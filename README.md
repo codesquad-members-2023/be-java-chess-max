@@ -32,10 +32,10 @@
   - [x] createPawns() 메서드 분리: createWhitePawn과 createBlackPawn으로 분리
   - [x] createPawnUsingDefaultConstructor() 생성: 기본 생성자를 사용하여 pawn생성을 검증
 - Board 구현
-  - [ ] 필드로 ArrayList를 가지게 설계
-  - [ ] add(): pawn을 board에 추가하는 메서드
-  - [ ] getSize(): board의 크기를 알려주는 메서드
-  - [ ] contains(): pawn이 리스트에 있는지 확인하는 메서드
+  - [x] 필드로 ArrayList를 가지게 설계
+  - [x] add(): pawn을 board에 추가하는 메서드
+  - [x] getSize(): board의 크기를 알려주는 메서드
+  - [x] contains(): pawn이 리스트에 있는지 확인하는 메서드
 - BoardTest 구현
   - [ ] createBoard(): Board 인스턴스가 잘 생성됐는지 확인
   - [ ] addWhitePawn(): white pawn이 잘 추가되는지 확인
