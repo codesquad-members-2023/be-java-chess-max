@@ -15,6 +15,10 @@
   - [x] createWhitePawn() 메서드 작성: 컴파일도 되지 않는 메서드 생성
 - Pawn Class 생성
   - [x] create() 메서드 작성: createWhitePawn() 메서드가 컴파일만 되고 실패하게 Pawn Class 생성
+- PawnTest 수정하기
+  - [ ] createWhitePawn()을 createPawn 테스트로 변경: 검은색 Pawn을 생성하고 실패하는 테스트 작성
+- Pawn Class 수정하기
+  - [ ] createPawn 테스트가 통과하게 Pawn 클래스 수정하기
 - 리팩토링
   - [ ] createTest() 메서드에 local variable을 추가해서 코드의 중복제거
   - [ ] Pawn Class에 verifyColor메서드를 생성해서 코드의 중복제거
