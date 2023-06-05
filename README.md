@@ -37,10 +37,9 @@
   - [x] getSize(): board의 크기를 알려주는 메서드
   - [x] contains(): pawn이 리스트에 있는지 확인하는 메서드
 - BoardTest 구현
-  - [ ] createBoard(): Board 인스턴스가 잘 생성됐는지 확인
-  - [ ] addWhitePawn(): white pawn이 잘 추가되는지 확인
-  - [ ] addBlackPawn(): black pawn이 잘 추가되는지 확인
-  - [ ] addMultiplePawns(): pawn들이 잘 추가되는지 확인
-  - [ ] addNotPawn(): pawn 인스턴스가 아닌 다른 요소를 추가해보고 error 발생 확인
+  - [x] createBoard(): Board 인스턴스가 잘 생성됐는지 확인
+  - [x] addWhitePawn(): white pawn이 잘 추가되는지 확인
+  - [x] addBlackPawn(): black pawn이 잘 추가되는지 확인
+  - [x] addPawns(): pawn들이 잘 추가되는지 확인
 - 패키지 분리
   - [ ] Pawn class를 pieces 패키지로 옮김
