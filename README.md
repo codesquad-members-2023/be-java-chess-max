@@ -25,12 +25,12 @@
 
 ### 체스판 생성
 - Pawn 수정하기
-  - [ ] 색깔 상수 만들기 
-  - [ ] 기본 생성자 추가하기: 기본적으로 color가 white이게 생성
+  - [x] 색깔 상수 만들기 
+  - [x] 기본 생성자 추가하기: 기본적으로 color가 white이게 생성
 - PawnTest 수정하기
-  - [ ] verifyPawnColor 메서드 삭제: 테스트 흐름상 메서드 분리를 하지 않는 것이 문맥에 자연스럽다고 생각합니다. 따라서 삭제합니다.
-  - [ ] createPawns() 메서드 분리: createWhitePawn과 createBlackPawn으로 분리
-  - [ ] createPawnUsingDefaultConstructor() 생성: 기본 생성자를 사용하여 pawn생성을 검증
+  - [x] verifyPawnColor 메서드 삭제: 테스트 흐름상 메서드 분리를 하지 않는 것이 문맥에 자연스럽다고 생각합니다. 따라서 삭제합니다.
+  - [x] createPawns() 메서드 분리: createWhitePawn과 createBlackPawn으로 분리
+  - [x] createPawnUsingDefaultConstructor() 생성: 기본 생성자를 사용하여 pawn생성을 검증
 - Board 구현
   - [ ] 필드로 ArrayList를 가지게 설계
   - [ ] add(): pawn을 board에 추가하는 메서드
