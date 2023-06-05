@@ -18,22 +18,22 @@ public class Board {
 
     private int pieceCount = 0;
 
-    public void addWhitePiece(Piece piece) {
+    private void addWhitePiece(Piece piece) {
         pieceCount++;
         whitePieces.add(piece);
     }
 
-    public void addBlackPiece(Piece piece) {
+    private void addBlackPiece(Piece piece) {
         pieceCount++;
         blackPieces.add(piece);
     }
 
-    public void addWhitePawn(Piece piece) {
+    private void addWhitePawn(Piece piece) {
         pieceCount++;
         whitePawns.add(piece);
     }
 
-    public void addBlackPawn(Piece piece) {
+    private void addBlackPawn(Piece piece) {
         pieceCount++;
         blackPawns.add(piece);
     }
