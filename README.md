@@ -18,7 +18,7 @@
 - PawnTest 수정하기
   - [x] createWhitePawn()을 createPawns 테스트로 변경: 검은색 Pawn을 생성하고 실패하는 테스트 작성
 - Pawn Class 수정하기
-  - [x] createPawns 테스트가 통과하게 Pawn 클래스 수정하기
+  - [x] createPawns() 테스트가 통과하게 Pawn 클래스 수정하기
 - 리팩토링
-  - [ ] createTest() 메서드에 local variable을 추가해서 코드의 중복제거
-  - [ ] Pawn Class에 verifyColor메서드를 생성해서 코드의 중복제거
+  - [x] createPawns() 테스트에 local variable을 추가해서 코드의 중복제거
+  - [x] PawnTest Class에 verifyPawnColor메서드를 생성하여 메서드 분리하기
