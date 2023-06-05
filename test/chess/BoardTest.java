@@ -1,6 +1,7 @@
 package chess;
 
 import chess.piece.Pawn;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,22 +12,33 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class BoardTest {
 
+    private Board board;
+
+    @BeforeEach
+    public void setUp() {
+        board = new Board();
+    }
+
     @Test
     @DisplayName("create: Board에 Pawn을 추가하면 Pawn의 수가 증가한다")
     public void create() {
-        Board board = new Board();
+        Pawn whitePawn = new Pawn(WHITE);
+        board.addWhitePawn(whitePawn);
+        assertAll(() -> assertThat(board.size()).isEqualTo(1),
+                  () -> assertThat(board.findWhitePawn(0)).isEqualTo(whitePawn));
 
-        assertAll(() -> createPawn(board, WHITE),
-                  () -> createPawn(board, BLACK));
+        Pawn blackPawn = new Pawn(BLACK);
+        board.addBlackPawn(blackPawn);
+        assertAll(() -> assertThat(board.size()).isEqualTo(2),
+                  () -> assertThat(board.findBlackPawn(0)).isEqualTo(blackPawn));
     }
 
-    void createPawn(final Board board, final Color color) {
-        int pawnCount = board.countPawn();
-        Pawn pawn = new Pawn(color);
-        board.add(pawn);
+    @Test
+    @DisplayName("initialize: 체스판을 초기화한다")
+    public void initialize() {
+        board.initialize();
 
-        assertThat(board.countPawn()).isEqualTo(pawnCount + 1);
-        assertThat(board.findPawn(pawnCount)).isEqualTo(pawn);
+        assertThat(board.size()).isEqualTo(16);
     }
 
 }
