@@ -28,5 +28,4 @@ class PawnTest {
 		assertThat(pawn.verifyColor(PieceColor.WHITE)).isTrue();
 	}
 
-
 }
