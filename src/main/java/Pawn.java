@@ -9,5 +9,4 @@ public class Pawn {
     public String getColor() {
         return color;
     }
-
 }
