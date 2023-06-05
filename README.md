@@ -9,11 +9,12 @@
 ## 구현 내용
 ### 체스 구현 시작하기
 - 개발 환경 설정
-  - [ ] gradle project 생성하기
-- Pawn Test 작성
-  - [ ] createTest() 메서드 작성: 컴파일만 되고 실패하는 테스트 작성
-- Pawn Class 작성
-  - [ ] create() 메서드 작성: 테스트를 통과하게 작성
+  - [x] gradle project 생성하기
+  - [x] build.gradle 수정하기
+- Pawn Test 생성
+  - [x] createWhitePawn() 메서드 작성: 컴파일도 되지 않는 메서드 생성
+- Pawn Class 생성
+  - [x] create() 메서드 작성: createWhitePawn() 메서드가 컴파일만 되고 실패하게 Pawn Class 생성
 - 리팩토링
   - [ ] createTest() 메서드에 local variable을 추가해서 코드의 중복제거
   - [ ] Pawn Class에 verifyColor메서드를 생성해서 코드의 중복제거
