@@ -1,4 +1,4 @@
-package com.chessgame.app.board;
+package com.chessgame.app.chess.board;
 
 
 import static org.assertj.core.api.Assertions.*;
@@ -6,9 +6,9 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.chessgame.app.piece.Pawn;
-import com.chessgame.app.piece.PieceColor;
-import com.chessgame.app.piece.PieceType;
+import com.chessgame.app.chess.piece.Pawn;
+import com.chessgame.app.chess.piece.PieceColor;
+import com.chessgame.app.chess.piece.PieceType;
 
 class BoardTest {
 

@@ -1,10 +1,10 @@
-package com.chessgame.app.board;
+package com.chessgame.app.chess.board;
 
 import java.util.ArrayList;
 
-import com.chessgame.app.piece.Piece;
-import com.chessgame.app.piece.PieceColor;
-import com.chessgame.app.piece.PieceType;
+import com.chessgame.app.chess.piece.Piece;
+import com.chessgame.app.chess.piece.PieceColor;
+import com.chessgame.app.chess.piece.PieceType;
 
 public class Board {
 

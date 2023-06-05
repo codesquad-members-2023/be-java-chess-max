@@ -1,4 +1,4 @@
-package com.chessgame.app.piece;
+package com.chessgame.app.chess.piece;
 
 public enum PieceType {
 	KING, QUEEN, ROOK, BISHOP, KNIGHT, PAWN

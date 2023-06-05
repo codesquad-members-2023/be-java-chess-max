@@ -1,4 +1,4 @@
-package com.chessgame.app.piece;
+package com.chessgame.app.chess.piece;
 
 public class Pawn implements Piece {
 
