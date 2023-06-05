@@ -7,8 +7,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.chessgame.app.chess.piece.Pawn;
-import com.chessgame.app.chess.piece.PieceColor;
-import com.chessgame.app.chess.piece.PieceType;
+import com.chessgame.app.chess.piece.type.PieceColor;
+import com.chessgame.app.chess.piece.type.PieceType;
 
 class BoardTest {
 
