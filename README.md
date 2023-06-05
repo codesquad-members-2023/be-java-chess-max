@@ -42,4 +42,4 @@
   - [x] addBlackPawn(): black pawn이 잘 추가되는지 확인
   - [x] addPawns(): pawn들이 잘 추가되는지 확인
 - 패키지 분리
-  - [ ] Pawn class를 pieces 패키지로 옮김
+  - [x] Pawn class를 pieces 패키지로 옮김

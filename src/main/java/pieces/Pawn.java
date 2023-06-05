@@ -1,3 +1,5 @@
+package pieces;
+
 public class Pawn {
 
     public static final String COLOR_BLACK = "black";

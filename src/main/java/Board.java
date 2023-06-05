@@ -1,3 +1,5 @@
+import pieces.Pawn;
+
 import java.util.ArrayList;
 
 public class Board {
