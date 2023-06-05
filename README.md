@@ -22,3 +22,25 @@
 - 리팩토링
   - [x] createPawns() 테스트에 local variable을 추가해서 코드의 중복제거
   - [x] PawnTest Class에 verifyPawnColor메서드를 생성하여 메서드 분리하기
+
+### 체스판 생성
+- Pawn 수정하기
+  - [ ] 색깔 상수 만들기 
+  - [ ] 기본 생성자 추가하기: 기본적으로 color가 white이게 생성
+- PawnTest 수정하기
+  - [ ] verifyPawnColor 메서드 삭제: 테스트 흐름상 메서드 분리를 하지 않는 것이 문맥에 자연스럽다고 생각합니다. 따라서 삭제합니다.
+  - [ ] createPawns() 메서드 분리: createWhitePawn과 createBlackPawn으로 분리
+  - [ ] createPawnUsingDefaultConstructor() 생성: 기본 생성자를 사용하여 pawn생성을 검증
+- Board 구현
+  - [ ] 필드로 ArrayList를 가지게 설계
+  - [ ] add(): pawn을 board에 추가하는 메서드
+  - [ ] getSize(): board의 크기를 알려주는 메서드
+  - [ ] contains(): pawn이 리스트에 있는지 확인하는 메서드
+- BoardTest 구현
+  - [ ] createBoard(): Board 인스턴스가 잘 생성됐는지 확인
+  - [ ] addWhitePawn(): white pawn이 잘 추가되는지 확인
+  - [ ] addBlackPawn(): black pawn이 잘 추가되는지 확인
+  - [ ] addMultiplePawns(): pawn들이 잘 추가되는지 확인
+  - [ ] addNotPawn(): pawn 인스턴스가 아닌 다른 요소를 추가해보고 error 발생 확인
+- 패키지 분리
+  - [ ] Pawn class를 pieces 패키지로 옮김
