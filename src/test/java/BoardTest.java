@@ -110,5 +110,28 @@ class BoardTest {
         assertThat(board.print()).isEqualTo(figure);
     }
 
+    @Test
+    @DisplayName("initialize를 여러번 해도 중첩되지 않는다")
+    public void initializeMultipleTimes() {
+        String figure = "........" + System.lineSeparator() +
+                "PPPPPPPP" + System.lineSeparator()+
+                "........" + System.lineSeparator()+
+                "........" + System.lineSeparator()+
+                "........" + System.lineSeparator()+
+                "........" + System.lineSeparator()+
+                "pppppppp" + System.lineSeparator()+
+                "........"+ System.lineSeparator();
+
+        board .initialize();
+        board .initialize();
+        board .initialize();
+        board .initialize();
+        board .initialize();
+        board .initialize();
+
+        assertThat(board.getSize()).isEqualTo(16);
+        assertThat(board.print()).isEqualTo(figure);
+    }
+
 
 }

@@ -14,7 +14,7 @@ public class Board {
     }
 
     public void initialize() {
-
+        pawns.clear();
         addBlackPawnSet();
         addWhitePawnSet();
     }
