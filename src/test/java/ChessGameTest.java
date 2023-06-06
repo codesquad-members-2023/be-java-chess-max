@@ -3,6 +3,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static utils.StringUtil.appendNewLine;
 
 public class ChessGameTest {
 
@@ -16,14 +17,14 @@ public class ChessGameTest {
     @Test
     @DisplayName("game()에 start를 입력하면 board가 initialize된다")
     public void gameStart() {
-        String figure = "........" + System.lineSeparator() +
-                "PPPPPPPP" + System.lineSeparator()+
-                "........" + System.lineSeparator()+
-                "........" + System.lineSeparator()+
-                "........" + System.lineSeparator()+
-                "........" + System.lineSeparator()+
-                "pppppppp" + System.lineSeparator()+
-                "........"+ System.lineSeparator();
+        String figure = appendNewLine("........") +
+                appendNewLine("PPPPPPPP") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("pppppppp") +
+                appendNewLine("........");
 
         game.play("start");
 

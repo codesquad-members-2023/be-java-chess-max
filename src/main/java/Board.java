@@ -1,11 +1,11 @@
 import pieces.Pawn;
+import static utils.StringUtil.appendNewLine;
 
 import java.util.ArrayList;
 
 public class Board {
 
-    private static final String LINE_SEPERATOR = System.lineSeparator();
-    private static final String EMPTY_LINE = "........" + LINE_SEPERATOR;
+    private static final String EMPTY_LINE = "........";
 
     private final ArrayList<Pawn> pawns;
 
@@ -34,17 +34,14 @@ public class Board {
     }
 
     public String print() {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(EMPTY_LINE);
-        sb.append(printBlackPawns());
-        sb.append(EMPTY_LINE);
-        sb.append(EMPTY_LINE);
-        sb.append(EMPTY_LINE);
-        sb.append(EMPTY_LINE);
-        sb.append(printWhitePawns());
-        sb.append(EMPTY_LINE);
-        return sb.toString();
+        return appendNewLine(EMPTY_LINE) +
+                appendNewLine(printBlackPawns()) +
+                appendNewLine(EMPTY_LINE) +
+                appendNewLine(EMPTY_LINE) +
+                appendNewLine(EMPTY_LINE) +
+                appendNewLine(EMPTY_LINE) +
+                appendNewLine(printWhitePawns()) +
+                appendNewLine(EMPTY_LINE);
     }
 
     public String printBlackPawns() {
@@ -55,7 +52,6 @@ public class Board {
                 sb.append(pawn.getFigure());
             }
         }
-        sb.append(LINE_SEPERATOR);
         return sb.toString();
     }
 
@@ -67,7 +63,6 @@ public class Board {
                 sb.append(pawn.getFigure());
             }
         }
-        sb.append(LINE_SEPERATOR);
         return sb.toString();
     }
 

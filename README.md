@@ -76,7 +76,9 @@
 
 ### 모든 기물 배치하기
 ####  StringUtil 생성하기
-- [ ] appendNewLine() 생성: String에 lineSeperator를 추가해서 반환하는 메서드
+- [x] appendNewLine() 생성: String에 lineSeperator를 추가해서 반환하는 메서드
+- [x] Board 및 테스트 코드에서 appendNewLine()을 사용하게 변경
+- [x] appendNewLine() 테스트 코드 작성
 #### Pawn 변경
 - [ ] Piece로 이름 변경
 - [ ] 필드로 name 추가

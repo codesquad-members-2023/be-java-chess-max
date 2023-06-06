@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import pieces.Pawn;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static utils.StringUtil.appendNewLine;
 
 class BoardTest {
 
@@ -76,7 +77,7 @@ class BoardTest {
     @Test
     @DisplayName("initialize()를 호출하면 8개의 검정색 폰이 추가된다")
     public void initializeAdd8BlackPawns() {
-        String figure = "PPPPPPPP" + System.lineSeparator();
+        String figure = "PPPPPPPP";
 
         board.initialize();
 
@@ -86,7 +87,7 @@ class BoardTest {
     @Test
     @DisplayName("initialize()를 호출하면 8개의 하얀색 폰이 추가된다")
     public void initializeAdd8WhitePawns() {
-        String figure = "pppppppp" + System.lineSeparator();
+        String figure = "pppppppp";
 
         board.initialize();
 
@@ -96,14 +97,14 @@ class BoardTest {
     @Test
     @DisplayName("initialize()를 호출하고 화면을 출력한다")
     public void initializeThenPrintBoard() {
-        String figure = "........" + System.lineSeparator() +
-                "PPPPPPPP" + System.lineSeparator()+
-                "........" + System.lineSeparator()+
-                "........" + System.lineSeparator()+
-                "........" + System.lineSeparator()+
-                "........" + System.lineSeparator()+
-                "pppppppp" + System.lineSeparator()+
-                "........"+ System.lineSeparator();
+        String figure = appendNewLine("........") +
+                appendNewLine("PPPPPPPP") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("pppppppp") +
+                appendNewLine("........");
 
         board.initialize();
 
@@ -113,14 +114,14 @@ class BoardTest {
     @Test
     @DisplayName("initialize를 여러번 해도 중첩되지 않는다")
     public void initializeMultipleTimes() {
-        String figure = "........" + System.lineSeparator() +
-                "PPPPPPPP" + System.lineSeparator()+
-                "........" + System.lineSeparator()+
-                "........" + System.lineSeparator()+
-                "........" + System.lineSeparator()+
-                "........" + System.lineSeparator()+
-                "pppppppp" + System.lineSeparator()+
-                "........"+ System.lineSeparator();
+        String figure = appendNewLine("........") +
+                appendNewLine("PPPPPPPP") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("pppppppp") +
+                appendNewLine("........");
 
         board .initialize();
         board .initialize();
@@ -132,6 +133,4 @@ class BoardTest {
         assertThat(board.getSize()).isEqualTo(16);
         assertThat(board.print()).isEqualTo(figure);
     }
-
-
 }
