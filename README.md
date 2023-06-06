@@ -52,10 +52,9 @@
   - [x] getFigure() 생성: figure를 리턴
   - [x] PawnTest에 figure 관련 테스트 만들기
 - Board 수정하기
-  - [ ] getSize() 생성: pawns의 크기를 반환
-  - [ ] initialize() 생성: 
-  - [ ] print() 생성: board의 상태를 출력
-    - [ ] printBlackPawns(): board에 있는 검은 폰들을 출력
-    - [ ] printWhitePawns(): board에 있는 하얀 폰들을 출력
-    - [ ] printEmptyLine(): 빈 줄을 출력
-  - [ ] BoardTest에 관련 테스트 만들기
+  - [x] initialize() 생성: 
+  - [x] print() 생성: board의 상태를 출력
+    - [x] printBlackPawns(): board에 있는 검은 폰들을 출력
+    - [x] printWhitePawns(): board에 있는 하얀 폰들을 출력
+    - [x] printEmptyLine(): 빈 줄을 출력
+  - [x] BoardTest에 관련 테스트 만들기

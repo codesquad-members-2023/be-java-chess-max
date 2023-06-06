@@ -64,4 +64,51 @@ class BoardTest {
         assertThat(board.contains(three)).isTrue();
         assertThat(board.contains(four)).isTrue();
     }
+
+    @Test
+    @DisplayName("initialize()을 호출하면 16개의 폰이 추가된다")
+    public void initializeAdd16Pawns() {
+        board.initialize();
+
+        assertThat(board.getSize()).isEqualTo(16);
+    }
+
+    @Test
+    @DisplayName("initialize()를 호출하면 8개의 검정색 폰이 추가된다")
+    public void initializeAdd8BlackPawns() {
+        String figure = "PPPPPPPP\r\n";
+
+        board.initialize();
+
+        assertThat(board.printBlackPawns()).isEqualTo(figure);
+    }
+
+    @Test
+    @DisplayName("initialize()를 호출하면 8개의 하얀색 폰이 추가된다")
+    public void initializeAdd8WhitePawns() {
+        String figure = "pppppppp\r\n";
+
+        board.initialize();
+
+        assertThat(board.printWhitePawns()).isEqualTo(figure);
+    }
+
+    @Test
+    @DisplayName("initialize()를 호출하고 화면을 출력한다")
+    public void initializeThenPrintBoard() {
+        String figure = "........\r\n" +
+                "PPPPPPPP\r\n" +
+                "........\r\n" +
+                "........\r\n" +
+                "........\r\n" +
+                "........\r\n" +
+                "pppppppp\r\n" +
+                "........\r\n";
+
+        board.initialize();
+
+        assertThat(board.print()).isEqualTo(figure);
+    }
+
+
 }
