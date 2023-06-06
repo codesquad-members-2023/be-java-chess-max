@@ -23,7 +23,7 @@ class BoardTest {
     @Test
     @DisplayName("하얀색 폰이 추가되는지 확인")
     void addWhitePawn() {
-        Pawn pawn = new Pawn(Pawn.COLOR_WHITE);
+        Pawn pawn = new Pawn(Pawn.COLOR_WHITE, Pawn.WHITE_FIGURE);
 
         board.add(pawn);
 
@@ -34,7 +34,7 @@ class BoardTest {
     @Test
     @DisplayName("검은색 폰이 추가되는지 확인")
     void addBlackPawn() {
-        Pawn pawn = new Pawn(Pawn.COLOR_BLACK);
+        Pawn pawn = new Pawn(Pawn.COLOR_BLACK, Pawn.BLACK_FIGURE);
 
         board.add(pawn);
 
@@ -45,10 +45,10 @@ class BoardTest {
     @Test
     @DisplayName("여러 개의 폰이 추가되는지 확인")
     void addPawns() {
-        Pawn one = new Pawn(Pawn.COLOR_WHITE);
-        Pawn two = new Pawn(Pawn.COLOR_BLACK);
-        Pawn three = new Pawn(Pawn.COLOR_WHITE);
-        Pawn four = new Pawn(Pawn.COLOR_BLACK);
+        Pawn one = new Pawn(Pawn.COLOR_WHITE, Pawn.WHITE_FIGURE);
+        Pawn two = new Pawn(Pawn.COLOR_BLACK, Pawn.BLACK_FIGURE);
+        Pawn three = new Pawn(Pawn.COLOR_WHITE, Pawn.WHITE_FIGURE);
+        Pawn four = new Pawn(Pawn.COLOR_BLACK, Pawn.BLACK_FIGURE);
 
         board.add(one);
         assertThat(board.getSize()).isEqualTo(1);

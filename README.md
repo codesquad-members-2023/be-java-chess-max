@@ -43,3 +43,19 @@
   - [x] addPawns(): pawn들이 잘 추가되는지 확인
 - 패키지 분리
   - [x] Pawn class를 pieces 패키지로 옮김
+
+### 보드 초기화하기
+- Pawn 수정하기
+  - [x] 필드로 figure 추가하기
+  - [x] 상수로 BLACK_FIGURE, WHITE_FIGURE 추가
+  - [x] 생성자를 통해 figure 값을 입력받고 필드에 할당하기
+  - [x] getFigure() 생성: figure를 리턴
+  - [x] PawnTest에 figure 관련 테스트 만들기
+- Board 수정하기
+  - [ ] getSize() 생성: pawns의 크기를 반환
+  - [ ] initialize() 생성: 
+  - [ ] print() 생성: board의 상태를 출력
+    - [ ] printBlackPawns(): board에 있는 검은 폰들을 출력
+    - [ ] printWhitePawns(): board에 있는 하얀 폰들을 출력
+    - [ ] printEmptyLine(): 빈 줄을 출력
+  - [ ] BoardTest에 관련 테스트 만들기
