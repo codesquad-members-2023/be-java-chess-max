@@ -58,3 +58,10 @@
     - [x] printWhitePawns(): board에 있는 하얀 폰들을 출력
     - [x] printEmptyLine(): 빈 줄을 출력
   - [x] BoardTest에 관련 테스트 만들기
+- ChessGame 구현
+  - [ ] start를 입력하면 board를 초기화하기
+  - [ ] end 입력시 keepPlaying을 false로 변경
+  - [ ] printResult()생성: 게임 실행결과를 출력
+- Application 구현
+  - [ ] 스캐너를 통해 사용자로부터 문자열 입력받기
+  - [ ] 반복문을 사용하여 end가 입력될 때까지 게임 진행
