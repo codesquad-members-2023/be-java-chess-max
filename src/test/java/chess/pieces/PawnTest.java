@@ -1,4 +1,4 @@
-package chess;
+package chess.pieces;
 
 import static chess.Color.BLACK;
 import static chess.Color.WHITE;

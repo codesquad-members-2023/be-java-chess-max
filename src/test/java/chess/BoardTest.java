@@ -4,6 +4,7 @@ import static chess.Color.BLACK;
 import static chess.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.pieces.Pawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

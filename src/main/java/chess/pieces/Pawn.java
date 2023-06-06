@@ -1,4 +1,6 @@
-package chess;
+package chess.pieces;
+
+import chess.Color;
 
 public record Pawn(Color color) implements Piece {
 

@@ -1,4 +1,4 @@
-package chess;
+package chess.pieces;
 
 public interface Piece {
 
