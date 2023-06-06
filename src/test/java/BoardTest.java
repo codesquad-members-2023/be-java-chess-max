@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pieces.Pawn;
+import pieces.Piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static utils.StringUtil.appendNewLine;
@@ -16,40 +16,28 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("보드가 생성되는지 확인")
+    @DisplayName("Board(): 보드가 생성되는지 확인")
     void createBoard() {
         assertThat(board).isInstanceOf(Board.class);
     }
 
     @Test
-    @DisplayName("하얀색 폰이 추가되는지 확인")
-    void addWhitePawn() {
-        Pawn pawn = new Pawn(Pawn.WHITE_COLOR, Pawn.WHITE_FIGURE);
+    @DisplayName("add(): 임의의 말이 pieces에 추가된다.")
+    void addPiece() {
+        Piece piece = Piece.createBlackKnight();
 
-        board.add(pawn);
+        board.add(piece);
 
-        assertThat(board.contains(pawn)).isTrue();
+        assertThat(board.contains(piece)).isTrue();
         assertThat(board.getSize()).isEqualTo(1);
     }
 
     @Test
-    @DisplayName("검은색 폰이 추가되는지 확인")
-    void addBlackPawn() {
-        Pawn pawn = new Pawn(Pawn.BLACK_COLOR, Pawn.BLACK_FIGURE);
-
-        board.add(pawn);
-
-        assertThat(board.contains(pawn)).isTrue();
-        assertThat(board.getSize()).isEqualTo(1);
-    }
-
-    @Test
-    @DisplayName("여러 개의 폰이 추가되는지 확인")
-    void addPawns() {
-        Pawn one = new Pawn(Pawn.WHITE_COLOR, Pawn.WHITE_FIGURE);
-        Pawn two = new Pawn(Pawn.BLACK_COLOR, Pawn.BLACK_FIGURE);
-        Pawn three = new Pawn(Pawn.WHITE_COLOR, Pawn.WHITE_FIGURE);
-        Pawn four = new Pawn(Pawn.BLACK_COLOR, Pawn.BLACK_FIGURE);
+    @DisplayName("add(): 임의의 말이 연속적으로 pieces에 추가된다.")
+    void addPieces() {
+        Piece one = Piece.createBlackBishop();
+        Piece two = Piece.createWhiteQueen();
+        Piece three = Piece.createWhiteRook();
 
         board.add(one);
         assertThat(board.getSize()).isEqualTo(1);
@@ -57,80 +45,57 @@ class BoardTest {
         assertThat(board.getSize()).isEqualTo(2);
         board.add(three);
         assertThat(board.getSize()).isEqualTo(3);
-        board.add(four);
-        assertThat(board.getSize()).isEqualTo(4);
 
         assertThat(board.contains(one)).isTrue();
         assertThat(board.contains(two)).isTrue();
         assertThat(board.contains(three)).isTrue();
-        assertThat(board.contains(four)).isTrue();
     }
 
     @Test
-    @DisplayName("initialize()을 호출하면 16개의 폰이 추가된다")
-    public void initializeAdd16Pawns() {
+    @DisplayName("initialize(): 32개의 말들로 초기화된다")
+    public void initializeBoard() {
         board.initialize();
 
-        assertThat(board.getSize()).isEqualTo(16);
+        assertThat(board.getSize()).isEqualTo(32);
     }
 
     @Test
-    @DisplayName("initialize()를 호출하면 8개의 검정색 폰이 추가된다")
-    public void initializeAdd8BlackPawns() {
-        String figure = "PPPPPPPP";
-
-        board.initialize();
-
-        assertThat(board.printBlackPawns()).isEqualTo(figure);
-    }
-
-    @Test
-    @DisplayName("initialize()를 호출하면 8개의 하얀색 폰이 추가된다")
-    public void initializeAdd8WhitePawns() {
-        String figure = "pppppppp";
-
-        board.initialize();
-
-        assertThat(board.printWhitePawns()).isEqualTo(figure);
-    }
-
-    @Test
-    @DisplayName("initialize()를 호출하고 화면을 출력한다")
-    public void initializeThenPrintBoard() {
-        String figure = appendNewLine("........") +
+    @DisplayName("initialize(): 여러번 초기화해도 중첩되지 않는다")
+    public void initializeMultipleTimes() {
+        String figure = appendNewLine("RNBQKBNR") +
                 appendNewLine("PPPPPPPP") +
                 appendNewLine("........") +
                 appendNewLine("........") +
                 appendNewLine("........") +
                 appendNewLine("........") +
                 appendNewLine("pppppppp") +
-                appendNewLine("........");
+                appendNewLine("rnbqkbnr");
 
-        board.initialize();
+        board .initialize();
+        board .initialize();
+        board .initialize();
+        board .initialize();
+        board .initialize();
+        board .initialize();
 
+        assertThat(board.getSize()).isEqualTo(32);
         assertThat(board.print()).isEqualTo(figure);
     }
 
     @Test
-    @DisplayName("initialize를 여러번 해도 중첩되지 않는다")
-    public void initializeMultipleTimes() {
-        String figure = appendNewLine("........") +
+    @DisplayName("print(): 를 호출하고 화면을 출력한다")
+    public void initializeThenPrintBoard() {
+        String figure = appendNewLine("RNBQKBNR") +
                 appendNewLine("PPPPPPPP") +
                 appendNewLine("........") +
                 appendNewLine("........") +
                 appendNewLine("........") +
                 appendNewLine("........") +
                 appendNewLine("pppppppp") +
-                appendNewLine("........");
+                appendNewLine("rnbqkbnr");
 
-        board .initialize();
-        board .initialize();
-        board .initialize();
-        board .initialize();
-        board .initialize();
-        board .initialize();
+        board.initialize();
 
-        assertThat(board.getSize()).isEqualTo(16);
         assertThat(board.print()).isEqualTo(figure);
     }
 }

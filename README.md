@@ -80,7 +80,7 @@
 - [x] Board 및 테스트 코드에서 appendNewLine()을 사용하게 변경
 - [x] appendNewLine() 테스트 코드 작성
 #### Pawn 변경
-- [ ] Piece로 이름 변경
-- [ ] 필드로 name 추가
-- [ ] 생성자를 private으로 변경하고 factory method 사용하여 생성하기
-- [ ] 변경된 내용에 맞게 다른 클래스 변경하기
+- [x] Piece로 이름 변경
+- [x] 필드로 name 추가
+- [x] 생성자를 private으로 변경하고 factory method 사용하여 생성하기
+- [x] 변경된 내용에 맞게 다른 클래스 변경하기

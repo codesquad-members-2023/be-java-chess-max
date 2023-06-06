@@ -17,14 +17,14 @@ public class ChessGameTest {
     @Test
     @DisplayName("game()에 start를 입력하면 board가 initialize된다")
     public void gameStart() {
-        String figure = appendNewLine("........") +
+        String figure = appendNewLine("RNBQKBNR") +
                 appendNewLine("PPPPPPPP") +
                 appendNewLine("........") +
                 appendNewLine("........") +
                 appendNewLine("........") +
                 appendNewLine("........") +
                 appendNewLine("pppppppp") +
-                appendNewLine("........");
+                appendNewLine("rnbqkbnr");
 
         game.play("start");
 
