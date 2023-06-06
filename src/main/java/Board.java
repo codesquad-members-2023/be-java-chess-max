@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public class Board {
 
+    private static final String LINE_SEPERATOR = System.lineSeparator();
+    private static final String EMPTY_LINE = "........" + LINE_SEPERATOR;
+
     private final ArrayList<Pawn> pawns;
 
     public Board() {
@@ -11,35 +14,36 @@ public class Board {
     }
 
     public void initialize() {
+
         addBlackPawnSet();
         addWhitePawnSet();
     }
 
     private void addBlackPawnSet() {
         for (int i = 0; i < 8; i ++) {
-            Pawn black = new Pawn(Pawn.COLOR_BLACK, Pawn.BLACK_FIGURE);
+            Pawn black = new Pawn(Pawn.BLACK_COLOR, Pawn.BLACK_FIGURE);
             add(black);
         }
     }
 
     private void addWhitePawnSet() {
         for (int i = 0; i < 8; i ++) {
-            Pawn black = new Pawn(Pawn.COLOR_WHITE, Pawn.WHITE_FIGURE);
-            add(black);
+            Pawn white = new Pawn(Pawn.WHITE_COLOR, Pawn.WHITE_FIGURE);
+            add(white);
         }
     }
 
     public String print() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(printEmptyLine());
+        sb.append(EMPTY_LINE);
         sb.append(printBlackPawns());
-        sb.append(printEmptyLine());
-        sb.append(printEmptyLine());
-        sb.append(printEmptyLine());
-        sb.append(printEmptyLine());
+        sb.append(EMPTY_LINE);
+        sb.append(EMPTY_LINE);
+        sb.append(EMPTY_LINE);
+        sb.append(EMPTY_LINE);
         sb.append(printWhitePawns());
-        sb.append(printEmptyLine());
+        sb.append(EMPTY_LINE);
         return sb.toString();
     }
 
@@ -47,11 +51,11 @@ public class Board {
         StringBuilder sb = new StringBuilder();
 
         for (Pawn pawn : pawns) {
-            if (pawn.getColor().equals("black")) {
+            if (pawn.isBlack()) {
                 sb.append(pawn.getFigure());
             }
         }
-        sb.append("\r\n");
+        sb.append(LINE_SEPERATOR);
         return sb.toString();
     }
 
@@ -59,16 +63,12 @@ public class Board {
         StringBuilder sb = new StringBuilder();
 
         for (Pawn pawn : pawns) {
-            if (pawn.getColor().equals("white")) {
+            if (pawn.isWhite()) {
                 sb.append(pawn.getFigure());
             }
         }
-        sb.append("\r\n");
+        sb.append(LINE_SEPERATOR);
         return sb.toString();
-    }
-
-    private String printEmptyLine() {
-        return "........\r\n";
     }
 
     public void add(Pawn pawn) {

@@ -23,7 +23,7 @@ class BoardTest {
     @Test
     @DisplayName("하얀색 폰이 추가되는지 확인")
     void addWhitePawn() {
-        Pawn pawn = new Pawn(Pawn.COLOR_WHITE, Pawn.WHITE_FIGURE);
+        Pawn pawn = new Pawn(Pawn.WHITE_COLOR, Pawn.WHITE_FIGURE);
 
         board.add(pawn);
 
@@ -34,7 +34,7 @@ class BoardTest {
     @Test
     @DisplayName("검은색 폰이 추가되는지 확인")
     void addBlackPawn() {
-        Pawn pawn = new Pawn(Pawn.COLOR_BLACK, Pawn.BLACK_FIGURE);
+        Pawn pawn = new Pawn(Pawn.BLACK_COLOR, Pawn.BLACK_FIGURE);
 
         board.add(pawn);
 
@@ -45,10 +45,10 @@ class BoardTest {
     @Test
     @DisplayName("여러 개의 폰이 추가되는지 확인")
     void addPawns() {
-        Pawn one = new Pawn(Pawn.COLOR_WHITE, Pawn.WHITE_FIGURE);
-        Pawn two = new Pawn(Pawn.COLOR_BLACK, Pawn.BLACK_FIGURE);
-        Pawn three = new Pawn(Pawn.COLOR_WHITE, Pawn.WHITE_FIGURE);
-        Pawn four = new Pawn(Pawn.COLOR_BLACK, Pawn.BLACK_FIGURE);
+        Pawn one = new Pawn(Pawn.WHITE_COLOR, Pawn.WHITE_FIGURE);
+        Pawn two = new Pawn(Pawn.BLACK_COLOR, Pawn.BLACK_FIGURE);
+        Pawn three = new Pawn(Pawn.WHITE_COLOR, Pawn.WHITE_FIGURE);
+        Pawn four = new Pawn(Pawn.BLACK_COLOR, Pawn.BLACK_FIGURE);
 
         board.add(one);
         assertThat(board.getSize()).isEqualTo(1);
@@ -76,7 +76,7 @@ class BoardTest {
     @Test
     @DisplayName("initialize()를 호출하면 8개의 검정색 폰이 추가된다")
     public void initializeAdd8BlackPawns() {
-        String figure = "PPPPPPPP\r\n";
+        String figure = "PPPPPPPP" + System.lineSeparator();
 
         board.initialize();
 
@@ -86,7 +86,7 @@ class BoardTest {
     @Test
     @DisplayName("initialize()를 호출하면 8개의 하얀색 폰이 추가된다")
     public void initializeAdd8WhitePawns() {
-        String figure = "pppppppp\r\n";
+        String figure = "pppppppp" + System.lineSeparator();
 
         board.initialize();
 
@@ -96,14 +96,14 @@ class BoardTest {
     @Test
     @DisplayName("initialize()를 호출하고 화면을 출력한다")
     public void initializeThenPrintBoard() {
-        String figure = "........\r\n" +
-                "PPPPPPPP\r\n" +
-                "........\r\n" +
-                "........\r\n" +
-                "........\r\n" +
-                "........\r\n" +
-                "pppppppp\r\n" +
-                "........\r\n";
+        String figure = "........" + System.lineSeparator() +
+                "PPPPPPPP" + System.lineSeparator()+
+                "........" + System.lineSeparator()+
+                "........" + System.lineSeparator()+
+                "........" + System.lineSeparator()+
+                "........" + System.lineSeparator()+
+                "pppppppp" + System.lineSeparator()+
+                "........"+ System.lineSeparator();
 
         board.initialize();
 

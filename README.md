@@ -66,3 +66,10 @@
 - Application 구현
   - [x] 스캐너를 통해 사용자로부터 문자열 입력받기
   - [x] 반복문을 사용하여 end가 입력될 때까지 게임 진행
+- 코드 재구조화(코드 넘나 드러운 것...)
+  - Pawn 재구조화
+    - 상수 네이밍 변경: 통일성을 위해 COLOR_WHITE, COLOR_BLACK을 WHITE_COLOR, BLACK_COLOR로 변경
+    - isBlack(), isWhite() 메서드 추가
+  - Board 재구조화
+    - 상수 생성: emptyLine과 crlf의 모양정보, 폰의 최대 갯수를 따로 저장
+    - initiatlize()에 초기화 기능 추가: 기존의 방식에서는 initialize()를 연속 호출하면 pawn들이 계속 추가되어 수정

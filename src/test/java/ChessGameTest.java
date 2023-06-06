@@ -16,14 +16,14 @@ public class ChessGameTest {
     @Test
     @DisplayName("game()에 start를 입력하면 board가 initialize된다")
     public void gameStart() {
-        String figure = "........\r\n" +
-                "PPPPPPPP\r\n" +
-                "........\r\n" +
-                "........\r\n" +
-                "........\r\n" +
-                "........\r\n" +
-                "pppppppp\r\n" +
-                "........\r\n";
+        String figure = "........" + System.lineSeparator() +
+                "PPPPPPPP" + System.lineSeparator()+
+                "........" + System.lineSeparator()+
+                "........" + System.lineSeparator()+
+                "........" + System.lineSeparator()+
+                "........" + System.lineSeparator()+
+                "pppppppp" + System.lineSeparator()+
+                "........"+ System.lineSeparator();
 
         game.play("start");
 
