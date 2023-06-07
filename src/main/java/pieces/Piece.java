@@ -83,12 +83,16 @@ public class Piece {
         return new Piece(Color.NOCOLOR, Type.NOTYPE);
     }
 
-    public boolean isBlackPawn() {
-        return color.equals(Color.BLACK) && type.equals(Type.PAWN);
+    public boolean isBlack() {
+        return color == Color.BLACK;
     }
 
-    public boolean isWhitePawn() {
-        return color.equals(Color.WHITE) && type.equals(Type.PAWN);
+    public boolean isWhite() {
+        return color == Color.WHITE;
+    }
+
+    public boolean isPawn() {
+        return type == Type.PAWN;
     }
 
     public Color getColor() {
@@ -100,6 +104,9 @@ public class Piece {
     }
 
     public char getShape() {
+        if (color == Color.BLACK) {
+            return Character.toUpperCase(type.getShape());
+        }
         return type.getShape();
     }
 }

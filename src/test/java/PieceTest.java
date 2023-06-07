@@ -11,11 +11,11 @@ public class PieceTest {
     void createWhitePawn() {
         Piece whitePawn = Piece.createWhitePawn();
 
-        assertThat(whitePawn.getColor()).isEqualTo("white");
-        assertThat(whitePawn.getType()).isEqualTo("pawn");
-        assertThat(whitePawn.getFigure()).isEqualTo("p");
-        assertThat(whitePawn.isWhitePawn()).isTrue();
-        assertThat(whitePawn.isBlackPawn()).isFalse();
+        assertThat(whitePawn.getColor()).isEqualTo(Piece.Color.WHITE);
+        assertThat(whitePawn.getType()).isEqualTo(Piece.Type.PAWN);
+        assertThat(whitePawn.getShape()).isEqualTo('p');
+        assertThat(whitePawn.isWhite()).isTrue();
+        assertThat(whitePawn.isBlack()).isFalse();
     }
 
     @Test
@@ -23,11 +23,11 @@ public class PieceTest {
     void createWhiteRook() {
         Piece whiteRook = Piece.createWhiteRook();
 
-        assertThat(whiteRook.getColor()).isEqualTo("white");
-        assertThat(whiteRook.getType()).isEqualTo("rook");
-        assertThat(whiteRook.getFigure()).isEqualTo("R");
-        assertThat(whiteRook.isWhitePawn()).isTrue();
-        assertThat(whiteRook.isBlackPawn()).isFalse();
+        assertThat(whiteRook.getColor()).isEqualTo(Piece.Color.WHITE);
+        assertThat(whiteRook.getType()).isEqualTo(Piece.Type.ROOK);
+        assertThat(whiteRook.getShape()).isEqualTo('r');
+        assertThat(whiteRook.isWhite()).isTrue();
+        assertThat(whiteRook.isBlack()).isFalse();
     }
 
     @Test
@@ -35,11 +35,11 @@ public class PieceTest {
     void createWhiteKnight() {
         Piece whiteKnight = Piece.createWhiteKnight();
 
-        assertThat(whiteKnight.getColor()).isEqualTo("white");
-        assertThat(whiteKnight.getType()).isEqualTo("knight");
-        assertThat(whiteKnight.getFigure()).isEqualTo("N");
-        assertThat(whiteKnight.isWhitePawn()).isTrue();
-        assertThat(whiteKnight.isBlackPawn()).isFalse();
+        assertThat(whiteKnight.getColor()).isEqualTo(Piece.Color.WHITE);
+        assertThat(whiteKnight.getType()).isEqualTo(Piece.Type.KNIGHT);
+        assertThat(whiteKnight.getShape()).isEqualTo('n');
+        assertThat(whiteKnight.isWhite()).isTrue();
+        assertThat(whiteKnight.isBlack()).isFalse();
     }
 
     @Test
@@ -47,11 +47,11 @@ public class PieceTest {
     void createWhiteBishop() {
         Piece whiteBishop = Piece.createWhiteBishop();
 
-        assertThat(whiteBishop.getColor()).isEqualTo("white");
-        assertThat(whiteBishop.getType()).isEqualTo("bishop");
-        assertThat(whiteBishop.getFigure()).isEqualTo("B");
-        assertThat(whiteBishop.isWhitePawn()).isTrue();
-        assertThat(whiteBishop.isBlackPawn()).isFalse();
+        assertThat(whiteBishop.getColor()).isEqualTo(Piece.Color.WHITE);
+        assertThat(whiteBishop.getType()).isEqualTo(Piece.Type.BISHOP);
+        assertThat(whiteBishop.getShape()).isEqualTo('b');
+        assertThat(whiteBishop.isWhite()).isTrue();
+        assertThat(whiteBishop.isBlack()).isFalse();
     }
 
     @Test
@@ -59,11 +59,11 @@ public class PieceTest {
     void createWhiteQueen() {
         Piece whiteQueen = Piece.createWhiteQueen();
 
-        assertThat(whiteQueen.getColor()).isEqualTo("white");
-        assertThat(whiteQueen.getType()).isEqualTo("queen");
-        assertThat(whiteQueen.getFigure()).isEqualTo("Q");
-        assertThat(whiteQueen.isWhitePawn()).isTrue();
-        assertThat(whiteQueen.isBlackPawn()).isFalse();
+        assertThat(whiteQueen.getColor()).isEqualTo(Piece.Color.WHITE);
+        assertThat(whiteQueen.getType()).isEqualTo(Piece.Type.QUEEN);
+        assertThat(whiteQueen.getShape()).isEqualTo('q');
+        assertThat(whiteQueen.isWhite()).isTrue();
+        assertThat(whiteQueen.isBlack()).isFalse();
     }
 
     @Test
@@ -71,11 +71,11 @@ public class PieceTest {
     void createWhiteKing() {
         Piece whiteKing = Piece.createWhiteKing();
 
-        assertThat(whiteKing.getColor()).isEqualTo("white");
-        assertThat(whiteKing.getType()).isEqualTo("king");
-        assertThat(whiteKing.getFigure()).isEqualTo("K");
-        assertThat(whiteKing.isWhitePawn()).isTrue();
-        assertThat(whiteKing.isBlackPawn()).isFalse();
+        assertThat(whiteKing.getColor()).isEqualTo(Piece.Color.WHITE);
+        assertThat(whiteKing.getType()).isEqualTo(Piece.Type.KING);
+        assertThat(whiteKing.getShape()).isEqualTo('k');
+        assertThat(whiteKing.isWhite()).isTrue();
+        assertThat(whiteKing.isBlack()).isFalse();
     }
 
     @Test
@@ -83,11 +83,11 @@ public class PieceTest {
     void createBlackPawn() {
         Piece blackPawn = Piece.createBlackPawn();
 
-        assertThat(blackPawn.getColor()).isEqualTo("black");
-        assertThat(blackPawn.getType()).isEqualTo("pawn");
-        assertThat(blackPawn.getFigure()).isEqualTo("p");
-        assertThat(blackPawn.isWhitePawn()).isFalse();
-        assertThat(blackPawn.isBlackPawn()).isTrue();
+        assertThat(blackPawn.getColor()).isEqualTo(Piece.Color.BLACK);
+        assertThat(blackPawn.getType()).isEqualTo(Piece.Type.PAWN);
+        assertThat(blackPawn.getShape()).isEqualTo('P');
+        assertThat(blackPawn.isWhite()).isFalse();
+        assertThat(blackPawn.isBlack()).isTrue();
     }
 
     @Test
@@ -95,11 +95,11 @@ public class PieceTest {
     void createBlackRook() {
         Piece blackRook = Piece.createBlackRook();
 
-        assertThat(blackRook.getColor()).isEqualTo("black");
-        assertThat(blackRook.getType()).isEqualTo("rook");
-        assertThat(blackRook.getFigure()).isEqualTo("R");
-        assertThat(blackRook.isWhitePawn()).isFalse();
-        assertThat(blackRook.isBlackPawn()).isTrue();
+        assertThat(blackRook.getColor()).isEqualTo(Piece.Color.BLACK);
+        assertThat(blackRook.getType()).isEqualTo(Piece.Type.ROOK);
+        assertThat(blackRook.getShape()).isEqualTo('R');
+        assertThat(blackRook.isWhite()).isFalse();
+        assertThat(blackRook.isBlack()).isTrue();
     }
 
     @Test
@@ -107,11 +107,11 @@ public class PieceTest {
     void createBlackKnight() {
         Piece blackKnight = Piece.createBlackKnight();
 
-        assertThat(blackKnight.getColor()).isEqualTo("black");
-        assertThat(blackKnight.getType()).isEqualTo("knight");
-        assertThat(blackKnight.getFigure()).isEqualTo("N");
-        assertThat(blackKnight.isWhitePawn()).isFalse();
-        assertThat(blackKnight.isBlackPawn()).isTrue();
+        assertThat(blackKnight.getColor()).isEqualTo(Piece.Color.BLACK);
+        assertThat(blackKnight.getType()).isEqualTo(Piece.Type.KNIGHT);
+        assertThat(blackKnight.getShape()).isEqualTo('N');
+        assertThat(blackKnight.isWhite()).isFalse();
+        assertThat(blackKnight.isBlack()).isTrue();
     }
 
     @Test
@@ -119,11 +119,11 @@ public class PieceTest {
     void createBlackBishop() {
         Piece blackBishop = Piece.createBlackBishop();
 
-        assertThat(blackBishop.getColor()).isEqualTo("black");
-        assertThat(blackBishop.getType()).isEqualTo("bishop");
-        assertThat(blackBishop.getFigure()).isEqualTo("B");
-        assertThat(blackBishop.isWhitePawn()).isFalse();
-        assertThat(blackBishop.isBlackPawn()).isTrue();
+        assertThat(blackBishop.getColor()).isEqualTo(Piece.Color.BLACK);
+        assertThat(blackBishop.getType()).isEqualTo(Piece.Type.BISHOP);
+        assertThat(blackBishop.getShape()).isEqualTo('B');
+        assertThat(blackBishop.isWhite()).isFalse();
+        assertThat(blackBishop.isBlack()).isTrue();
     }
 
     @Test
@@ -131,11 +131,11 @@ public class PieceTest {
     void createBlackQueen() {
         Piece blackQueen = Piece.createBlackQueen();
 
-        assertThat(blackQueen.getColor()).isEqualTo("black");
-        assertThat(blackQueen.getType()).isEqualTo("queen");
-        assertThat(blackQueen.getFigure()).isEqualTo("Q");
-        assertThat(blackQueen.isWhitePawn()).isFalse();
-        assertThat(blackQueen.isBlackPawn()).isTrue();
+        assertThat(blackQueen.getColor()).isEqualTo(Piece.Color.BLACK);
+        assertThat(blackQueen.getType()).isEqualTo(Piece.Type.QUEEN);
+        assertThat(blackQueen.getShape()).isEqualTo('Q');
+        assertThat(blackQueen.isWhite()).isFalse();
+        assertThat(blackQueen.isBlack()).isTrue();
     }
 
     @Test
@@ -143,10 +143,22 @@ public class PieceTest {
     void createBlackKing() {
         Piece blackKing = Piece.createBlackKing();
 
-        assertThat(blackKing.getColor()).isEqualTo("black");
-        assertThat(blackKing.getType()).isEqualTo("king");
-        assertThat(blackKing.getFigure()).isEqualTo("K");
-        assertThat(blackKing.isWhitePawn()).isFalse();
-        assertThat(blackKing.isBlackPawn()).isTrue();
+        assertThat(blackKing.getColor()).isEqualTo(Piece.Color.BLACK);
+        assertThat(blackKing.getType()).isEqualTo(Piece.Type.KING);
+        assertThat(blackKing.getShape()).isEqualTo('K');
+        assertThat(blackKing.isWhite()).isFalse();
+        assertThat(blackKing.isBlack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("createBlank(): 빈 칸이 생성된다")
+    void createBlank() {
+        Piece blackKing = Piece.createBlank();
+
+        assertThat(blackKing.getColor()).isEqualTo(Piece.Color.NOCOLOR);
+        assertThat(blackKing.getType()).isEqualTo(Piece.Type.NOTYPE);
+        assertThat(blackKing.getShape()).isEqualTo('.');
+        assertThat(blackKing.isWhite()).isFalse();
+        assertThat(blackKing.isBlack()).isFalse();
     }
 }

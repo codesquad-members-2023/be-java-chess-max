@@ -134,8 +134,8 @@ public class Board {
         StringBuilder sb = new StringBuilder();
 
         for (Piece piece : pieces) {
-            if (piece.isBlackPawn()) {
-                sb.append(piece.getFigure());
+            if (piece.isBlack() && piece.isPawn()) {
+                sb.append(piece.getShape());
             }
         }
         return sb.toString();
@@ -145,8 +145,8 @@ public class Board {
         StringBuilder sb = new StringBuilder();
 
         for (Piece piece : pieces) {
-            if (piece.isWhitePawn()) {
-                sb.append(piece.getFigure());
+            if (piece.isWhite() && piece.isPawn()) {
+                sb.append(piece.getShape());
             }
         }
         return sb.toString();
