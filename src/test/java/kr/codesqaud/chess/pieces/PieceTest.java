@@ -20,11 +20,11 @@ class PieceTest {
     @DisplayName("폰의 색깔이 하얀색이어야 한다.")
     public void isWhite() {
         // given
-        Piece whitePawn = Piece.createWhitePawn();
+        final Piece whitePawn = Piece.createWhitePawn();
         // when
-        boolean white = whitePawn.isWhite();
+        final boolean white = whitePawn.isWhite();
         // then
-        SoftAssertions assertions = new SoftAssertions();
+        final SoftAssertions assertions = new SoftAssertions();
         assertions.assertThat(white).isTrue();
         assertions.assertAll();
     }
@@ -33,18 +33,19 @@ class PieceTest {
     @DisplayName("폰의 색깔이 검색이어야 한다.")
     public void isBlack() {
         // given
-        Piece whitePawn = Piece.createBlackPawn();
+        final Piece whitePawn = Piece.createBlackPawn();
         // when
-        boolean black = whitePawn.isBlack();
+        final boolean black = whitePawn.isBlack();
         // then
-        SoftAssertions assertions = new SoftAssertions();
+        final SoftAssertions assertions = new SoftAssertions();
         assertions.assertThat(black).isTrue();
         assertions.assertAll();
     }
 
     private void verifyPawn(final Piece piece, final Color color, final String representation) {
-        SoftAssertions assertions = new SoftAssertions();
-        assertions.assertThat(piece.getRepresentation()).isEqualTo(color);
-        assertions.assertThat(piece.getColor()).isEqualTo(representation);
+        final SoftAssertions assertions = new SoftAssertions();
+        assertions.assertThat(piece.getColor()).isEqualTo(color);
+        assertions.assertThat(piece.getRepresentation()).isEqualTo(representation);
+        assertions.assertAll();
     }
 }
