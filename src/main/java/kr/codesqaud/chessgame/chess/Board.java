@@ -18,8 +18,11 @@ import static kr.codesqaud.chessgame.pieces.Position.createPosition;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import kr.codesqaud.chessgame.pieces.Piece;
+import kr.codesqaud.chessgame.pieces.Piece.Color;
+import kr.codesqaud.chessgame.pieces.Piece.Type;
 import kr.codesqaud.chessgame.utils.StringUtils;
 
 public class Board {
@@ -98,5 +101,13 @@ public class Board {
             .map(Rank::getPieceResult)
             .map(StringUtils::appendNewLine)
             .collect(Collectors.joining());
+    }
+
+    public int getPieceCount(final Color color, final Type type) {
+        return (int) ranks.stream()
+            .flatMap(rank -> rank.getPieces().stream())
+            .filter(piece -> Objects.equals(piece.getColor(), color))
+            .filter(piece -> Objects.equals(piece.getType(), type))
+            .count();
     }
 }

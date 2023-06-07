@@ -1,5 +1,7 @@
 package kr.codesqaud.chessgame.chess;
 
+import kr.codesqaud.chessgame.pieces.Piece.Color;
+import kr.codesqaud.chessgame.pieces.Piece.Type;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,6 +31,41 @@ class BoardTest {
         SoftAssertions assertions = new SoftAssertions();
         assertions.assertThat(board.size()).isEqualTo(64);
         assertions.assertThat(board.showBoard()).isEqualTo(expectedBoard);
+        assertions.assertAll();
+    }
+
+    @Test
+    @DisplayName("기물의 색상과 종류가 주어질때 Board가 가지고 있는 기물의 개수를 요청했을때 개수를 응답한다")
+    public void getPieceCount() {
+        // given
+        board.initialize();
+        // when
+        int blackPawnCount = board.getPieceCount(Color.BLACK, Type.PAWN);
+        int blackRookCount = board.getPieceCount(Color.BLACK, Type.ROOK);
+        int blackKnightCount = board.getPieceCount(Color.BLACK, Type.KNIGHT);
+        int blackBishopCount = board.getPieceCount(Color.BLACK, Type.BISHOP);
+        int blackQueenCount = board.getPieceCount(Color.BLACK, Type.QUEEN);
+        int blackKingCount = board.getPieceCount(Color.BLACK, Type.KING);
+        int whitePawnCount = board.getPieceCount(Color.WHITE, Type.PAWN);
+        int whiteRookCount = board.getPieceCount(Color.WHITE, Type.ROOK);
+        int whiteKnightCount = board.getPieceCount(Color.WHITE, Type.KNIGHT);
+        int whiteBishopCount = board.getPieceCount(Color.WHITE, Type.BISHOP);
+        int whiteQueenCount = board.getPieceCount(Color.WHITE, Type.QUEEN);
+        int whiteKingCount = board.getPieceCount(Color.WHITE, Type.KING);
+        // then
+        SoftAssertions assertions = new SoftAssertions();
+        assertions.assertThat(blackPawnCount).isEqualTo(8);
+        assertions.assertThat(blackRookCount).isEqualTo(2);
+        assertions.assertThat(blackKnightCount).isEqualTo(2);
+        assertions.assertThat(blackBishopCount).isEqualTo(2);
+        assertions.assertThat(blackQueenCount).isEqualTo(1);
+        assertions.assertThat(blackKingCount).isEqualTo(1);
+        assertions.assertThat(whitePawnCount).isEqualTo(8);
+        assertions.assertThat(whiteRookCount).isEqualTo(2);
+        assertions.assertThat(whiteKnightCount).isEqualTo(2);
+        assertions.assertThat(whiteBishopCount).isEqualTo(2);
+        assertions.assertThat(whiteQueenCount).isEqualTo(1);
+        assertions.assertThat(whiteKingCount).isEqualTo(1);
         assertions.assertAll();
     }
 }
