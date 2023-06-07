@@ -1,28 +1,29 @@
 package chess;
 
-import static chess.Color.BLACK;
-import static chess.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.pieces.Pawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BoardTest {
 
-    @DisplayName("보드에 기물이 추가한다")
+    @DisplayName("Board 초기화 출력")
     @Test
-    void addPiece() {
+    void initAndPrint() {
         Board board = new Board();
-        Pawn white = new Pawn(WHITE);
-        Pawn black = new Pawn(BLACK);
+        assertThat(board.print()).isEqualTo(
+                """
+                        RNBQKBNR  8 (rank 8)
+                        PPPPPPPP  7
+                        ........  6
+                        ........  5
+                        ........  4
+                        ........  3
+                        pppppppp  2
+                        rnbqkbnr  1 (rank 1)
 
-
-        board.add(white);
-        assertThat(board.size()).isEqualTo(1);
-
-
-        board.add(black);
-        assertThat(board.size()).isEqualTo(2);
+                        abcdefgh"""
+        );
     }
+
 }
