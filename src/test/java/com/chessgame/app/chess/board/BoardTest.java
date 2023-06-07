@@ -12,7 +12,7 @@ import com.chessgame.app.chess.piece.position.File;
 import com.chessgame.app.chess.piece.position.Position;
 import com.chessgame.app.chess.piece.position.Rank;
 import com.chessgame.app.chess.piece.type.PieceColor;
-import com.chessgame.app.chess.piece.type.PieceType;
+import com.chessgame.app.chess.piece.type.PieceKind;
 
 class BoardTest {
 
@@ -21,14 +21,14 @@ class BoardTest {
 	void crete() {
 		Board board = new Board();
 
-		Piece whitePawn = new Piece(PieceType.PAWN, PieceColor.WHITE, new Position(File.BLOCK, Rank.BLOCK));
+		Piece whitePawn = new Piece(PieceKind.PAWN, PieceColor.WHITE, new Position(File.BLOCK, Rank.BLOCK));
 		board.add(whitePawn);
-		assertThat(board.countPieces(PieceType.PAWN, PieceColor.WHITE)).isEqualTo(1);
+		assertThat(board.countPieces(PieceKind.PAWN, PieceColor.WHITE)).isEqualTo(1);
 		assertThat(board.findPiece(0)).isEqualTo(whitePawn);
 
-		Piece blackPawn = new Piece(PieceType.PAWN, PieceColor.BLACK, new Position(File.BLOCK, Rank.BLOCK));
+		Piece blackPawn = new Piece(PieceKind.PAWN, PieceColor.BLACK, new Position(File.BLOCK, Rank.BLOCK));
 		board.add(blackPawn);
-		assertThat(board.countPieces(PieceType.PAWN, PieceColor.BLACK)).isEqualTo(1);
+		assertThat(board.countPieces(PieceKind.PAWN, PieceColor.BLACK)).isEqualTo(1);
 		assertThat(board.findPiece(1)).isEqualTo(blackPawn);
 	}
 

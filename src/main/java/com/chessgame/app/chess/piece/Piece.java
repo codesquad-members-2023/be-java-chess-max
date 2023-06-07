@@ -4,32 +4,39 @@ import com.chessgame.app.chess.piece.position.File;
 import com.chessgame.app.chess.piece.position.Position;
 import com.chessgame.app.chess.piece.position.Rank;
 import com.chessgame.app.chess.piece.type.PieceColor;
-import com.chessgame.app.chess.piece.type.PieceSymbol;
+import com.chessgame.app.chess.piece.type.PieceKind;
 import com.chessgame.app.chess.piece.type.PieceType;
 import com.chessgame.app.chess.piece.utill.PieceSymbolGenerator;
 
 public class Piece {
-	private final PieceType type;
+	private final PieceKind kind;
 	private final PieceColor color;
-	private final PieceSymbol symbol;
+	private final String symbol;
 	private final Position position;
 
 	public Piece(PieceType type, Position position) {
-		this.type = type;
+		this.kind = type.getKind();
+		this.color = type.getColor();
+		this.symbol = type.getSymbol();
+		this.position = position;
+	}
+
+	public Piece(PieceKind kind, Position position) {
+		this.kind = kind;
 		this.color = PieceColor.WHITE;
-		this.symbol = PieceSymbolGenerator.determine(type, this.color);
+		this.symbol = PieceSymbolGenerator.determine(kind, color);
 		this.position = position;
 	}
 
-	public Piece(PieceType type, PieceColor color, Position position) {
-		this.type = type;
+	public Piece(PieceKind kind, PieceColor color,  Position position) {
+		this.kind = kind;
 		this.color = color;
-		this.symbol = PieceSymbolGenerator.determine(type, this.color);
+		this.symbol = PieceSymbolGenerator.determine(kind, color);
 		this.position = position;
 	}
 
-	public String getMark() {
-		return symbol.getMark();
+	public String getSymbol() {
+		return symbol;
 	}
 
 	public File getFile() {
@@ -48,12 +55,12 @@ public class Piece {
 		return getRank().getValue();
 	}
 
-	public boolean verify(PieceType type, PieceColor color) {
-		return verifyType(type) && verifyColor(color);
+	public boolean verify(PieceKind kind, PieceColor color) {
+		return verifyType(kind) && verifyColor(color);
 	}
 
-	public boolean verifyType(PieceType type) {
-		return this.type == type;
+	public boolean verifyType(PieceKind kind) {
+		return this.kind == kind;
 	}
 
 	public boolean verifyColor(PieceColor color) {

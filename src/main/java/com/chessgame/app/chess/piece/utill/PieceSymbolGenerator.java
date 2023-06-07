@@ -1,15 +1,15 @@
 package com.chessgame.app.chess.piece.utill;
 
 import com.chessgame.app.chess.piece.type.PieceColor;
-import com.chessgame.app.chess.piece.type.PieceSymbol;
+import com.chessgame.app.chess.piece.type.PieceKind;
 import com.chessgame.app.chess.piece.type.PieceType;
 
 public class PieceSymbolGenerator {
 
 	private PieceSymbolGenerator() {}
 
-	public static PieceSymbol determine(PieceType type, PieceColor color) {
-		switch(type) {
+	public static String determine(PieceKind kind, PieceColor color) {
+		switch(kind) {
 			case KING:
 				return determineKingSymbol(color);
 			case QUEEN:
@@ -25,28 +25,28 @@ public class PieceSymbolGenerator {
 		}
 	}
 
-	private static PieceSymbol determineKingSymbol(PieceColor color) {
-		return color == PieceColor.WHITE? PieceSymbol.WHITE_KING : PieceSymbol.BLACK_KING;
+	private static String determineKingSymbol(PieceColor color) {
+		return color == PieceColor.WHITE? PieceType.WHITE_KING.getSymbol() : PieceType.BLACK_KING.getSymbol();
 	}
 
-	private static PieceSymbol determineQueenSymbol(PieceColor color) {
-		return color == PieceColor.WHITE? PieceSymbol.WHITE_QUEEN : PieceSymbol.BLACK_QUEEN;
+	private static String determineQueenSymbol(PieceColor color) {
+		return color == PieceColor.WHITE? PieceType.WHITE_QUEEN.getSymbol() : PieceType.BLACK_QUEEN.getSymbol();
 	}
 
-	private static PieceSymbol determineRookSymbol(PieceColor color) {
-		return color == PieceColor.WHITE? PieceSymbol.WHITE_ROOK : PieceSymbol.BLACK_ROOK;
+	private static String determineRookSymbol(PieceColor color) {
+		return color == PieceColor.WHITE? PieceType.WHITE_ROOK.getSymbol() : PieceType.BLACK_ROOK.getSymbol();
 	}
 
-	private static PieceSymbol determineBishopSymbol(PieceColor color) {
-		return color == PieceColor.WHITE? PieceSymbol.WHITE_BISHOP : PieceSymbol.BLACK_BISHOP;
+	private static String determineBishopSymbol(PieceColor color) {
+		return color == PieceColor.WHITE? PieceType.WHITE_BISHOP.getSymbol() : PieceType.BLACK_BISHOP.getSymbol();
 	}
 
-	private static PieceSymbol determineKnightSymbol(PieceColor color) {
-		return color == PieceColor.WHITE? PieceSymbol.WHITE_KNIGHT : PieceSymbol.BLACK_KNIGHT;
+	private static String determineKnightSymbol(PieceColor color) {
+		return color == PieceColor.WHITE? PieceType.WHITE_KNIGHT.getSymbol() : PieceType.BLACK_KNIGHT.getSymbol();
 	}
 
-	private static PieceSymbol determinePawnSymbol(PieceColor color) {
-		return color == PieceColor.WHITE? PieceSymbol.WHITE_PAWN : PieceSymbol.BLACK_PAWN;
+	private static String determinePawnSymbol(PieceColor color) {
+		return color == PieceColor.WHITE? PieceType.WHITE_PAWN.getSymbol() : PieceType.BLACK_PAWN.getSymbol();
 	}
 
 }
