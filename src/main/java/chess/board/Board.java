@@ -37,6 +37,7 @@ public class Board {
 			boardFigure.append(boardLine).append("\n");
 		}
 
+		System.out.println(boardFigure);
 		return boardFigure.toString();
 	}
 }
