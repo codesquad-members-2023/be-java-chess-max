@@ -2,6 +2,8 @@ package kr.codesqaud.chessgame.pieces;
 
 import static kr.codesqaud.chessgame.pieces.Piece.Type.*;
 
+import java.util.Objects;
+
 public class Piece {
 
     public enum Color {
@@ -129,5 +131,21 @@ public class Piece {
         return color == Color.BLACK;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Piece)) {
+            return false;
+        }
+        Piece piece = (Piece) o;
+        return getColor() == piece.getColor() && getType() == piece.getType() && Objects.equals(getPosition(),
+            piece.getPosition());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getColor(), getType(), getPosition());
+    }
 }

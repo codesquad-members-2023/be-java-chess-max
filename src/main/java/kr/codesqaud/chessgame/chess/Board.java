@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 import kr.codesqaud.chessgame.pieces.Piece;
 import kr.codesqaud.chessgame.pieces.Piece.Color;
 import kr.codesqaud.chessgame.pieces.Piece.Type;
+import kr.codesqaud.chessgame.pieces.Position;
 import kr.codesqaud.chessgame.utils.StringUtils;
 
 public class Board {
@@ -56,7 +57,7 @@ public class Board {
 
         // 흑색 폰 초기화
         for (int i = 0; i < SIZE; i++) {
-            String position = String.valueOf('a' + i) + 7;
+            String position = String.format("%s%d", (char) ('a' + i), 7);
             addPiece(7, createBlackPawn(createPosition(position)));
         }
 
@@ -67,7 +68,7 @@ public class Board {
 
         // 백색 폰 초기화
         for (int i = 0; i < SIZE; i++) {
-            String position = String.valueOf('a' + i) + 2;
+            String position = String.format("%s%d", (char) ('a' + i), 2);
             addPiece(2, createWhitePawn(createPosition(position)));
         }
 
@@ -84,7 +85,7 @@ public class Board {
 
     private void initializeBlank(int rank) {
         for (int i = 0; i < SIZE; i++) {
-            String position = String.valueOf('a' + i) + rank;
+            String position = String.format("%s%d", (char) ('a' + i), rank);
             addPiece(rank, createBlank(createPosition(position)));
         }
     }
@@ -109,5 +110,14 @@ public class Board {
             .filter(piece -> Objects.equals(piece.getColor(), color))
             .filter(piece -> Objects.equals(piece.getType(), type))
             .count();
+    }
+
+    public Piece findPiece(final String position) {
+        Position pos = createPosition(position);
+        return ranks.stream()
+            .flatMap(rank -> rank.getPieces().stream())
+            .filter(piece -> Objects.equals(piece.getPosition(), pos))
+            .findAny()
+            .orElseThrow(() -> new RuntimeException("기물을 찾을 수 없습니다. : " + position));
     }
 }

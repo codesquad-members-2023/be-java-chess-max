@@ -1,7 +1,12 @@
 package kr.codesqaud.chessgame.chess;
 
+import static kr.codesqaud.chessgame.pieces.Piece.*;
+import static kr.codesqaud.chessgame.pieces.Position.*;
+
+import kr.codesqaud.chessgame.pieces.Piece;
 import kr.codesqaud.chessgame.pieces.Piece.Color;
 import kr.codesqaud.chessgame.pieces.Piece.Type;
+import kr.codesqaud.chessgame.pieces.Position;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -66,6 +71,27 @@ class BoardTest {
         assertions.assertThat(whiteBishopCount).isEqualTo(2);
         assertions.assertThat(whiteQueenCount).isEqualTo(1);
         assertions.assertThat(whiteKingCount).isEqualTo(1);
+        assertions.assertAll();
+    }
+
+    @Test
+    @DisplayName("위치가 주어질때 Board 객체에게 위치에 따른 기물을 조회하면 해당 위치에 있는 기물(빈칸 포함)을 응답합니다.")
+    public void findPiece() {
+        // given
+        board.initialize();
+        // when
+        Piece blackRook = board.findPiece("a8");
+        Piece blackRook2 = board.findPiece("h8");
+        Piece whiteRook = board.findPiece("a1");
+        Piece whiteRook2 = board.findPiece("h1");
+        Piece emptyPiece = board.findPiece("a6");
+        // then
+        SoftAssertions assertions = new SoftAssertions();
+        assertions.assertThat(blackRook).isEqualTo(createBlackRook(createPosition("a8")));
+        assertions.assertThat(blackRook2).isEqualTo(createBlackRook(createPosition("h8")));
+        assertions.assertThat(whiteRook).isEqualTo(createWhiteRook(createPosition("a1")));
+        assertions.assertThat(whiteRook2).isEqualTo(createWhiteRook(createPosition("h1")));
+        assertions.assertThat(emptyPiece).isEqualTo(createBlank(createPosition("a6")));
         assertions.assertAll();
     }
 }
