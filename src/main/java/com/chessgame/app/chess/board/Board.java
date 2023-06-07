@@ -52,4 +52,14 @@ public class Board {
 
 		return sb.toString();
 	}
+
+	public String getResult() {
+		StringBuilder sb = new StringBuilder();
+
+		for(Rank rank : Rank.values()) {
+			if(rank == Rank.BLOCK) continue;
+			sb.append(getResult(rank)).append(System.lineSeparator());
+		}
+		return sb.toString();
+	}
 }

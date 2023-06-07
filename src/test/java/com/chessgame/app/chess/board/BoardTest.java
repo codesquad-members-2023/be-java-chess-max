@@ -1,6 +1,5 @@
 package com.chessgame.app.chess.board;
 
-
 import static org.assertj.core.api.Assertions.*;
 
 import org.assertj.core.api.SoftAssertions;
@@ -32,6 +31,7 @@ class BoardTest {
 		assertThat(board.findPiece(1)).isEqualTo(blackPawn);
 	}
 
+	@DisplayName("체스판을 초기화 하면 모든 체스말들이 제자리에 배치된다.")
 	@Test
 	void initialize() {
 		Board board = new Board();
@@ -39,8 +39,14 @@ class BoardTest {
 		board.initialize();
 
 		SoftAssertions softAssertions = new SoftAssertions();
+		softAssertions.assertThat(board.getResult(Rank.R1)).isEqualTo("♖♘♗♕♔♗♘♖");
 		softAssertions.assertThat(board.getResult(Rank.R2)).isEqualTo("♙♙♙♙♙♙♙♙");
+		softAssertions.assertThat(board.getResult(Rank.R3)).isEqualTo("▭▭▭▭▭▭▭▭");
+		softAssertions.assertThat(board.getResult(Rank.R4)).isEqualTo("▭▭▭▭▭▭▭▭");
+		softAssertions.assertThat(board.getResult(Rank.R5)).isEqualTo("▭▭▭▭▭▭▭▭");
+		softAssertions.assertThat(board.getResult(Rank.R6)).isEqualTo("▭▭▭▭▭▭▭▭");
 		softAssertions.assertThat(board.getResult(Rank.R7)).isEqualTo("♟♟♟♟♟♟♟♟");
+		softAssertions.assertThat(board.getResult(Rank.R8)).isEqualTo("♜♞♝♛♚♝♞♜");
 		softAssertions.assertAll();
 	}
 }
