@@ -4,4 +4,6 @@ public interface Piece {
 
     boolean verifyColor(Color color);
     Representation getRepresentation();
+
+    double getScore();
 }
