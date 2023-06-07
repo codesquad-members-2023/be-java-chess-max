@@ -22,7 +22,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class PawnCreatorTest {
+class PieceCreatorTest {
 
     @DisplayName("색상에 따라 Pawn를 생성한다")
     @MethodSource("provideCreatePiece")
