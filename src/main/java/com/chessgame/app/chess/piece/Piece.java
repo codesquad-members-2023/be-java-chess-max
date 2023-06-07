@@ -1,5 +1,7 @@
 package com.chessgame.app.chess.piece;
 
+import java.util.Objects;
+
 import com.chessgame.app.chess.piece.position.File;
 import com.chessgame.app.chess.piece.position.Position;
 import com.chessgame.app.chess.piece.position.Rank;
@@ -73,5 +75,21 @@ public class Piece {
 
 	public boolean verifyPosition(File file, Rank rank) {
 		return position.isSamePosition(file, rank);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof Piece)) {
+			return false;
+		}
+
+		return this.kind == ((Piece)obj).kind
+			&& this.color == ((Piece)obj).color
+			&& this.position.isSamePosition(((Piece)obj).getFile(), ((Piece)obj).getRank());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(kind, color, position.getFile(), position.getRank());
 	}
 }
