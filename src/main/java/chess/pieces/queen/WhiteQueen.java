@@ -1,11 +1,12 @@
-package chess.pieces.pawn;
+package chess.pieces.queen;
 
 import static chess.pieces.Color.WHITE;
+import static chess.pieces.Representation.WHITE_QUEEN;
 
 import chess.pieces.Color;
 import chess.pieces.Representation;
 
-public class WhitePawn extends Pawn {
+public class WhiteQueen extends Queen {
 
     @Override
     public boolean verifyColor(Color color) {
@@ -14,6 +15,6 @@ public class WhitePawn extends Pawn {
 
     @Override
     public Representation getRepresentation() {
-        return Representation.WHITE_PAWN;
+        return WHITE_QUEEN;
     }
 }

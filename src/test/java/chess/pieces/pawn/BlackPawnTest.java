@@ -3,6 +3,7 @@ package chess.pieces.pawn;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.pieces.Color;
+import chess.pieces.Representation;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,8 +13,8 @@ class BlackPawnTest {
     @Test
     void verifyPawn() {
         BlackPawn blackPawn = new BlackPawn();
-        assertThat(blackPawn.verifyPawn(Color.BLACK)).isTrue();
-        assertThat(blackPawn.verifyPawn(Color.WHITE)).isFalse();
+        assertThat(blackPawn.verifyColor(Color.BLACK)).isTrue();
+        assertThat(blackPawn.verifyColor(Color.WHITE)).isFalse();
     }
 
     @DisplayName("PawnRepresentation.Black 를 return")
@@ -21,6 +22,6 @@ class BlackPawnTest {
     void getRepresentation() {
         BlackPawn blackPawn = new BlackPawn();
 
-        assertThat(blackPawn.getRepresentation()).isEqualTo(PawnRepresentation.BLACK);
+        assertThat(blackPawn.getRepresentation()).isEqualTo(Representation.BLACK_PAWN);
     }
 }

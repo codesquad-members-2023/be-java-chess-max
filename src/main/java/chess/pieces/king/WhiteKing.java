@@ -1,20 +1,17 @@
-package chess.pieces.pawn;
-
-import static chess.pieces.Color.BLACK;
+package chess.pieces.king;
 
 import chess.pieces.Color;
 import chess.pieces.Representation;
 
-public class BlackPawn extends Pawn {
-
+public class WhiteKing extends King {
 
     @Override
     public boolean verifyColor(Color color) {
-        return BLACK.equals(color);
+        return Color.WHITE.equals(color);
     }
 
     @Override
     public Representation getRepresentation() {
-        return Representation.BLACK_PAWN;
+        return Representation.WHITE_KNIGHT;
     }
 }
