@@ -96,8 +96,8 @@
 - [x] Rank 클래스 생성: 체스의 한 줄을 관리하는 클래스
 - [x] pieces를 Map<Integer, Rank>로 변경
 - [x] 변경에 따른 클래스의 코드 변경
-- [ ] getPieceAt(): 좌표를 입력시 해당하는 기물을 반환
-- [ ] add(): 특
+- [x] getPieceAt(): 좌표를 입력시 해당하는 기물을 반환
+- [x] insert(): 해당 좌표에 Piece를 삽입
 #### 점수 부여하기
 - [ ] Type enum에 점수 추가하기
 - [ ] board의 기물 상태에 따른 점수 계산하기

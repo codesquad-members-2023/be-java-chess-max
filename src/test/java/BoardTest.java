@@ -22,33 +22,8 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("initialize(): 8개의 rank로 초기화된다")
-    public void initializeBoard() {
-        board.initialize();
-
-        assertThat(board.getSize()).isEqualTo(8);
-    }
-
-    @Test
-    @DisplayName("print(): 를 호출하고 화면을 출력한다")
-    public void initializeThenPrintBoard() {
-        String figure = appendNewLine("RNBQKBNR") +
-                appendNewLine("PPPPPPPP") +
-                appendNewLine("........") +
-                appendNewLine("........") +
-                appendNewLine("........") +
-                appendNewLine("........") +
-                appendNewLine("pppppppp") +
-                appendNewLine("rnbqkbnr");
-
-        board.initialize();
-
-        assertThat(board.print()).isEqualTo(figure);
-    }
-
-    @Test
-    @DisplayName("initialize(): 여러번 초기화해도 중첩되지 않는다")
-    public void initializeMultipleTimes() {
+    @DisplayName("initializeDefaultBoard(): 기본배열로 초기화한다.")
+    public void initializeDefaultBoard() {
         String shape = appendNewLine("RNBQKBNR") +
                 appendNewLine("PPPPPPPP") +
                 appendNewLine("........") +
@@ -58,14 +33,94 @@ class BoardTest {
                 appendNewLine("pppppppp") +
                 appendNewLine("rnbqkbnr");
 
-        board .initialize();
-        board .initialize();
-        board .initialize();
-        board .initialize();
-        board .initialize();
-        board .initialize();
+        board.initializeDefaultBoard();
 
         assertThat(board.getSize()).isEqualTo(8);
         assertThat(board.print()).isEqualTo(shape);
+    }
+
+    @Test
+    @DisplayName("initializeDefaultBoard(): 여러번 초기화해도 중첩되지 않는다")
+    public void initializeDefaultBoardMultipleTimes() {
+        String shape = appendNewLine("RNBQKBNR") +
+                appendNewLine("PPPPPPPP") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("pppppppp") +
+                appendNewLine("rnbqkbnr");
+
+        board .initializeDefaultBoard();
+        board .initializeDefaultBoard();
+        board .initializeDefaultBoard();
+        board .initializeDefaultBoard();
+        board .initializeDefaultBoard();
+        board .initializeDefaultBoard();
+
+        assertThat(board.getSize()).isEqualTo(8);
+        assertThat(board.print()).isEqualTo(shape);
+    }
+
+    @Test
+    @DisplayName("initializeVoidBoard(): blank만으로 이루어진 board로 초기화한다")
+    public void initializeThenPrintBoard() {
+        String shape = appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........");
+
+        board.initializeVoidBoard();
+
+        assertThat(board.getSize()).isEqualTo(8);
+        assertThat(board.print()).isEqualTo(shape);
+    }
+
+    @Test
+    @DisplayName("initializeVoidBoard(): 여러번 초기화해도 중첩되지 않는다")
+    public void initializeVoidBoardMultipleTimes() {
+        String shape = appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........");
+
+        board.initializeVoidBoard();
+        board.initializeVoidBoard();
+        board.initializeVoidBoard();
+        board.initializeVoidBoard();
+        board.initializeVoidBoard();
+
+        assertThat(board.getSize()).isEqualTo(8);
+        assertThat(board.print()).isEqualTo(shape);
+    }
+
+    @Test
+    @DisplayName("insert(): 특정 위치에 새로운 Piece를 삽입한다")
+    public void insertAtBoard() {
+        board.initializeVoidBoard();
+        Piece piece = Piece.createBlackQueen();
+
+        board.insert(piece, "a1");
+
+        assertThat(board.getPieceAt("a1")).isEqualTo(piece);
+    }
+
+    @Test
+    @DisplayName("getPieceAt(): 특정 위치의 Piece를 가져온다")
+    public void getPieceAtBoard() {
+        board.initializeDefaultBoard();
+
+        Piece piece = board.getPieceAt("c8");
+
+        assertThat(piece.getColor()).isEqualTo(Piece.Color.BLACK);
+        assertThat(piece.getType()).isEqualTo(Piece.Type.BISHOP);
     }
 }
