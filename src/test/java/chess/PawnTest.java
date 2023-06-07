@@ -2,25 +2,22 @@ package chess;
 
 import static org.assertj.core.api.Assertions.*;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import chess.color.Color;
 
-public class PawnTest {
+class PawnTest {
 
-	@Test
+	@EnumSource(Color.class)
+	@ParameterizedTest
 	@DisplayName("지정한 색의 폰이 생성되어야 한다.")
-	void create() {
+	void create(Color color) {
 		//given
-		Pawn whitePawn = new Pawn(Color.WHITE);
-		Pawn blackPawn = new Pawn(Color.BLACK);
+		Pawn pawn = new Pawn(color);
 
 		//when, then
-		Assertions.assertAll(
-			() -> assertThat(whitePawn.getColor()).isEqualTo(Color.WHITE),
-			() -> assertThat(blackPawn.getColor()).isEqualTo(Color.BLACK)
-		);
+		assertThat(pawn.getColor()).isEqualTo(color);
 	}
 }
