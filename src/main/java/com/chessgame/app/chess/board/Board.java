@@ -17,8 +17,8 @@ public class Board {
 	}
 
 	public void initialize() {
-		pieceStorage.addAll(PieceInitializer.initialWhitePawns());
-		pieceStorage.addAll(PieceInitializer.initialBlackPawns());
+		pieceStorage.addAll(PieceInitializer.initialWhitePiece());
+		pieceStorage.addAll(PieceInitializer.initialBlackPiece());
 	}
 
 	public void add(Piece piece) {
