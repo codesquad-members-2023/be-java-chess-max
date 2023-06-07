@@ -8,7 +8,7 @@ import com.chessgame.app.chess.piece.type.PieceSymbol;
 import com.chessgame.app.chess.piece.type.PieceType;
 import com.chessgame.app.chess.piece.utill.PieceSymbolGenerator;
 
-public class Pawn implements Piece {
+public class Pawn {
 
 	private static final PieceType TYPE = PieceType.PAWN;
 	private final PieceColor color;

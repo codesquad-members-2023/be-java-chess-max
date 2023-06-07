@@ -7,7 +7,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.chessgame.app.chess.piece.Pawn;
+import com.chessgame.app.chess.piece.Piece;
 import com.chessgame.app.chess.piece.position.File;
 import com.chessgame.app.chess.piece.position.Position;
 import com.chessgame.app.chess.piece.position.Rank;
@@ -21,12 +21,12 @@ class BoardTest {
 	void crete() {
 		Board board = new Board();
 
-		Pawn whitePawn = new Pawn(PieceColor.WHITE, new Position(File.BLOCK, Rank.BLOCK));
+		Piece whitePawn = new Piece(PieceType.PAWN, PieceColor.WHITE, new Position(File.BLOCK, Rank.BLOCK));
 		board.add(whitePawn);
 		assertThat(board.countPieces(PieceType.PAWN, PieceColor.WHITE)).isEqualTo(1);
 		assertThat(board.findPiece(0)).isEqualTo(whitePawn);
 
-		Pawn blackPawn = new Pawn(PieceColor.BLACK, new Position(File.BLOCK, Rank.BLOCK));
+		Piece blackPawn = new Piece(PieceType.PAWN, PieceColor.BLACK, new Position(File.BLOCK, Rank.BLOCK));
 		board.add(blackPawn);
 		assertThat(board.countPieces(PieceType.PAWN, PieceColor.BLACK)).isEqualTo(1);
 		assertThat(board.findPiece(1)).isEqualTo(blackPawn);

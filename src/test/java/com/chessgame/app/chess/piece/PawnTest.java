@@ -12,18 +12,19 @@ import com.chessgame.app.chess.piece.position.Position;
 import com.chessgame.app.chess.piece.position.Rank;
 import com.chessgame.app.chess.piece.type.PieceColor;
 import com.chessgame.app.chess.piece.type.PieceSymbol;
+import com.chessgame.app.chess.piece.type.PieceType;
 
 class PawnTest {
 
-	Pawn whitePawn;
-	Pawn balckPawn;
-	Pawn pawn;
+	Piece whitePawn;
+	Piece balckPawn;
+	Piece pawn;
 
 	@BeforeEach
 	void beforEach() {
-		whitePawn = new Pawn(PieceColor.WHITE, new Position(File.BLOCK, Rank.BLOCK));
-		balckPawn = new Pawn(PieceColor.BLACK, new Position(File.BLOCK, Rank.BLOCK));
-		pawn = new Pawn(new Position(File.BLOCK, Rank.BLOCK));
+		whitePawn = new Piece(PieceType.PAWN, PieceColor.WHITE, new Position(File.BLOCK, Rank.BLOCK));
+		balckPawn = new Piece(PieceType.PAWN, PieceColor.BLACK, new Position(File.BLOCK, Rank.BLOCK));
+		pawn = new Piece(PieceType.PAWN, new Position(File.BLOCK, Rank.BLOCK));
 	}
 
 	@DisplayName("원하는 색의 Pawn을 생성할 수 있다.")
