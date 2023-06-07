@@ -1,13 +1,12 @@
 package chess;
 
-import chess.piece.Pawn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static chess.Color.BLACK;
-import static chess.Color.WHITE;
-import static org.assertj.core.api.Assertions.*;
+import static chess.Board.BLANK_LINE;
+import static chess.StringUtil.NEW_LINE;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class BoardTest {
@@ -20,25 +19,21 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("create: Board에 Pawn을 추가하면 Pawn의 수가 증가한다")
-    public void create() {
-        Pawn whitePawn = new Pawn(WHITE);
-        board.addWhitePawn(whitePawn);
-        assertAll(() -> assertThat(board.size()).isEqualTo(1),
-                  () -> assertThat(board.findWhitePawn(0)).isEqualTo(whitePawn));
-
-        Pawn blackPawn = new Pawn(BLACK);
-        board.addBlackPawn(blackPawn);
-        assertAll(() -> assertThat(board.size()).isEqualTo(2),
-                  () -> assertThat(board.findBlackPawn(0)).isEqualTo(blackPawn));
-    }
-
-    @Test
-    @DisplayName("initialize: 체스판을 초기화한다")
+    @DisplayName("initialize: 체스판 초기화 시 총 32개의 기물을 생성한다")
     public void initialize() {
         board.initialize();
 
-        assertThat(board.size()).isEqualTo(16);
+        String blackPieces = "RNBQKBNR" + NEW_LINE;
+        String blackPawns = "PPPPPPPP" + NEW_LINE;
+        String whitePawns = "pppppppp" + NEW_LINE;
+        String whitePieces = "rnbqkbnr" + NEW_LINE;
+        String blankLine = BLANK_LINE + NEW_LINE;
+
+        assertAll(() -> assertThat(board.countPieces()).isEqualTo(32),
+                  () -> assertThat(board.show()).isEqualTo(
+                          blackPieces + blackPawns +
+                                  blankLine + blankLine + blankLine + blankLine +
+                                  whitePawns + whitePieces));
     }
 
 }
