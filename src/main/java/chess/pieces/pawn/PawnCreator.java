@@ -1,6 +1,6 @@
-package chess.pieces;
+package chess.pieces.pawn;
 
-import chess.Color;
+import chess.pieces.Color;
 
 public class PawnCreator {
 

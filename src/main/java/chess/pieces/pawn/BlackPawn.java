@@ -1,8 +1,8 @@
-package chess.pieces;
+package chess.pieces.pawn;
 
-import static chess.Color.BLACK;
+import static chess.pieces.Color.BLACK;
 
-import chess.Color;
+import chess.pieces.Color;
 
 public class BlackPawn extends Pawn {
 

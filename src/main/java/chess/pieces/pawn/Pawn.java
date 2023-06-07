@@ -1,6 +1,7 @@
-package chess.pieces;
+package chess.pieces.pawn;
 
-import chess.Color;
+import chess.pieces.Color;
+import chess.pieces.Piece;
 
 public abstract class Pawn implements Piece {
 

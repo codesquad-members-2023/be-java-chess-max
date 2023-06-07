@@ -1,4 +1,4 @@
-package chess.pieces;
+package chess.pieces.pawn;
 
 public enum PawnRepresentation {
     WHITE("p"), BLACK("value");
