@@ -9,6 +9,7 @@ import java.util.stream.IntStream;
 
 import static chess.Color.BLACK;
 import static chess.Color.WHITE;
+import static chess.StringUtil.NEW_LINE;
 
 public class Board {
 
@@ -49,13 +50,13 @@ public class Board {
     public void print() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append(BLANK_LINE).append(System.lineSeparator());
+        builder.append(BLANK_LINE).append(NEW_LINE);
         builder.append(blackPawns.stream().map(Pawn::getRepresentation).collect(Collectors.joining()))
-                .append(System.lineSeparator());
-        IntStream.range(0, 4).forEach(o -> builder.append(BLANK_LINE).append(System.lineSeparator()));
+                .append(NEW_LINE);
+        IntStream.range(0, 4).forEach(o -> builder.append(BLANK_LINE).append(NEW_LINE));
         builder.append(whitePawns.stream().map(Pawn::getRepresentation).collect(Collectors.joining()))
-                .append(System.lineSeparator());
-        builder.append(BLANK_LINE).append(System.lineSeparator());
+                .append(NEW_LINE);
+        builder.append(BLANK_LINE).append(NEW_LINE);
 
         System.out.println(builder);
     }
