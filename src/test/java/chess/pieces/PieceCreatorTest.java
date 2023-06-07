@@ -1,17 +1,15 @@
-package chess.pieces.pawn;
+package chess.pieces;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.pieces.Color;
-import chess.pieces.Piece;
-import chess.pieces.PieceCreator;
-import chess.pieces.Type;
 import chess.pieces.bishop.BlackBishop;
 import chess.pieces.bishop.WhiteBishop;
 import chess.pieces.king.BlackKing;
 import chess.pieces.king.WhiteKing;
 import chess.pieces.knight.BlackKnight;
 import chess.pieces.knight.WhiteKnight;
+import chess.pieces.pawn.BlackPawn;
+import chess.pieces.pawn.WhitePawn;
 import chess.pieces.queen.BlackQueen;
 import chess.pieces.queen.WhiteQueen;
 import chess.pieces.rook.BlackRook;

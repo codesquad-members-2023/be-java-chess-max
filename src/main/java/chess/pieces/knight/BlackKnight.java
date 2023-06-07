@@ -1,7 +1,7 @@
 package chess.pieces.knight;
 
 import static chess.pieces.Color.BLACK;
-import static chess.pieces.Representation.WHITE_KNIGHT;
+import static chess.pieces.Representation.BLACK_KNIGHT;
 
 import chess.pieces.Color;
 import chess.pieces.Representation;
@@ -15,6 +15,6 @@ public class BlackKnight extends Knight {
 
     @Override
     public Representation getRepresentation() {
-        return WHITE_KNIGHT;
+        return BLACK_KNIGHT;
     }
 }

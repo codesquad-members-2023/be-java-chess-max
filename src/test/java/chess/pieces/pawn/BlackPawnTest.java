@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 class BlackPawnTest {
 
-    @DisplayName("생삭이 Black일 때만 ture를 반환한다")
+    @DisplayName("인증 할 color가 Black일 때만 ture를 반환한다")
     @Test
     void verifyPawn() {
         BlackPawn blackPawn = new BlackPawn();
@@ -17,11 +17,10 @@ class BlackPawnTest {
         assertThat(blackPawn.verifyColor(Color.WHITE)).isFalse();
     }
 
-    @DisplayName("PawnRepresentation.Black 를 return")
+    @DisplayName("PawnRepresentation.BLACK_PAWN 를 return")
     @Test
     void getRepresentation() {
         BlackPawn blackPawn = new BlackPawn();
-
         assertThat(blackPawn.getRepresentation()).isEqualTo(Representation.BLACK_PAWN);
     }
 }

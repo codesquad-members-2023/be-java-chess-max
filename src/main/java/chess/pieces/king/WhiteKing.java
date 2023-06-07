@@ -12,6 +12,6 @@ public class WhiteKing extends King {
 
     @Override
     public Representation getRepresentation() {
-        return Representation.WHITE_KNIGHT;
+        return Representation.WHITE_KING;
     }
 }
