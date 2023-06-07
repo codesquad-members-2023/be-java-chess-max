@@ -4,6 +4,7 @@ import static kr.codesqaud.chessgame.pieces.Piece.createBlackRook;
 import static kr.codesqaud.chessgame.pieces.Piece.createBlank;
 import static kr.codesqaud.chessgame.pieces.Piece.createWhiteRook;
 import static kr.codesqaud.chessgame.pieces.Position.createPosition;
+import static org.assertj.core.data.Offset.offset;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,7 +12,6 @@ import java.nio.file.Paths;
 import kr.codesqaud.chessgame.pieces.Piece;
 import kr.codesqaud.chessgame.pieces.Piece.Color;
 import kr.codesqaud.chessgame.pieces.Piece.Type;
-import kr.codesqaud.chessgame.pieces.Position;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -107,7 +107,7 @@ class BoardTest {
         // given
         board.initializeEmpty();
         String position = "b5";
-        Piece piece = createBlackRook(Position.createPosition(position));
+        Piece piece = createBlackRook(createPosition(position));
         // when
         board.move(position, piece);
         // then
@@ -115,6 +115,31 @@ class BoardTest {
         assertions.assertThat(board.findPiece(position)).isEqualTo(piece);
         assertions.assertAll();
         logger.debug("board : \r\n{}", board.showBoard());
+    }
+
+    @Test
+    @DisplayName("체스판 위에 기물이 주어지고 남아있는 기물에 대한 점수를 요청했을때 점수합계를 응답합니다.")
+    public void calculatePoint() {
+        // given
+        board.initializeEmpty();
+        // when
+        addPiece("b6", Piece.createBlackPawn(createPosition("b6")));
+        addPiece("e6", Piece.createBlackQueen(createPosition("e6")));
+        addPiece("b8", Piece.createBlackKing(createPosition("b8")));
+        addPiece("c8", Piece.createBlackRook(createPosition("c8")));
+
+        addPiece("f2", Piece.createWhitePawn(createPosition("f2")));
+        addPiece("g2", Piece.createWhitePawn(createPosition("g2")));
+        addPiece("e1", Piece.createWhiteRook(createPosition("e1")));
+        addPiece("f1", Piece.createWhiteKing(createPosition("f1")));
+
+        double blackScore = board.calculatePoint(Color.BLACK);
+        double whiteScore = board.calculatePoint(Color.WHITE);
+        // then
+        SoftAssertions assertions = new SoftAssertions();
+        assertions.assertThat(blackScore).isEqualTo(15.0, offset(0.01));
+        assertions.assertThat(whiteScore).isEqualTo(7.0, offset(0.01));
+        assertions.assertAll();
     }
 
     @Test
@@ -129,5 +154,9 @@ class BoardTest {
             board.findPiece("h1");
         }
         // then
+    }
+
+    private void addPiece(String position, Piece piece) {
+        board.move(position, piece);
     }
 }

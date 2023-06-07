@@ -18,6 +18,7 @@ import static kr.codesqaud.chessgame.pieces.Position.createPosition;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import kr.codesqaud.chessgame.pieces.Piece;
 import kr.codesqaud.chessgame.pieces.Piece.Color;
@@ -134,5 +135,36 @@ public class Board {
     public void move(final Position position, final Piece piece) {
         ranks.get(position.getRankIndex())
             .setPiece(position.getFileIndex(), piece);
+    }
+
+    public double calculatePoint(final Color color) {
+        final double PAWN_SCORE = 0.5;
+        double score = 0.0;
+        for (Rank rank : ranks) {
+            for (Piece piece : rank.getPieces()) {
+                // 색깔이 동일하고 폰이 아닌경우
+                if (Objects.equals(piece.getColor(), color) &&
+                    !Objects.equals(piece.getType(), Type.PAWN)) {
+                    score += piece.getType().getDefaultPoint();
+                    continue;
+                }
+                if (Objects.equals(piece.getColor(), color) &&
+                    Objects.equals(piece.getType(), Type.PAWN)) {
+                    if (existPawnInVeritable(piece.getPosition())) {
+                        score += PAWN_SCORE;
+                    } else {
+                        score += piece.getType().getDefaultPoint();
+                    }
+                }
+            }
+        }
+        return score;
+    }
+
+    private boolean existPawnInVeritable(final Position position) {
+        int file = position.getFile();
+        return ranks.stream()
+            .filter(rank -> !rank.isMatchRank(position.getRank()))
+            .anyMatch(rank -> Objects.equals(rank.findPiece(file).getType(), Type.PAWN));
     }
 }

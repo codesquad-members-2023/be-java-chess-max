@@ -14,12 +14,15 @@ public class Rank implements Comparable<Rank> {
 
     private static final Logger logger = LoggerFactory.getLogger(Rank.class);
 
-
     private final List<Piece> pieces = new ArrayList<>(Board.SIZE);
     private final int value;
 
     public Rank(final int value) {
         this.value = value;
+    }
+
+    public List<Piece> getPieces() {
+        return pieces;
     }
 
     public void addPiece(Piece piece) {
@@ -40,12 +43,15 @@ public class Rank implements Comparable<Rank> {
             .collect(Collectors.joining());
     }
 
-
     public int getPieceCount(final Color color, final Type type) {
         return (int) pieces.stream()
             .filter(piece -> Objects.equals(piece.getColor(), color))
             .filter(piece -> Objects.equals(piece.getType(), type))
             .count();
+    }
+
+    public boolean isMatchRank(int rank) {
+        return this.value == rank;
     }
 
     @Override
