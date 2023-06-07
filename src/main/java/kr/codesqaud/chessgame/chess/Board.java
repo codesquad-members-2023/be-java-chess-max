@@ -1,12 +1,12 @@
 package kr.codesqaud.chessgame.chess;
 
-import kr.codesqaud.chessgame.pieces.Color;
 import kr.codesqaud.chessgame.pieces.Piece;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static kr.codesqaud.chessgame.pieces.Piece.*;
 import static kr.codesqaud.chessgame.utils.StringUtils.*;
 
 public class Board {
@@ -44,26 +44,26 @@ public class Board {
     }
 
     public void initialize() {
-        addBlackPiece(Piece.createBlackRook());
-        addBlackPiece(Piece.createBlackKnight());
-        addBlackPiece(Piece.createBlackBishop());
-        addBlackPiece(Piece.createBlackQueen());
-        addBlackPiece(Piece.createBlackKing());
-        addBlackPiece(Piece.createBlackBishop());
-        addBlackPiece(Piece.createBlackKnight());
-        addBlackPiece(Piece.createBlackRook());
+        addBlackPiece(createBlackRook());
+        addBlackPiece(createBlackKnight());
+        addBlackPiece(createBlackBishop());
+        addBlackPiece(createBlackQueen());
+        addBlackPiece(createBlackKing());
+        addBlackPiece(createBlackBishop());
+        addBlackPiece(createBlackKnight());
+        addBlackPiece(createBlackRook());
         for (int i = 0; i < SIZE; i++) {
-            addBlackPawn(Piece.createBlackPawn());
-            addWhitePawn(Piece.createWhitePawn());
+            addBlackPawn(createBlackPawn());
+            addWhitePawn(createWhitePawn());
         }
-        addWhitePiece(Piece.createWhiteRook());
-        addWhitePiece(Piece.createWhiteKnight());
-        addWhitePiece(Piece.createWhiteBishop());
-        addWhitePiece(Piece.createWhiteQueen());
-        addWhitePiece(Piece.createWhiteKing());
-        addWhitePiece(Piece.createWhiteBishop());
-        addWhitePiece(Piece.createWhiteKnight());
-        addWhitePiece(Piece.createWhiteRook());
+        addWhitePiece(createWhiteRook());
+        addWhitePiece(createWhiteKnight());
+        addWhitePiece(createWhiteBishop());
+        addWhitePiece(createWhiteQueen());
+        addWhitePiece(createWhiteKing());
+        addWhitePiece(createWhiteBishop());
+        addWhitePiece(createWhiteKnight());
+        addWhitePiece(createWhiteRook());
     }
 
     private String getWhitePawnsResult() {

@@ -1,13 +1,9 @@
 package kr.codesqaud.chessgame.chess;
 
-import kr.codesqaud.chessgame.pieces.Color;
-import kr.codesqaud.chessgame.pieces.Piece;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
