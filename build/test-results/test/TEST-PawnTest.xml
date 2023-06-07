@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="PawnTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-06-05T07:50:11" hostname="DESKTOP-6BJ4TD2" time="0.07">
-  <properties/>
-  <testcase name="지정한 색의 폰이 생성되어야 한다." classname="PawnTest" time="0.07"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
