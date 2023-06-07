@@ -18,9 +18,9 @@ class ChessGameTest {
     public void start() throws FileNotFoundException {
         // given
         FileInputStream in = new FileInputStream("src/test/resources/commands.txt");
-        ChessGame chessGame = new ChessGame(in);
+        ChessGame chessGame = ChessGame.getInstance();
         // when
-        chessGame.start();
+        chessGame.start(in);
         // then
     }
 }
