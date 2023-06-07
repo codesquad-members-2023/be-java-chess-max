@@ -1,6 +1,12 @@
 package kr.codesqaud.chessgame.pieces;
 
-import static kr.codesqaud.chessgame.pieces.Piece.Type.*;
+import static kr.codesqaud.chessgame.pieces.Piece.Type.BISHOP;
+import static kr.codesqaud.chessgame.pieces.Piece.Type.KING;
+import static kr.codesqaud.chessgame.pieces.Piece.Type.KNIGHT;
+import static kr.codesqaud.chessgame.pieces.Piece.Type.NO_PIECE;
+import static kr.codesqaud.chessgame.pieces.Piece.Type.PAWN;
+import static kr.codesqaud.chessgame.pieces.Piece.Type.QUEEN;
+import static kr.codesqaud.chessgame.pieces.Piece.Type.ROOK;
 
 import java.util.Objects;
 
@@ -123,6 +129,8 @@ public class Piece {
         return type.getBlackRepresentation();
     }
 
+
+
     public boolean isWhite() {
         return color == Color.WHITE;
     }
@@ -147,5 +155,14 @@ public class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(getColor(), getType(), getPosition());
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+            "color=" + color +
+            ", type=" + type +
+            ", position=" + position +
+            '}';
     }
 }

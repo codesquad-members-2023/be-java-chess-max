@@ -42,6 +42,15 @@ public class Board {
         return pieceCount;
     }
 
+
+    public void initializeEmpty() {
+        initializeRank();
+
+        for (int i = 1; i <= SIZE; i++) {
+            initializeBlank(i);
+        }
+    }
+
     public void initialize() {
         initializeRank();
 
@@ -119,5 +128,15 @@ public class Board {
             .filter(piece -> Objects.equals(piece.getPosition(), pos))
             .findAny()
             .orElseThrow(() -> new RuntimeException("기물을 찾을 수 없습니다. : " + position));
+    }
+
+    // position에 위치한 기물을 piece로 설정
+    public void move(final String position, final Piece piece) {
+        move(createPosition(position), piece);
+    }
+
+    public void move(final Position position, final Piece piece) {
+        ranks.get(position.getRankIndex())
+            .setPiece(position.getFileIndex(), piece);
     }
 }

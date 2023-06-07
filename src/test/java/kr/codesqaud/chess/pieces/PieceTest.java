@@ -1,14 +1,32 @@
 package kr.codesqaud.chess.pieces;
 
 
-import static kr.codesqaud.chessgame.pieces.Piece.*;
-import static kr.codesqaud.chessgame.pieces.Piece.Type.*;
-import static kr.codesqaud.chessgame.pieces.Position.*;
+import static kr.codesqaud.chessgame.pieces.Piece.Type.BISHOP;
+import static kr.codesqaud.chessgame.pieces.Piece.Type.KING;
+import static kr.codesqaud.chessgame.pieces.Piece.Type.KNIGHT;
+import static kr.codesqaud.chessgame.pieces.Piece.Type.NO_PIECE;
+import static kr.codesqaud.chessgame.pieces.Piece.Type.PAWN;
+import static kr.codesqaud.chessgame.pieces.Piece.Type.QUEEN;
+import static kr.codesqaud.chessgame.pieces.Piece.Type.ROOK;
+import static kr.codesqaud.chessgame.pieces.Piece.createBlackBishop;
+import static kr.codesqaud.chessgame.pieces.Piece.createBlackKing;
+import static kr.codesqaud.chessgame.pieces.Piece.createBlackKnight;
+import static kr.codesqaud.chessgame.pieces.Piece.createBlackPawn;
+import static kr.codesqaud.chessgame.pieces.Piece.createBlackQueen;
+import static kr.codesqaud.chessgame.pieces.Piece.createBlackRook;
+import static kr.codesqaud.chessgame.pieces.Piece.createBlank;
+import static kr.codesqaud.chessgame.pieces.Piece.createWhiteBishop;
+import static kr.codesqaud.chessgame.pieces.Piece.createWhiteKing;
+import static kr.codesqaud.chessgame.pieces.Piece.createWhiteKnight;
+import static kr.codesqaud.chessgame.pieces.Piece.createWhitePawn;
+import static kr.codesqaud.chessgame.pieces.Piece.createWhiteQueen;
+import static kr.codesqaud.chessgame.pieces.Piece.createWhiteRook;
+import static kr.codesqaud.chessgame.pieces.Position.createPosition;
+import static kr.codesqaud.chessgame.pieces.Position.emptyPosition;
 
 import kr.codesqaud.chessgame.pieces.Piece;
 import kr.codesqaud.chessgame.pieces.Piece.Color;
 import kr.codesqaud.chessgame.pieces.Piece.Type;
-import kr.codesqaud.chessgame.pieces.Position;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -105,7 +123,7 @@ class PieceTest {
         assertions.assertThat(blank.isWhite()).isFalse();
         assertions.assertThat(blank.isBlack()).isFalse();
         assertions.assertThat(blank.getType()).isEqualTo(NO_PIECE);
-        assertions.assertThat(blank.getPosition().toString()).isEqualTo(" 0");
+        assertions.assertThat(blank.getPosition().toString()).isEqualTo("00");
         assertions.assertAll();
     }
 

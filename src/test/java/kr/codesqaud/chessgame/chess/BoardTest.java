@@ -1,22 +1,28 @@
 package kr.codesqaud.chessgame.chess;
 
-import static kr.codesqaud.chessgame.pieces.Piece.*;
-import static kr.codesqaud.chessgame.pieces.Position.*;
+import static kr.codesqaud.chessgame.pieces.Piece.createBlackRook;
+import static kr.codesqaud.chessgame.pieces.Piece.createBlank;
+import static kr.codesqaud.chessgame.pieces.Piece.createWhiteRook;
+import static kr.codesqaud.chessgame.pieces.Position.createPosition;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import kr.codesqaud.chessgame.pieces.Piece;
 import kr.codesqaud.chessgame.pieces.Piece.Color;
 import kr.codesqaud.chessgame.pieces.Piece.Type;
 import kr.codesqaud.chessgame.pieces.Position;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class BoardTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(BoardTest.class);
 
     private Board board;
 
@@ -93,5 +99,35 @@ class BoardTest {
         assertions.assertThat(whiteRook2).isEqualTo(createWhiteRook(createPosition("h1")));
         assertions.assertThat(emptyPiece).isEqualTo(createBlank(createPosition("a6")));
         assertions.assertAll();
+    }
+
+    @Test
+    @DisplayName("빈 체스판이 주어지고 흑백룩을 특정 위치로 이동시킨다")
+    public void move() {
+        // given
+        board.initializeEmpty();
+        String position = "b5";
+        Piece piece = createBlackRook(Position.createPosition(position));
+        // when
+        board.move(position, piece);
+        // then
+        SoftAssertions assertions = new SoftAssertions();
+        assertions.assertThat(board.findPiece(position)).isEqualTo(piece);
+        assertions.assertAll();
+        logger.debug("board : \r\n{}", board.showBoard());
+    }
+
+    @Test
+    @Disabled
+    @DisplayName("board.findPiece 메소드를 100번 호출했을때 속도 측정 테스트")
+    public void findPiece_speed() {
+        // given
+        board.initialize();
+        // when
+        // 100만번 기준 2.239초
+        for (int i = 0; i < 1000000; i++) {
+            board.findPiece("h1");
+        }
+        // then
     }
 }
