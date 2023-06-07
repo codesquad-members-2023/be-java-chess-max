@@ -34,14 +34,14 @@ public class Rank {
         Piece six = Piece.createBlackBishop();
         Piece seven = Piece.createBlackKnight();
         Piece eight = Piece.createBlackRook();
-        rank.add(one, 0);
-        rank.add(two, 1);
-        rank.add(three, 2);
-        rank.add(four, 3);
-        rank.add(five, 4);
-        rank.add(six, 5);
-        rank.add(seven, 6);
-        rank.add(eight, 7);
+        rank.insert(one, 'a');
+        rank.insert(two, 'b');
+        rank.insert(three, 'c');
+        rank.insert(four, 'd');
+        rank.insert(five, 'e');
+        rank.insert(six, 'f');
+        rank.insert(seven, 'g');
+        rank.insert(eight, 'h');
 
         return rank;
     }
@@ -56,14 +56,14 @@ public class Rank {
         Piece six = Piece.createWhiteBishop();
         Piece seven = Piece.createWhiteKnight();
         Piece eight = Piece.createWhiteRook();
-        rank.add(one, 0);
-        rank.add(two, 1);
-        rank.add(three, 2);
-        rank.add(four, 3);
-        rank.add(five, 4);
-        rank.add(six, 5);
-        rank.add(seven, 6);
-        rank.add(eight, 7);
+        rank.insert(one, 'a');
+        rank.insert(two, 'b');
+        rank.insert(three, 'c');
+        rank.insert(four, 'd');
+        rank.insert(five, 'e');
+        rank.insert(six, 'f');
+        rank.insert(seven, 'g');
+        rank.insert(eight, 'h');
 
         return rank;
     }
@@ -71,9 +71,9 @@ public class Rank {
     private static Rank initialize7thRank() {
         Rank rank = new Rank();
 
-        for (int i = 0; i < 8; i++) {
+        for (char ch = 'a'; ch < 'i'; ch++) {
             Piece blackPawn = Piece.createBlackPawn();
-            rank.add(blackPawn, i);
+            rank.insert(blackPawn, ch);
         }
         return rank;
     }
@@ -81,9 +81,9 @@ public class Rank {
     private static Rank initialize2ndRank() {
         Rank rank = new Rank();
 
-        for (int i = 0; i < 8; i++) {
+        for (char ch = 'a'; ch < 'i'; ch++) {
             Piece whitePawn = Piece.createWhitePawn();
-            rank.add(whitePawn, i);
+            rank.insert(whitePawn, ch);
         }
         return rank;
     }
@@ -91,9 +91,9 @@ public class Rank {
     private static Rank initializeEmptyRank() {
         Rank rank = new Rank();
 
-        for (int i = 0; i < 8; i++) {
-            Piece whitePawn = Piece.createBlank();
-            rank.add(whitePawn, i);
+        for (char ch = 'a'; ch < 'i'; ch++) {
+            Piece Blank = Piece.createBlank();
+            rank.insert(Blank, ch);
         }
         return rank;
     }
@@ -107,8 +107,15 @@ public class Rank {
         return sb.toString();
     }
 
-    public void add(Piece piece, int index) {
-        rank[index] = piece;
+    public Piece getPieceAt(char index) {
+        int intIndex = index - 'a';
+
+        return rank[intIndex];
+    }
+
+    public void insert(Piece piece, char index) {
+        int intIndex = index - 'a';
+        rank[intIndex] = piece;
     }
 
     public Piece[] getRank() {
