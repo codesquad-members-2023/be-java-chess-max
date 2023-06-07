@@ -87,11 +87,11 @@
 
 ### 보드에 위치 부여 및 점수 계산
 #### Piece에 enum 생성
-- [ ] 색을 관리하는 Color 생성
-- [ ] 타입을 관리하는 Type 생성
-- [ ] 빈 Piece를 생성하는 createBlank() 생성
-- [ ] enum을 쓰도록 Piece의 메서드 변경
-- [ ] Piece의 메서드를호출하는 다른 클래스 변경
+- [x] 색을 관리하는 Color 생성
+- [x] 타입을 관리하는 Type 생성
+- [x] 빈 Piece를 생성하는 createBlank() 생성
+- [x] enum을 쓰도록 Piece의 메서드 변경
+- [x] Piece의 메서드를호출하는 다른 클래스 변경
 #### 보드에 위치 부여
 - [ ] Rank 클래스 생성: 체스의 한 줄을 관리하는 클래스
 - [ ] pieces를 List<Rank>로 변경
