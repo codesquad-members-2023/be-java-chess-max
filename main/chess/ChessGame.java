@@ -19,7 +19,7 @@ public class ChessGame {
             if (command.equals(RUN_COMMAND)) {
                 Board board = new Board();
                 board.initialize();
-                board.print();
+                System.out.println(board.show());
             } else if (command.equals(EXIT_COMMAND)) {
                 break;
             } else {
