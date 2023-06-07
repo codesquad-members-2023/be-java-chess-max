@@ -1,4 +1,4 @@
-package chess;
+package chess.pieces;
 
 import chess.color.Color;
 import lombok.AllArgsConstructor;
