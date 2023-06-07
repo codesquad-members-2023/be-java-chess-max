@@ -1,5 +1,6 @@
 package com.chessgame.app.chess.piece.utill;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.chessgame.app.chess.piece.Piece;
@@ -52,6 +53,33 @@ public class PieceInitializer {
 			new Piece(PieceKind.PAWN, PieceColor.BLACK, new Position(File.F, Rank.R7)),
 			new Piece(PieceKind.PAWN, PieceColor.BLACK, new Position(File.G, Rank.R7)),
 			new Piece(PieceKind.PAWN, PieceColor.BLACK, new Position(File.H, Rank.R7))
+		);
+	}
+
+	public static List<Piece> initialEmptyPiece() {
+		List<Piece> emptyPieces = new ArrayList<>();
+		emptyPieces.addAll(initialEmptyPiece(Rank.R3));
+		emptyPieces.addAll(initialEmptyPiece(Rank.R4));
+		emptyPieces.addAll(initialEmptyPiece(Rank.R5));
+		emptyPieces.addAll(initialEmptyPiece(Rank.R6));
+
+		return emptyPieces;
+	}
+
+	private static List<Piece> initialEmptyPiece(Rank rank) {
+		if(rank.getValue() <= Rank.R2.getValue() || rank.getValue() >= Rank.R7.getValue()) {
+			throw new IllegalArgumentException("Empty Piece의 초기 Rank 위치는 R3~R6 까지 입니다. Rank를 다시 입력해 주세요.");
+		}
+
+		return List.of(
+			new Piece(PieceKind.EMPTY, PieceColor.NO_COLOR, new Position(File.A, rank)),
+			new Piece(PieceKind.EMPTY, PieceColor.NO_COLOR, new Position(File.B, rank)),
+			new Piece(PieceKind.EMPTY, PieceColor.NO_COLOR, new Position(File.C, rank)),
+			new Piece(PieceKind.EMPTY, PieceColor.NO_COLOR, new Position(File.D, rank)),
+			new Piece(PieceKind.EMPTY, PieceColor.NO_COLOR, new Position(File.E, rank)),
+			new Piece(PieceKind.EMPTY, PieceColor.NO_COLOR, new Position(File.F, rank)),
+			new Piece(PieceKind.EMPTY, PieceColor.NO_COLOR, new Position(File.G, rank)),
+			new Piece(PieceKind.EMPTY, PieceColor.NO_COLOR, new Position(File.H, rank))
 		);
 	}
 

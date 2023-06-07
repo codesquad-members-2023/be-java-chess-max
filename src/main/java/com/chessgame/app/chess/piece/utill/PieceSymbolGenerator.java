@@ -20,8 +20,10 @@ public class PieceSymbolGenerator {
 				return determineBishopSymbol(color);
 			case KNIGHT:
 				return determineKnightSymbol(color);
-			default:
+			case PAWN:
 				return determinePawnSymbol(color);
+			default:
+				return determineEmptySymbol();
 		}
 	}
 
@@ -47,6 +49,10 @@ public class PieceSymbolGenerator {
 
 	private static String determinePawnSymbol(PieceColor color) {
 		return color == PieceColor.WHITE? PieceType.WHITE_PAWN.getSymbol() : PieceType.BLACK_PAWN.getSymbol();
+	}
+
+	private static String determineEmptySymbol() {
+		return PieceType.EMPTY.getSymbol();
 	}
 
 }

@@ -12,7 +12,8 @@ public enum PieceType {
 	BLACK_ROOK(PieceKind.ROOK, PieceColor.BLACK, "♜"),
 	BLACK_BISHOP(PieceKind.BISHOP, PieceColor.BLACK, "♝"),
 	BLACK_KNIGHT(PieceKind.KNIGHT, PieceColor.BLACK, "♞"),
-	BLACK_PAWN(PieceKind.PAWN, PieceColor.BLACK, "♟");
+	BLACK_PAWN(PieceKind.PAWN, PieceColor.BLACK, "♟"),
+	EMPTY(PieceKind.EMPTY, PieceColor.NO_COLOR, "▭");
 
 	private final PieceKind kind;
 	private final PieceColor color;

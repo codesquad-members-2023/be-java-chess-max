@@ -10,6 +10,8 @@ import com.chessgame.app.chess.piece.utill.PieceInitializer;
 
 public class Board {
 
+	private static final int MAX_SIZE = 8;
+
 	private final ArrayList<Piece> pieceStorage;
 
 	public Board() {
@@ -19,6 +21,7 @@ public class Board {
 	public void initialize() {
 		pieceStorage.addAll(PieceInitializer.initialWhitePiece());
 		pieceStorage.addAll(PieceInitializer.initialBlackPiece());
+		pieceStorage.addAll(PieceInitializer.initialEmptyPiece());
 	}
 
 	public void add(Piece piece) {
@@ -41,7 +44,7 @@ public class Board {
 	}
 
 	public String getResult(Rank rank) {
-		StringBuilder sb = new StringBuilder("▭▭▭▭▭▭▭▭");
+		StringBuilder sb = new StringBuilder(" ".repeat(MAX_SIZE));
 
 		for(Piece piece : pieceStorage) {
 			if(piece.verifyRank(rank)) {
