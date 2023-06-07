@@ -1,6 +1,5 @@
 package chess.board;
 
-import chess.pieces.Pawn;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,22 +14,19 @@ class BoardTest {
 		sut = new Board();
 	}
 
-	@DisplayName("Pawn 인스턴스를 체스보드에 추가할 때 Pawn 인스턴스가 주어지면 체스보드는 Pawn 인스턴스를 가지고 있는다.")
+	@DisplayName("체스판을 초기화할 때 체스판을 출력하면 검은색 Pawn과 흰색 Pawn이 각각 8개씩 존재한다.")
 	@Test
-	void givenPawns_whenAddPawnsOnBoard_thenBoardHasPawns() {
+	void givenInitializedBoard_whenPrintBoard_thenBoardContainsPawns() {
 		// given
-		Pawn white = new Pawn("white");
-		Pawn black = new Pawn("black");
+		sut.initialize();
 
 		// when
-		sut.addPiece(white);
-		sut.addPiece(black);
+		String boardFigure = sut.print();
 
 		// then
 		SoftAssertions.assertSoftly(softAssertions -> {
-			softAssertions.assertThat(sut.size()).isEqualTo(2);
-			softAssertions.assertThat(sut.findPawn(0)).isEqualTo(white);
-			softAssertions.assertThat(sut.findPawn(1)).isEqualTo(black);
+			softAssertions.assertThat(boardFigure).contains("PPPPPPPP");
+			softAssertions.assertThat(boardFigure).contains("pppppppp");
 		});
 	}
 }
