@@ -18,7 +18,6 @@ import static kr.codesqaud.chessgame.pieces.Position.createPosition;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import kr.codesqaud.chessgame.pieces.Piece;
 import kr.codesqaud.chessgame.pieces.Piece.Color;
@@ -114,20 +113,17 @@ public class Board {
     }
 
     public int getPieceCount(final Color color, final Type type) {
-        return (int) ranks.stream()
-            .flatMap(rank -> rank.getPieces().stream())
-            .filter(piece -> Objects.equals(piece.getColor(), color))
-            .filter(piece -> Objects.equals(piece.getType(), type))
-            .count();
+        return ranks.stream()
+            .mapToInt(rank -> rank.getPieceCount(color, type))
+            .sum();
     }
 
     public Piece findPiece(final String position) {
-        Position pos = createPosition(position);
-        return ranks.stream()
-            .flatMap(rank -> rank.getPieces().stream())
-            .filter(piece -> Objects.equals(piece.getPosition(), pos))
-            .findAny()
-            .orElseThrow(() -> new RuntimeException("기물을 찾을 수 없습니다. : " + position));
+        return findPiece(createPosition(position));
+    }
+
+    public Piece findPiece(final Position position) {
+        return ranks.get(position.getRankIndex()).findPiece(position.getFileIndex());
     }
 
     // position에 위치한 기물을 piece로 설정

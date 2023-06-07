@@ -15,11 +15,30 @@ public class Position {
     }
 
     public static Position createPosition(final String position) {
+        validatePosition(position);
         final int FILE_INDEX = 0;
         final int RANK_INDEX = 1;
         int file = position.charAt(FILE_INDEX) - 'a' + 1;
         int rank = getNumericValue(position.charAt(RANK_INDEX));
         return new Position(file, rank);
+    }
+
+    private static void validatePosition(final String position) {
+        // position 길이 검증
+        if (position.length() != 2) {
+            throw new IllegalArgumentException("부적절한 위치 값입니다. : " + position);
+        }
+        // position File 입력값 범위 검증
+        int file = position.charAt(0) - 'a' + 1;
+        if (file < 1 || file > 8) {
+            throw new IllegalArgumentException("부적절한 File 값입니다. : " + file);
+        }
+
+        // position Rank 입력값 범위 검증
+        int rank = getNumericValue(position.charAt(1));
+        if (rank < 1 || rank > 8) {
+            throw new IllegalArgumentException("부적절한 Rank 값입니다. : " + rank);
+        }
     }
 
     public static Position emptyPosition() {

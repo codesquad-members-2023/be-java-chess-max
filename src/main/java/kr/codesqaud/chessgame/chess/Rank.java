@@ -2,8 +2,11 @@ package kr.codesqaud.chessgame.chess;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import kr.codesqaud.chessgame.pieces.Piece;
+import kr.codesqaud.chessgame.pieces.Piece.Color;
+import kr.codesqaud.chessgame.pieces.Piece.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,14 +30,22 @@ public class Rank implements Comparable<Rank> {
         pieces.set(file, piece);
     }
 
-    public List<Piece> getPieces() {
-        return new ArrayList<>(pieces);
+    public Piece findPiece(final int file) {
+        return pieces.get(file);
     }
 
     public String getPieceResult() {
         return pieces.stream()
             .map(Piece::getRepresentation)
             .collect(Collectors.joining());
+    }
+
+
+    public int getPieceCount(final Color color, final Type type) {
+        return (int) pieces.stream()
+            .filter(piece -> Objects.equals(piece.getColor(), color))
+            .filter(piece -> Objects.equals(piece.getType(), type))
+            .count();
     }
 
     @Override
