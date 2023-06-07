@@ -1,163 +1,38 @@
-import pieces.Piece;
+import utils.StringUtil;
+
 import static utils.StringUtil.appendNewLine;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Board {
 
-    private static final String EMPTY_LINE = "........";
-
-    private final ArrayList<Piece> pieces;
+    private final Map<Integer, Rank> pieces;
 
     public Board() {
-        this.pieces = new ArrayList<>();
+        this.pieces = new HashMap<>();
     }
 
     public void initialize() {
         pieces.clear();
-        addBlackPieces();
-        addWhitePieces();
-    }
+        for (int i = 1; i < 9; i++) {
+            Rank rank = Rank.initialize(i);
 
-    private void addBlackPieces() {
-        addBlackPawns();
-        addBlackRooks();
-        addBlackKnights();
-        addBlackBishops();
-        addBlackQueen();
-        addBlackKing();
-    }
-
-    private void addWhitePieces() {
-        addWhitePawns();
-        addWhiteRooks();
-        addWhiteKnights();
-        addWhiteBishops();
-        addWhiteQueen();
-        addWhiteKing();
-    }
-
-    private void addBlackPawns() {
-        for (int i = 0; i < 8; i++) {
-            Piece blackPawn = Piece.createBlackPawn();
-            add(blackPawn);
+            pieces.put(i, rank);
         }
-    }
-    private void addBlackRooks() {
-        for (int i = 0; i < 2; i++) {
-            Piece blackRook = Piece.createBlackRook();
-            add(blackRook);
-        }
-    }
-    private void addBlackKnights() {
-        for (int i = 0; i < 2; i++) {
-            Piece blackKnight = Piece.createBlackKnight();
-            add(blackKnight);
-        }
-    }
-    private void addBlackBishops() {
-        for (int i = 0; i < 2; i++) {
-            Piece blackBishop = Piece.createBlackBishop();
-            add(blackBishop);
-        }
-    }
-
-    private void addBlackQueen() {
-        Piece blackQueen = Piece.createBlackQueen();
-        add(blackQueen);
-    }
-
-
-    private void addBlackKing() {
-        Piece blackKing = Piece.createBlackKing();
-        add(blackKing);
-    }
-
-    private void addWhitePawns() {
-        for (int i = 0; i < 8; i++) {
-            Piece whitePawn = Piece.createWhitePawn();
-            add(whitePawn);
-        }
-    }
-
-    private void addWhiteRooks() {
-        for (int i = 0; i < 2; i++) {
-            Piece whiteRook = Piece.createWhiteRook();
-            add(whiteRook);
-        }
-    }
-
-    private void addWhiteKnights() {
-        for (int i = 0; i < 2; i++) {
-            Piece whiteKnight = Piece.createWhiteKnight();
-            add(whiteKnight);
-        }
-    }
-
-    private void addWhiteBishops() {
-        for (int i = 0; i < 2; i++) {
-            Piece whiteBishop = Piece.createWhiteBishop();
-            add(whiteBishop);
-        }
-    }
-
-    private void addWhiteQueen() {
-        Piece whiteQueen = Piece.createWhiteQueen();
-        add(whiteQueen);
-    }
-
-    private void addWhiteKing() {
-        Piece whiteKing = Piece.createWhiteKing();
-        add(whiteKing);
     }
 
     public String print() {
-        return appendNewLine(printBlackPieces()) +
-                appendNewLine(printBlackPawns()) +
-                appendNewLine(EMPTY_LINE) +
-                appendNewLine(EMPTY_LINE) +
-                appendNewLine(EMPTY_LINE) +
-                appendNewLine(EMPTY_LINE) +
-                appendNewLine(printWhitePawns()) +
-                appendNewLine(printWhitePieces());
-    }
-
-    public String printBlackPieces() {
-        return "RNBQKBNR";
-    }
-
-    public String printWhitePieces() {
-        return "rnbqkbnr";
-    }
-
-    public String printBlackPawns() {
         StringBuilder sb = new StringBuilder();
 
-        for (Piece piece : pieces) {
-            if (piece.isBlack() && piece.isPawn()) {
-                sb.append(piece.getShape());
-            }
+        for (int key = 8; key > 0; key--) {
+            Rank rank = pieces.get(key);
+            String rawShape = rank.getShape();
+            String editedShape = StringUtil.appendNewLine(rawShape);
+
+            sb.append(editedShape);
         }
         return sb.toString();
-    }
-
-    public String printWhitePawns() {
-        StringBuilder sb = new StringBuilder();
-
-        for (Piece piece : pieces) {
-            if (piece.isWhite() && piece.isPawn()) {
-                sb.append(piece.getShape());
-            }
-        }
-        return sb.toString();
-    }
-
-    public void add(Piece piece) {
-        pieces.add(piece);
-    }
-
-    public boolean contains(Piece piece) {
-        return pieces.contains(piece);
     }
 
     public int getSize() {

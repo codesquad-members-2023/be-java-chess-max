@@ -22,64 +22,11 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("add(): 임의의 말이 pieces에 추가된다.")
-    void addPiece() {
-        Piece piece = Piece.createBlackKnight();
-
-        board.add(piece);
-
-        assertThat(board.contains(piece)).isTrue();
-        assertThat(board.getSize()).isEqualTo(1);
-    }
-
-    @Test
-    @DisplayName("add(): 임의의 말이 연속적으로 pieces에 추가된다.")
-    void addPieces() {
-        Piece one = Piece.createBlackBishop();
-        Piece two = Piece.createWhiteQueen();
-        Piece three = Piece.createWhiteRook();
-
-        board.add(one);
-        assertThat(board.getSize()).isEqualTo(1);
-        board.add(two);
-        assertThat(board.getSize()).isEqualTo(2);
-        board.add(three);
-        assertThat(board.getSize()).isEqualTo(3);
-
-        assertThat(board.contains(one)).isTrue();
-        assertThat(board.contains(two)).isTrue();
-        assertThat(board.contains(three)).isTrue();
-    }
-
-    @Test
-    @DisplayName("initialize(): 32개의 말들로 초기화된다")
+    @DisplayName("initialize(): 8개의 rank로 초기화된다")
     public void initializeBoard() {
         board.initialize();
 
-        assertThat(board.getSize()).isEqualTo(32);
-    }
-
-    @Test
-    @DisplayName("initialize(): 여러번 초기화해도 중첩되지 않는다")
-    public void initializeMultipleTimes() {
-        String figure = appendNewLine("RNBQKBNR") +
-                appendNewLine("PPPPPPPP") +
-                appendNewLine("........") +
-                appendNewLine("........") +
-                appendNewLine("........") +
-                appendNewLine("........") +
-                appendNewLine("pppppppp") +
-                appendNewLine("rnbqkbnr");
-
-        board .initialize();
-        board .initialize();
-        board .initialize();
-        board .initialize();
-        board .initialize();
-        board .initialize();
-
-        assertThat(board.getSize()).isEqualTo(32);
-        assertThat(board.print()).isEqualTo(figure);
+        assertThat(board.getSize()).isEqualTo(8);
     }
 
     @Test
@@ -97,5 +44,28 @@ class BoardTest {
         board.initialize();
 
         assertThat(board.print()).isEqualTo(figure);
+    }
+
+    @Test
+    @DisplayName("initialize(): 여러번 초기화해도 중첩되지 않는다")
+    public void initializeMultipleTimes() {
+        String shape = appendNewLine("RNBQKBNR") +
+                appendNewLine("PPPPPPPP") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("........") +
+                appendNewLine("pppppppp") +
+                appendNewLine("rnbqkbnr");
+
+        board .initialize();
+        board .initialize();
+        board .initialize();
+        board .initialize();
+        board .initialize();
+        board .initialize();
+
+        assertThat(board.getSize()).isEqualTo(8);
+        assertThat(board.print()).isEqualTo(shape);
     }
 }
