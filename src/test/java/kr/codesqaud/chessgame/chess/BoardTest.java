@@ -27,7 +27,7 @@ class BoardTest {
         // then
         String expectedBoard = Files.readString(Paths.get("src/test/resources/chessBoard.txt"));
         SoftAssertions assertions = new SoftAssertions();
-        assertions.assertThat(board.size()).isEqualTo(32);
+        assertions.assertThat(board.size()).isEqualTo(64);
         assertions.assertThat(board.showBoard()).isEqualTo(expectedBoard);
         assertions.assertAll();
     }
