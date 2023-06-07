@@ -11,6 +11,7 @@ import static kr.codesqaud.chessgame.utils.StringUtils.*;
 
 public class Board {
 
+    private static final int SIZE = 8;
     private final List<Piece> whitePieces = new ArrayList<>();
     private final List<Piece> blackPieces = new ArrayList<>();
     private final List<Piece> whitePawns = new ArrayList<>();
@@ -18,22 +19,22 @@ public class Board {
 
     private int pieceCount = 0;
 
-    private void addWhitePiece(Piece piece) {
+    private void addWhitePiece(final Piece piece) {
         pieceCount++;
         whitePieces.add(piece);
     }
 
-    private void addBlackPiece(Piece piece) {
+    private void addBlackPiece(final Piece piece) {
         pieceCount++;
         blackPieces.add(piece);
     }
 
-    private void addWhitePawn(Piece piece) {
+    private void addWhitePawn(final Piece piece) {
         pieceCount++;
         whitePawns.add(piece);
     }
 
-    private void addBlackPawn(Piece piece) {
+    private void addBlackPawn(final Piece piece) {
         pieceCount++;
         blackPawns.add(piece);
     }
@@ -51,11 +52,8 @@ public class Board {
         addBlackPiece(Piece.createBlackBishop());
         addBlackPiece(Piece.createBlackKnight());
         addBlackPiece(Piece.createBlackRook());
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < SIZE; i++) {
             addBlackPawn(Piece.createBlackPawn());
-        }
-
-        for (int i = 0; i < 8; i++) {
             addWhitePawn(Piece.createWhitePawn());
         }
         addWhitePiece(Piece.createWhiteRook());
@@ -69,17 +67,18 @@ public class Board {
     }
 
     private String getWhitePawnsResult() {
-        return whitePawns.stream()
-                .filter(piece -> piece.getColor().equals(Color.WHITE))
-                .map(Piece::getRepresentation)
-                .collect(Collectors.joining());
+        return getPawnsResult(whitePawns, Color.WHITE);
     }
 
     private String getBlackPawnsResult() {
-        return blackPawns.stream()
-                .filter(piece -> piece.getColor().equals(Color.BLACK))
-                .map(Piece::getRepresentation)
-                .collect(Collectors.joining());
+        return getPawnsResult(blackPawns, Color.BLACK);
+    }
+
+    private String getPawnsResult(List<Piece> pawns, Color color) {
+        return pawns.stream()
+            .filter(piece -> piece.getColor().equals(color))
+            .map(Piece::getRepresentation)
+            .collect(Collectors.joining());
     }
 
     private String getWhitePieceResult() {
@@ -91,11 +90,9 @@ public class Board {
     }
 
     private String getPieceResult(List<Piece> pieces) {
-        StringBuilder sb = new StringBuilder();
-        for (Piece piece : pieces) {
-            sb.append(piece.getRepresentation());
-        }
-        return sb.toString();
+        return pieces.stream()
+            .map(Piece::getRepresentation)
+            .collect(Collectors.joining());
     }
 
     public String showBoard() {
