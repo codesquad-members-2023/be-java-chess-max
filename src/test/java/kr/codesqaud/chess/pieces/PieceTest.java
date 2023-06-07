@@ -79,6 +79,7 @@ class PieceTest {
         Piece blackQueen = createBlackQueen();
         Piece whiteKing = createWhiteKing();
         Piece blackKing = createBlackKing();
+        Piece blank = createBlank();
         // then
         verifyPiece(whitePawn, blackPawn, PAWN);
         verifyPiece(whiteRook, blackRook, ROOK);
@@ -86,6 +87,12 @@ class PieceTest {
         verifyPiece(whiteBishop, blackBishop, BISHOP);
         verifyPiece(whiteQueen, blackQueen, QUEEN);
         verifyPiece(whiteKing, blackKing, KING);
+
+        SoftAssertions assertions = new SoftAssertions();
+        assertions.assertThat(blank.isWhite()).isFalse();
+        assertions.assertThat(blank.isBlack()).isFalse();
+        assertions.assertThat(blank.getType()).isEqualTo(NO_PIECE);
+        assertions.assertAll();
     }
 
     private void verifyPawn(final Piece piece, final Color color, final String representation) {
