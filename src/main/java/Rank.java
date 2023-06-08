@@ -1,5 +1,8 @@
 import pieces.Piece;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Rank {
 
     private final Piece[] rank;
@@ -116,6 +119,116 @@ public class Rank {
     public void insert(Piece piece, char index) {
         int intIndex = index - 'a';
         rank[intIndex] = piece;
+    }
+
+    public int countBlack() {
+        int count = 0;
+
+        for (Piece piece : rank) {
+            if (piece.isBlack()) {
+                count += 1;
+            }
+        }
+        return count;
+    }
+
+    public int countWhite() {
+        int count = 0;
+
+        for (Piece piece : rank) {
+            if (piece.isWhite()) {
+                count += 1;
+            }
+        }
+        return count;
+    }
+
+    public int countPawn() {
+        int count = 0;
+
+        for (Piece piece : rank) {
+            if (piece.isPawn()) {
+                count += 1;
+            }
+        }
+        return count;
+    }
+
+    public int countKnight() {
+        int count = 0;
+
+        for (Piece piece : rank) {
+            if (piece.isKnight()) {
+                count += 1;
+            }
+        }
+        return count;
+    }
+
+    public int countBishop() {
+        int count = 0;
+
+        for (Piece piece : rank) {
+            if (piece.isBishop()) {
+                count += 1;
+            }
+        }
+        return count;
+    }
+
+    public int countQueen() {
+        int count = 0;
+
+        for (Piece piece : rank) {
+            if (piece.isQueen()) {
+                count += 1;
+            }
+        }
+        return count;
+    }
+
+    public int countKing() {
+        int count = 0;
+
+        for (Piece piece : rank) {
+            if (piece.isKing()) {
+                count += 1;
+            }
+        }
+        return count;
+    }
+
+    public int countBlank() {
+        int count = 0;
+
+        for (Piece piece : rank) {
+            if (piece.isBlank()) {
+                count += 1;
+            }
+        }
+        return count;
+    }
+
+    public double calculateOtherPiecesScore(Piece.Color color) {
+        double score = 0;
+
+        for (Piece piece : rank) {
+            if (piece.isColor(color) && !piece.isPawn()) {
+                score += piece.getScore();
+            }
+        }
+        return score;
+    }
+
+    public List<Character> getPawnIndex(Piece.Color color) {
+        List<Character> index = new ArrayList<>();
+
+        for (int i = 0; i < rank.length; i++) {
+            if (rank[i].isColor(color) && rank[i].isPawn()) {
+                index.add((char) ('a' + i));
+            }
+        }
+        return index;
     }
 
     public Piece[] getRank() {

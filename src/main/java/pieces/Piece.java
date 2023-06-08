@@ -9,17 +9,28 @@ public class Piece {
 
     public enum Type {
         
-        PAWN('p'), ROOK('r'), KNIGHT('n'), BISHOP('b'), 
-        QUEEN('q'), KING('k'), NOTYPE('.');
+        PAWN('p', 1.0),
+        ROOK('r', 5.0),
+        KNIGHT('n', 2.5),
+        BISHOP('b', 3.0),
+        QUEEN('q', 9.0),
+        KING('k', 0.0),
+        NOTYPE('.', 0.0);
 
         private final char shape;
+        private final double score;
 
-        private Type(char shape) {
+        private Type(char shape, double score) {
             this.shape = shape;
+            this.score = score;
         }
 
         public char getShape() {
             return shape;
+        }
+
+        public double getScore() {
+            return score;
         }
     }
     
@@ -95,6 +106,30 @@ public class Piece {
         return type == Type.PAWN;
     }
 
+    public boolean isRook() {
+        return type == Type.ROOK;
+    }
+
+    public boolean isKnight() {
+        return type == Type.KNIGHT;
+    }
+
+    public boolean isBishop() {
+        return type == Type.BISHOP;
+    }
+
+    public boolean isQueen() {
+        return type == Type.QUEEN;
+    }
+
+    public boolean isKing() {
+        return type == Type.KING;
+    }
+
+    public boolean isBlank() {
+        return color == Color.NOCOLOR && type == Type.NOTYPE;
+    }
+
     public Color getColor() {
         return color;
     }
@@ -108,5 +143,17 @@ public class Piece {
             return Character.toUpperCase(type.getShape());
         }
         return type.getShape();
+    }
+
+    public double getScore() {
+        return type.score;
+    }
+
+    public boolean isColor(Piece.Color color) {
+        return this.color == color;
+    }
+
+    public boolean isType(Piece.Type type) {
+        return this.type == type;
     }
 }

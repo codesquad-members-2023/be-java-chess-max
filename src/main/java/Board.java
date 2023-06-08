@@ -3,8 +3,7 @@ import pieces.Piece;
 
 import static utils.StringUtil.appendNewLine;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Board {
 
@@ -49,6 +48,35 @@ public class Board {
 
         return target.getPieceAt(file);
     }
+
+    public double calculateScoreOf(Piece.Color color) {
+        double score = 0;
+
+        score += calculatePawnScore(color);
+        score += calculateOtherPiecesScore(color);
+        return score;
+    }
+
+    private double calculateOtherPiecesScore(Piece.Color color) {
+        double score = 0;
+
+        for (Rank rank : pieces.values()) {
+            score += rank.calculateOtherPiecesScore(color);
+        }
+        return score;
+    }
+
+    private double calculatePawnScore(Piece.Color color) {
+        List<Character> index = new ArrayList<>();
+
+        for (Rank rank : pieces.values()) {
+            index.addAll(rank.getPawnIndex(color));
+        }
+        Set<Character> indexWithoutDuplication = new HashSet<>(index);
+        return indexWithoutDuplication.size() * Piece.Type.PAWN.getScore();
+    }
+
+
 
     public String print() {
         StringBuilder sb = new StringBuilder();

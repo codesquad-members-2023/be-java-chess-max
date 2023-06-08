@@ -123,4 +123,38 @@ class BoardTest {
         assertThat(piece.getColor()).isEqualTo(Piece.Color.BLACK);
         assertThat(piece.getType()).isEqualTo(Piece.Type.BISHOP);
     }
+
+    @Test
+    @DisplayName("calculateScoreOf(): 기물의 점수를 계산한다")
+    public void calculateScoreOfBoard() {
+        board.initializeDefaultBoard();
+
+        double blackScore = board.calculateScoreOf(Piece.Color.BLACK);
+        double whiteScore = board.calculateScoreOf(Piece.Color.WHITE);
+
+        assertThat(blackScore).isEqualTo(38);
+        assertThat(whiteScore).isEqualTo(38);
+    }
+
+    @Test
+    @DisplayName("calculateScoreOf(): 한 줄로 세워진 폰의 점수를 계산한다")
+    public void calculateScoreOfSortedPawns() {
+        board.initializeVoidBoard();
+        board.insert(Piece.createBlackPawn(), "a8");
+        board.insert(Piece.createBlackPawn(), "a7");
+        board.insert(Piece.createBlackPawn(), "a6");
+        board.insert(Piece.createBlackPawn(), "a5");
+        board.insert(Piece.createBlackPawn(), "a4");
+        board.insert(Piece.createBlackPawn(), "a3");
+        board.insert(Piece.createBlackPawn(), "b3");
+        board.insert(Piece.createBlackPawn(), "b4");
+        board.insert(Piece.createBlackPawn(), "c3");
+        board.insert(Piece.createBlackPawn(), "g3");
+
+
+        double blackScore = board.calculateScoreOf(Piece.Color.BLACK);
+
+        assertThat(blackScore).isEqualTo(4);
+    }
+
 }
