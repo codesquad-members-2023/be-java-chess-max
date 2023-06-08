@@ -1,62 +1,77 @@
 package chess;
 
-import chess.piece.Pawn;
+import chess.piece.Piece;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static chess.Color.BLACK;
-import static chess.Color.WHITE;
+import static chess.StringUtil.NEW_LINE;
 
 public class Board {
 
-    private final List<Pawn> whitePawns;
-    private final List<Pawn> blackPawns;
+    private final List<Piece> whitePieces;
+    private final List<Piece> blackPieces;
+    private final List<Piece> whitePawns;
+    private final List<Piece> blackPawns;
     public static final String BLANK_LINE = "........";
 
     public Board() {
+        this.whitePieces = new ArrayList<>(8);
+        this.blackPieces = new ArrayList<>(8);
         this.whitePawns = new ArrayList<>(8);
         this.blackPawns = new ArrayList<>(8);
     }
 
     public void initialize() {
-        whitePawns.addAll(IntStream.range(0, 8).mapToObj(o -> new Pawn(WHITE)).collect(Collectors.toList()));
-        blackPawns.addAll(IntStream.range(0, 8).mapToObj(o -> new Pawn(BLACK)).collect(Collectors.toList()));
+        whitePawns.addAll(IntStream.range(0, 8).mapToObj(o -> Piece.createWhitePawn()).collect(Collectors.toList()));
+        blackPawns.addAll(IntStream.range(0, 8).mapToObj(o -> Piece.createBlackPawn()).collect(Collectors.toList()));
+
+        addWhitePieces(Piece.createWhiteRook());
+        addWhitePieces(Piece.createWhiteKnight());
+        addWhitePieces(Piece.createWhiteBishop());
+        addWhitePieces(Piece.createWhiteQueen());
+        addWhitePieces(Piece.createWhiteKing());
+        addWhitePieces(Piece.createWhiteBishop());
+        addWhitePieces(Piece.createWhiteKnight());
+        addWhitePieces(Piece.createWhiteRook());
+
+        addBlackPieces(Piece.createBlackRook());
+        addBlackPieces(Piece.createBlackKnight());
+        addBlackPieces(Piece.createBlackBishop());
+        addBlackPieces(Piece.createBlackQueen());
+        addBlackPieces(Piece.createBlackKing());
+        addBlackPieces(Piece.createBlackBishop());
+        addBlackPieces(Piece.createBlackKnight());
+        addBlackPieces(Piece.createBlackRook());
     }
 
-    public void addWhitePawn(final Pawn pawn) {
-        this.whitePawns.add(pawn);
+
+    public int countPieces() {
+        return this.whitePieces.size() + this.blackPieces.size() + this.blackPawns.size() + this.whitePawns.size();
     }
 
-    public void addBlackPawn(final Pawn pawn) {
-        this.blackPawns.add(pawn);
+    private void addWhitePieces(Piece piece) {
+        whitePieces.add(piece);
     }
 
-    public int size() {
-        return this.whitePawns.size() + this.blackPawns.size();
+    private void addBlackPieces(Piece piece) {
+        blackPieces.add(piece);
     }
 
-    public Pawn findWhitePawn(final int index) {
-        return this.whitePawns.get(index);
-    }
-
-    public Pawn findBlackPawn(final int index) {
-        return this.blackPawns.get(index);
-    }
-
-    public void print() {
+    public String show() {
         StringBuilder builder = new StringBuilder();
 
-        builder.append(BLANK_LINE).append(System.lineSeparator());
-        builder.append(blackPawns.stream().map(Pawn::getRepresentation).collect(Collectors.joining()))
-                .append(System.lineSeparator());
-        IntStream.range(0, 4).forEach(o -> builder.append(BLANK_LINE).append(System.lineSeparator()));
-        builder.append(whitePawns.stream().map(Pawn::getRepresentation).collect(Collectors.joining()))
-                .append(System.lineSeparator());
-        builder.append(BLANK_LINE).append(System.lineSeparator());
+        builder.append(blackPieces.stream().map(Piece::getRepresentation).collect(Collectors.joining())).append(NEW_LINE);
+        builder.append(blackPawns.stream().map(Piece::getRepresentation).collect(Collectors.joining()))
+                .append(NEW_LINE);
+        IntStream.range(0, 4).forEach(o -> builder.append(BLANK_LINE).append(NEW_LINE));
+        builder.append(whitePawns.stream().map(Piece::getRepresentation).collect(Collectors.joining()))
+                .append(NEW_LINE);
+        builder.append(whitePieces.stream().map(Piece::getRepresentation).collect(Collectors.joining())).append(NEW_LINE);
 
-        System.out.println(builder);
+        return builder.toString();
     }
+
 }
