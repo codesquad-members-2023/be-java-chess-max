@@ -1,21 +1,26 @@
 package chess.piece;
 
-import chess.Color;
-import chess.Name;
-
-import static chess.Color.BLACK;
-import static chess.Color.WHITE;
-import static chess.Name.BISHOP;
-import static chess.Name.KING;
-import static chess.Name.KNIGHT;
-import static chess.Name.PAWN;
-import static chess.Name.QUEEN;
-import static chess.Name.ROOK;
+import static chess.piece.Piece.Type.BISHOP;
+import static chess.piece.Piece.Type.KING;
+import static chess.piece.Piece.Type.KNIGHT;
+import static chess.piece.Piece.Type.PAWN;
+import static chess.piece.Piece.Type.QUEEN;
+import static chess.piece.Piece.Type.ROOK;
+import static chess.piece.Piece.Color.BLACK;
+import static chess.piece.Piece.Color.WHITE;
 
 public class Piece {
 
+    public enum Color {
+        WHITE, BLACK
+    }
+
+    public enum Type {
+        PAWN, KNIGHT, ROOK, BISHOP, QUEEN, KING
+    }
+
     private final Color color;
-    private final Name name;
+    private final Type type;
     private final String representation;
     public static final String WHITE_PAWN= "p";
     public static final String BLACK_PAWN = "P";
@@ -78,9 +83,9 @@ public class Piece {
         return new Piece(BLACK, KING, BLACK_KING);
     }
 
-    private Piece(Color color, Name name, String representation) {
+    private Piece(Color color, Type type, String representation) {
         this.color = color;
-        this.name = name;
+        this.type = type;
         this.representation = representation;
     }
 
@@ -88,8 +93,8 @@ public class Piece {
         return this.color;
     }
 
-    public Name getName() {
-        return this.name;
+    public Type getType() {
+        return this.type;
     }
 
     public String getRepresentation() {
