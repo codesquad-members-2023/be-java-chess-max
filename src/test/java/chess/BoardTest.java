@@ -1,27 +1,32 @@
 package chess;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pieces.Pawn;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
+import static utils.StringUtils.appendNewLine;
 
 public class BoardTest {
+    private Board board;
+
+    @BeforeEach
+    public void setup() {
+        board = new Board();
+    }
 
     @Test
-    @DisplayName("체스판을 생성해서 폰을 추가하고 폰의 개수를 확인하고 추가한 폰이 맞는지 확인한다.")
+    @DisplayName("체스판을 초기 기물 위치에 맞게 초기화한다.")
     public void create() {
-        Board board = new Board();
+        board.initialize();
+        assertThat(board.pieceCount()).isEqualTo(32);
 
-        Pawn white = new Pawn(Pawn.WHITE_COLOR, Pawn.WHITE_REPRESENTATION);
-        board.add(white);
-        assertEquals(1, board.size());
-        assertEquals(white, board.findPawn(0));
-
-        Pawn black = new Pawn(Pawn.BLACK_COLOR, Pawn.BLACK_REPRESENTATION);
-        board.add(black);
-        assertEquals(2, board.size());
-        assertEquals(black, board.findPawn(1));
+        String blankLine = appendNewLine("........");
+        assertThat(board.showBoard()).isEqualTo(
+                appendNewLine("RNBQKBNR") + appendNewLine("PPPPPPPP") +
+                        blankLine + blankLine + blankLine + blankLine +
+                        appendNewLine("pppppppp") + appendNewLine("rnbqkbnr")
+        );
     }
 
     @Test
@@ -29,7 +34,7 @@ public class BoardTest {
     public void initialize() {
         Board board = new Board();
         board.initialize();
-        assertEquals("pppppppp", board.getWhitePawnResult());
-        assertEquals("PPPPPPPP", board.getBlackPawnResult());
+
+        System.out.println(board.showBoard());
     }
 }
