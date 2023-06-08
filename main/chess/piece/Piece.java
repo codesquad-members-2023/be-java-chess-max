@@ -1,13 +1,15 @@
 package chess.piece;
 
 import static chess.piece.Piece.Type.BISHOP;
+import static chess.piece.Piece.Type.BLANK;
 import static chess.piece.Piece.Type.KING;
 import static chess.piece.Piece.Type.KNIGHT;
 import static chess.piece.Piece.Type.PAWN;
 import static chess.piece.Piece.Type.QUEEN;
 import static chess.piece.Piece.Type.ROOK;
-import static chess.piece.Piece.Color.BLACK;
 import static chess.piece.Piece.Color.WHITE;
+import static chess.piece.Piece.Color.BLACK;
+import static chess.piece.Piece.Color.NONE;
 
 public class Piece {
 
@@ -62,6 +64,10 @@ public class Piece {
         return new Piece(BLACK, KING);
     }
 
+    public static Piece createBlank() {
+        return new Piece(NONE, BLANK);
+    }
+
     private Piece(Color color, Type type) {
         this.color = color;
         this.type = type;
@@ -87,12 +93,14 @@ public class Piece {
         if (this.color == WHITE) {
             return this.type.representation;
         }
-
-        return this.type.representation.toUpperCase();
+        if (this.color ==  BLACK) {
+            return this.type.representation.toUpperCase();
+        }
+        return this.type.representation;
     }
 
     public enum Color {
-        WHITE, BLACK
+        WHITE, BLACK, NONE
     }
 
     public enum Type {
@@ -101,7 +109,8 @@ public class Piece {
         ROOK("r"),
         BISHOP("b"),
         QUEEN("q"),
-        KING("k");
+        KING("k"),
+        BLANK(".");
 
         private final String representation;
 
