@@ -9,11 +9,7 @@ public class Pawn extends Piece {
 		super(color, Type.PAWN);
 	}
 
-	public static Pawn createWhite() {
-		return new Pawn(Color.WHITE);
-	}
-
-	public static Pawn createBlack() {
-		return new Pawn(Color.BLACK);
+	public static Pawn of(Color color) {
+		return new Pawn(color);
 	}
 }

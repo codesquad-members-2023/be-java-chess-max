@@ -1,5 +1,6 @@
 package chess.board;
 
+import chess.color.Color;
 import chess.pieces.Dummy;
 import chess.pieces.Pawn;
 import chess.pieces.Piece;
@@ -24,8 +25,8 @@ public class Board {
 		}
 
 		int initialPawnRow = 1;
-		Arrays.fill(board[initialPawnRow], Pawn.createBlack());
-		Arrays.fill(board[BOARD_SIZE - initialPawnRow - 1], Pawn.createWhite());
+		Arrays.fill(board[initialPawnRow], Pawn.of(Color.BLACK));
+		Arrays.fill(board[BOARD_SIZE - initialPawnRow - 1], Pawn.of(Color.WHITE));
 	}
 
 	public String print() {

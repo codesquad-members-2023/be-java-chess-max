@@ -14,20 +14,23 @@ class PawnTest {
 	@DisplayName("Pawn 인스턴스를 생성할 때 팩터리 메서드를 통해 생성하면 올바른 Pawn 인스턴스가 생성된다.")
 	@ParameterizedTest
 	@MethodSource("providePawns")
-	void givenNothing_whenCreatePawn_thenCreatesPawn(Pawn pawn, Color expectedColor, String expectedFigure) {
+	void givenNothing_whenCreatePawn_thenCreatesPawn(Color color, String expectedFigure) {
 		// given
 
-		// when & then
+		// when
+		Pawn pawn = Pawn.of(color);
+
+		// then
 		SoftAssertions.assertSoftly(softAssertions -> {
-			softAssertions.assertThat(pawn.getColor()).isEqualTo(expectedColor);
+			softAssertions.assertThat(pawn.getColor()).isEqualTo(color);
 			softAssertions.assertThat(pawn.toString()).isEqualTo(expectedFigure);
 		});
 	}
 
 	private static Stream<Arguments> providePawns() {
 		return Stream.of(
-				Arguments.of(Pawn.createBlack(), Color.BLACK, "P"),
-				Arguments.of(Pawn.createWhite(), Color.WHITE, "p")
+				Arguments.of(Color.BLACK, "P"),
+				Arguments.of(Color.WHITE, "p")
 		);
 	}
 }
