@@ -1,10 +1,12 @@
 package chess;
 
+import chess.piece.Piece;
+import chess.piece.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static chess.StringUtil.NEW_LINE;
+import static chess.util.StringUtil.NEW_LINE;
 import static chess.piece.Piece.Color.BLACK;
 import static chess.piece.Piece.Color.WHITE;
 import static chess.piece.Piece.Type.BISHOP;
@@ -46,6 +48,17 @@ class BoardTest {
 
         assertAll(() -> assertThat(board.countPiecesByColorAndType(WHITE, PAWN)).isEqualTo(8),
                   () -> assertThat(board.countPiecesByColorAndType(BLACK, BISHOP)).isEqualTo(2));
+    }
+
+    @Test
+    @DisplayName("findPiece: 주어진 위치의 기물을 조회한다")
+    public void findPiece() {
+        board.initialize();
+
+        assertAll(() -> assertThat(Piece.createBlackRook(new Position("a8"))).isEqualTo(board.findPiece("a8")),
+                  () -> assertThat(Piece.createBlackRook(new Position("h8"))).isEqualTo(board.findPiece("h8")),
+                  () -> assertThat(Piece.createWhiteRook(new Position("a1"))).isEqualTo(board.findPiece("a1")),
+                  () -> assertThat(Piece.createWhiteRook(new Position("h1"))).isEqualTo(board.findPiece("h1")));
     }
 
 }
