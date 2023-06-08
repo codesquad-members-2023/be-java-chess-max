@@ -11,19 +11,20 @@ import com.chessgame.app.chess.piece.position.File;
 import com.chessgame.app.chess.piece.position.Position;
 import com.chessgame.app.chess.piece.position.Rank;
 import com.chessgame.app.chess.piece.type.PieceColor;
-import com.chessgame.app.chess.piece.type.PieceSymbol;
+import com.chessgame.app.chess.piece.type.PieceKind;
+import com.chessgame.app.chess.piece.type.PieceType;
 
 class PawnTest {
 
-	Pawn whitePawn;
-	Pawn balckPawn;
-	Pawn pawn;
+	Piece whitePawn;
+	Piece balckPawn;
+	Piece pawn;
 
 	@BeforeEach
 	void beforEach() {
-		whitePawn = new Pawn(PieceColor.WHITE, new Position(File.BLOCK, Rank.BLOCK));
-		balckPawn = new Pawn(PieceColor.BLACK, new Position(File.BLOCK, Rank.BLOCK));
-		pawn = new Pawn(new Position(File.BLOCK, Rank.BLOCK));
+		whitePawn = new Piece(PieceKind.PAWN, PieceColor.WHITE, new Position(File.BLOCK, Rank.BLOCK));
+		balckPawn = new Piece(PieceKind.PAWN, PieceColor.BLACK, new Position(File.BLOCK, Rank.BLOCK));
+		pawn = new Piece(PieceKind.PAWN, new Position(File.BLOCK, Rank.BLOCK));
 	}
 
 	@DisplayName("원하는 색의 Pawn을 생성할 수 있다.")
@@ -44,8 +45,8 @@ class PawnTest {
 	@DisplayName("Pawn 생성시 symbol이 자동으로 결정된다.")
 	@Test
 	void determine_symbol() {SoftAssertions softAssertions = new SoftAssertions();
-		softAssertions.assertThat(whitePawn.getMark()).isEqualTo(PieceSymbol.WHITE_PAWN.getMark());
-		softAssertions.assertThat(balckPawn.getMark()).isEqualTo(PieceSymbol.BLACK_PAWN.getMark());
+		softAssertions.assertThat(whitePawn.getSymbol()).isEqualTo(PieceType.WHITE_PAWN.getSymbol());
+		softAssertions.assertThat(balckPawn.getSymbol()).isEqualTo(PieceType.BLACK_PAWN.getSymbol());
 		softAssertions.assertAll();
 	}
 

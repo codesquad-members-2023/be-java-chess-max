@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.chessgame.app.chess.piece.Piece;
 import com.chessgame.app.chess.piece.position.Rank;
 import com.chessgame.app.chess.piece.type.PieceColor;
-import com.chessgame.app.chess.piece.type.PieceType;
+import com.chessgame.app.chess.piece.type.PieceKind;
 import com.chessgame.app.chess.piece.utill.PieceInitializer;
 
 public class Board {
@@ -17,8 +17,8 @@ public class Board {
 	}
 
 	public void initialize() {
-		pieceStorage.addAll(PieceInitializer.initialWhitePawns());
-		pieceStorage.addAll(PieceInitializer.initialBlackPawns());
+		pieceStorage.addAll(PieceInitializer.initialWhitePiece());
+		pieceStorage.addAll(PieceInitializer.initialBlackPiece());
 	}
 
 	public void add(Piece piece) {
@@ -29,7 +29,7 @@ public class Board {
 		return pieceStorage.get(index);
 	}
 
-	public int countPieces(PieceType clazz, PieceColor color) {
+	public int countPieces(PieceKind clazz, PieceColor color) {
 		int count = 0;
 		for(Piece piece : pieceStorage) {
 			if(piece.verify(clazz, color)) {
@@ -46,10 +46,20 @@ public class Board {
 		for(Piece piece : pieceStorage) {
 			if(piece.verifyRank(rank)) {
 				int startIndex = piece.getFileValue() - 1;
-				sb.replace(startIndex, startIndex + 1, piece.getMark());
+				sb.replace(startIndex, startIndex + 1, piece.getSymbol());
 			}
 		}
 
+		return sb.toString();
+	}
+
+	public String getResult() {
+		StringBuilder sb = new StringBuilder();
+
+		for(Rank rank : Rank.values()) {
+			if(rank == Rank.BLOCK) continue;
+			sb.append(getResult(rank)).append(System.lineSeparator());
+		}
 		return sb.toString();
 	}
 }
