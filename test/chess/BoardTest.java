@@ -86,14 +86,31 @@ class BoardTest {
         addPiece(Piece.createBlackRook(new Position("c8")));
 
         addPiece(Piece.createWhitePawn(new Position("f2")));
-        addPiece(Piece.createWhitePawn(new Position("f3")));
+        addPiece(Piece.createWhitePawn(new Position("g2")));
         addPiece(Piece.createWhiteRook(new Position("e1")));
         addPiece(Piece.createWhiteKing(new Position("f1")));
 
         assertAll(() -> assertThat(board.calculatePoint(BLACK)).isEqualTo(15.0),
-                  () -> assertThat(board.calculatePoint(WHITE)).isEqualTo(6.0));
+                  () -> assertThat(board.calculatePoint(WHITE)).isEqualTo(7.0));
 
         System.out.println(board.show());
+    }
+
+    @Test
+    @DisplayName("같은 세로 방향에 있는 같은 색의 Pawn의 점수는 0.5점으로 계산한다")
+    public void calculatePawnPoint() {
+        board.initializeEmpty();
+
+        addPiece(Piece.createBlackPawn(new Position("b6")));
+        addPiece(Piece.createBlackPawn(new Position("b5")));
+        addPiece(Piece.createBlackPawn(new Position("b4")));
+
+        addPiece(Piece.createWhitePawn(new Position("g6")));
+        addPiece(Piece.createWhitePawn(new Position("f5")));
+        addPiece(Piece.createWhitePawn(new Position("e4")));
+
+        assertAll(() -> assertThat(board.calculatePoint(BLACK)).isEqualTo(1.5),
+                  () -> assertThat(board.calculatePoint(WHITE)).isEqualTo(3.0));
     }
 
     private void addPiece(Piece piece) {
