@@ -29,6 +29,11 @@ public class Board {
         board.add(Rank.initializeBlackPieces(7));
     }
 
+    public void initializeEmpty() {
+        board.addAll(IntStream.range(0, 8).mapToObj(Rank::createBlankRank).collect(Collectors.toList()));
+    }
+
+
     public int countPieces() {
         return board.stream().mapToInt(Rank::countPieces).sum();
     }
@@ -48,4 +53,8 @@ public class Board {
         return reversedBoard.stream().map(Rank::show).collect(Collectors.joining(NEW_LINE));
     }
 
+    public void move(final String position, final Piece piece) {
+        final Position targetPosition = new Position(position);
+        board.get(targetPosition.getIndexY()).move(targetPosition.getIndexX(), piece);
+    }
 }

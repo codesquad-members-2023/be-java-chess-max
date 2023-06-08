@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static chess.piece.Piece.Type.BLANK;
+
 public class Rank {
     private final List<Piece> rank;
 
@@ -18,7 +20,7 @@ public class Rank {
     }
 
     public int countPieces() {
-        return (int) rank.stream().filter(piece -> piece.getType() != Type.BLANK).count();
+        return (int) rank.stream().filter(piece -> piece.getType() != BLANK).count();
     }
 
     public static Rank createBlankRank(int index) {
@@ -78,4 +80,7 @@ public class Rank {
         return this.rank.stream().map(Piece::getRepresentation).collect(Collectors.joining());
     }
 
+    public void move(final int indexX, final Piece piece) {
+        this.rank.set(indexX, piece);
+    }
 }
