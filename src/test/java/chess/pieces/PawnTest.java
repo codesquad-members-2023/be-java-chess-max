@@ -3,6 +3,7 @@ package chess.pieces;
 import chess.color.Color;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -32,5 +33,22 @@ class PawnTest {
 				Arguments.of(Color.BLACK, "P"),
 				Arguments.of(Color.WHITE, "p")
 		);
+	}
+
+	@DisplayName("Pawn의 색깔을 확인할 때 Pawn 인스턴스가 주어지면 흑색 / 백색 여부가 반환된다.")
+	@Test
+	void givenPawn_whenCheckPieceOfColor_thenReturnsResult() {
+		// given
+		Pawn pawn = Pawn.of(Color.BLACK);
+
+		// when
+		boolean isBlack = pawn.isBlack();
+		boolean isWhite = pawn.isWhite();
+
+		// then
+		SoftAssertions.assertSoftly(softAssertions -> {
+			softAssertions.assertThat(isBlack).isTrue();
+			softAssertions.assertThat(isWhite).isFalse();
+		});
 	}
 }
