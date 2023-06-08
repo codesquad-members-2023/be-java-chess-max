@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 public class Board {
 
 	private static final int BOARD_SIZE = 8;
+	private static final String NEW_LINE = System.getProperty("line.separator");
 
 	private final Piece[][] board;
 
@@ -34,7 +35,7 @@ public class Board {
 			String boardLine = Arrays.stream(board[row])
 					.map(Object::toString)
 					.collect(Collectors.joining());
-			boardFigure.append(boardLine).append("\n");
+			boardFigure.append(boardLine).append(NEW_LINE);
 		}
 
 		System.out.println(boardFigure);
