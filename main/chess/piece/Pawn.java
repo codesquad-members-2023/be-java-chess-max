@@ -4,9 +4,11 @@ import chess.Color;
 
 import static chess.Color.WHITE;
 
-public class Pawn {
+public class Pawn implements Piece {
 
     private final Color color;
+    public static final String WHITE_REPRESENTATION = "p";
+    public static final String BLACK_REPRESENTATION = "P";
 
     public Pawn() {
         this.color = WHITE;
@@ -18,6 +20,13 @@ public class Pawn {
 
     public Color getColor() {
         return this.color;
+    }
+
+    public String getRepresentation() {
+        if (this.color == WHITE) {
+            return WHITE_REPRESENTATION;
+        }
+        return BLACK_REPRESENTATION;
     }
 
 }
