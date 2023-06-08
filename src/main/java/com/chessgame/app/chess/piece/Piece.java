@@ -8,37 +8,41 @@ import com.chessgame.app.chess.piece.position.Rank;
 import com.chessgame.app.chess.piece.type.PieceColor;
 import com.chessgame.app.chess.piece.type.PieceKind;
 import com.chessgame.app.chess.piece.type.PieceType;
-import com.chessgame.app.chess.piece.utill.PieceSymbolGenerator;
+import com.chessgame.app.chess.piece.utill.PieceTypeGenerator;
 
 public class Piece {
-	private final PieceKind kind;
-	private final PieceColor color;
-	private final String symbol;
+	private final PieceType type;
 	private final Position position;
 
 	public Piece(PieceType type, Position position) {
-		this.kind = type.getKind();
-		this.color = type.getColor();
-		this.symbol = type.getSymbol();
+		this.type = type;
 		this.position = position;
 	}
 
 	public Piece(PieceKind kind, Position position) {
-		this.kind = kind;
-		this.color = PieceColor.WHITE;
-		this.symbol = PieceSymbolGenerator.determine(kind, color);
+		this.type = PieceTypeGenerator.generate(kind, PieceColor.WHITE);
 		this.position = position;
 	}
 
 	public Piece(PieceKind kind, PieceColor color,  Position position) {
-		this.kind = kind;
-		this.color = color;
-		this.symbol = PieceSymbolGenerator.determine(kind, color);
+		this.type = PieceTypeGenerator.generate(kind, color);
 		this.position = position;
 	}
 
+	public PieceType getType() {
+		return type;
+	}
+
+	public PieceKind getKind() {
+		return type.getKind();
+	}
+
+	public PieceColor getColor() {
+		return type.getColor();
+	}
+
 	public String getSymbol() {
-		return symbol;
+		return type.getSymbol();
 	}
 
 	public File getFile() {
@@ -62,11 +66,11 @@ public class Piece {
 	}
 
 	public boolean verifyType(PieceKind kind) {
-		return this.kind == kind;
+		return type.getKind() == kind;
 	}
 
 	public boolean verifyColor(PieceColor color) {
-		return this.color == color;
+		return type.getColor() == color;
 	}
 
 	public boolean verifyRank(Rank rank) {
@@ -83,13 +87,13 @@ public class Piece {
 			return false;
 		}
 
-		return this.kind == ((Piece)obj).kind
-			&& this.color == ((Piece)obj).color
-			&& this.position.isSamePosition(((Piece)obj).getFile(), ((Piece)obj).getRank());
+		return type.getKind() == ((Piece)obj).getKind()
+			&& type.getColor() == ((Piece)obj).getColor()
+			&& position.isSamePosition(((Piece)obj).getFile(), ((Piece)obj).getRank());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(kind, color, position.getFile(), position.getRank());
+		return Objects.hash(type.getKind(), type.getColor(), position.getFile(), position.getRank());
 	}
 }

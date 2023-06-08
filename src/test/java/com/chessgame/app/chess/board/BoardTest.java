@@ -79,4 +79,11 @@ class BoardTest {
 		softAssertions.assertThat(board.getResult(Rank.R8)).isEqualTo("♜♞♝♛♚♝♞♜");
 		softAssertions.assertAll();
 	}
+
+	@DisplayName("원하는 위치에 있는 Piece를 알아낼 수 있다.")
+	@Test
+	void findByPosition() {
+		assertThat(board.findPiece(whitePawnPosition).getKind()).isEqualTo(PieceKind.PAWN);
+	}
+
 }

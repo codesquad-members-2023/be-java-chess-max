@@ -44,6 +44,15 @@ public class Board {
 		return findPiece(new Piece(type, position));
 	}
 
+	public Piece findPiece(Position position) {
+		for(Piece exist : pieceStorage) {
+			if(exist.verifyPosition(position.getFile(), position.getRank())) {
+				return exist;
+			}
+		}
+		throw new NoSuchElementException("해당하는 위치의 Piece를 찾을 수 없습니다. Board에는 항상 64개의 Piece가 있어야 되기 떄문에 이런 경우가 생기면 안됩니다.");
+	}
+
 	public int countPieces(PieceKind kind, PieceColor color) {
 		int count = 0;
 		for(Piece piece : pieceStorage) {
