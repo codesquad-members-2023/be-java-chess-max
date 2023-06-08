@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="chess.BoardTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-06-07T03:03:49" hostname="DESKTOP-6BJ4TD2" time="0.102">
+<testsuite name="chess.BoardTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-06-08T07:07:31" hostname="DESKTOP-6BJ4TD2" time="0.093">
   <properties/>
-  <testcase name="체스 판은 여러 개의 폰을 저장할 수 있다." classname="chess.BoardTest" time="0.102"/>
+  <testcase name="체스판을 초기화한다." classname="chess.BoardTest" time="0.088"/>
+  <testcase name="체스 판은 여러 개의 폰을 저장할 수 있다." classname="chess.BoardTest" time="0.004"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
