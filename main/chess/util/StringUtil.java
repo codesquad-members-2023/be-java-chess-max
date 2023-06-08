@@ -1,4 +1,4 @@
-package chess;
+package chess.util;
 
 public final class StringUtil {
 
