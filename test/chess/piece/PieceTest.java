@@ -52,4 +52,28 @@ class PieceTest {
                   () -> assertThat(Piece.createBlackKnight().getRepresentation()).isEqualTo("N"));
     }
 
+    @Test
+    @DisplayName("팩토리 메서드를 사용하여 색과 종류가 다른 각각의 Piece를 생성한다")
+    public void createPiece() {
+        verifyPiece(Piece.createWhitePawn(), Piece.createBlackPawn(), Type.PAWN);
+        verifyPiece(Piece.createWhiteKnight(), Piece.createBlackKnight(), Type.KNIGHT);
+        verifyPiece(Piece.createWhiteRook(), Piece.createBlackRook(), Type.ROOK);
+        verifyPiece(Piece.createWhiteBishop(), Piece.createBlackBishop(), Type.BISHOP);
+        verifyPiece(Piece.createWhiteQueen(), Piece.createBlackQueen(), Type.QUEEN);
+        verifyPiece(Piece.createWhiteKing(), Piece.createBlackKing(), Type.KING);
+
+        Piece blank = Piece.createBlank();
+        assertAll(() -> assertThat(blank.isWhite()).isFalse(),
+                  () -> assertThat(blank.isBlack()).isFalse(),
+                  () -> assertThat(blank.getRepresentation()).isEqualTo("."),
+                  () -> assertThat(blank.getType()).isEqualTo(Type.BLANK));
+    }
+
+    private void verifyPiece(final Piece whitePiece, final Piece blackPiece, final Type type) {
+        assertAll(() -> assertThat(whitePiece.isWhite()).isTrue(),
+                  () -> assertThat(blackPiece.isBlack()).isTrue(),
+                  () -> assertThat(whitePiece.getType()).isEqualTo(type),
+                  () -> assertThat(blackPiece.getType()).isEqualTo(type));
+    }
+
 }
