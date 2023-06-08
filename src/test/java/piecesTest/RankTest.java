@@ -1,6 +1,9 @@
+package piecesTest;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pieces.Piece;
+import pieces.Rank;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,3 +1,7 @@
+package controller;
+
+import pieces.Board;
+
 public class ChessGame {
 
     private final Board board;

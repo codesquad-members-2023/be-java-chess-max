@@ -1,5 +1,7 @@
+package pieces;
 
 import pieces.Piece;
+import pieces.Rank;
 
 import static utils.StringUtil.appendNewLine;
 

@@ -1,6 +1,9 @@
+package piecesTest;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import pieces.Board;
 import pieces.Piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,7 +19,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("Board(): 보드가 생성되는지 확인")
+    @DisplayName("pieces.Board(): 보드가 생성되는지 확인")
     void createBoard() {
         assertThat(board).isInstanceOf(Board.class);
     }
