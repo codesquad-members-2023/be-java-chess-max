@@ -2,8 +2,7 @@ package chess.pieces;
 
 public class Dummy extends Piece {
 
-	@Override
-	public String toString() {
-		return ".";
+	public static Dummy of() {
+		return new Dummy();
 	}
 }

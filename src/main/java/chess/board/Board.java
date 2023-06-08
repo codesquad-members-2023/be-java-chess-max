@@ -1,9 +1,7 @@
 package chess.board;
 
 import chess.color.Color;
-import chess.pieces.Dummy;
-import chess.pieces.Pawn;
-import chess.pieces.Piece;
+import chess.pieces.*;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -20,13 +18,29 @@ public class Board {
 	}
 
 	public void initialize() {
-		for (int i = 0; i < BOARD_SIZE; i++) {
-			Arrays.fill(board[i], new Dummy());
-		}
+		initPieces(0, Color.BLACK);
+		initPieces(BOARD_SIZE - 1, Color.WHITE);
+		initPawns(1, Color.BLACK);
+		initPawns(BOARD_SIZE - 2, Color.WHITE);
+		initDummyPieces();
+	}
 
-		int initialPawnRow = 1;
-		Arrays.fill(board[initialPawnRow], Pawn.of(Color.BLACK));
-		Arrays.fill(board[BOARD_SIZE - initialPawnRow - 1], Pawn.of(Color.WHITE));
+	private void initPieces(int row, Color color) {
+		board[row][0] = board[row][7] = Rook.of(color);
+		board[row][1] = board[row][6] = Knight.of(color);
+		board[row][2] = board[row][5] = Bishop.of(color);
+		board[row][3] = Queen.of(color);
+		board[row][4] = King.of(color);
+	}
+
+	private void initPawns(int row, Color color) {
+		Arrays.fill(board[row], Pawn.of(color));
+	}
+
+	private void initDummyPieces() {
+		for (int row = 2; row < BOARD_SIZE - 2; row++) {
+			Arrays.fill(board[row], Dummy.of());
+		}
 	}
 
 	public String print() {
