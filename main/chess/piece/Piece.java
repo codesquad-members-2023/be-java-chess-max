@@ -16,54 +16,6 @@ public class Piece {
     private final Color color;
     private final Type type;
 
-    public static Piece createWhitePawn() {
-        return new Piece(WHITE, PAWN);
-    }
-
-    public static Piece createBlackPawn() {
-        return new Piece(BLACK, PAWN);
-    }
-
-    public static Piece createWhiteKnight() {
-        return new Piece(WHITE, KNIGHT);
-    }
-
-    public static Piece createBlackKnight() {
-        return new Piece(BLACK, KNIGHT);
-    }
-
-    public static Piece createWhiteRook() {
-        return new Piece(WHITE, ROOK);
-    }
-
-    public static Piece createBlackRook() {
-        return new Piece(BLACK, ROOK);
-    }
-
-    public static Piece createWhiteBishop() {
-        return new Piece(WHITE, BISHOP);
-    }
-
-    public static Piece createBlackBishop() {
-        return new Piece(BLACK, BISHOP);
-    }
-
-    public static Piece createWhiteQueen() {
-        return new Piece(WHITE, QUEEN);
-    }
-
-    public static Piece createBlackQueen() {
-        return new Piece(BLACK, QUEEN);
-    }
-
-    public static Piece createWhiteKing() {
-        return new Piece(WHITE, KING);
-    }
-
-    public static Piece createBlackKing() {
-        return new Piece(BLACK, KING);
-    }
-
     public static Piece createBlank() {
         return new Piece(NONE, BLANK);
     }
@@ -71,6 +23,62 @@ public class Piece {
     private Piece(Color color, Type type) {
         this.color = color;
         this.type = type;
+    }
+
+    public static Piece createWhitePawn() {
+        return createWhite(PAWN);
+    }
+
+    public static Piece createBlackPawn() {
+        return createBlack(PAWN);
+    }
+
+    public static Piece createWhiteKnight() {
+        return createWhite(KNIGHT);
+    }
+
+    public static Piece createBlackKnight() {
+        return createBlack(KNIGHT);
+    }
+
+    public static Piece createWhiteRook() {
+        return createWhite(ROOK);
+    }
+
+    public static Piece createBlackRook() {
+        return createBlack(ROOK);
+    }
+
+    public static Piece createWhiteBishop() {
+        return createWhite(BISHOP);
+    }
+
+    public static Piece createBlackBishop() {
+        return createBlack(BISHOP);
+    }
+
+    public static Piece createWhiteQueen() {
+        return createWhite(QUEEN);
+    }
+
+    public static Piece createBlackQueen() {
+        return createBlack(QUEEN);
+    }
+
+    public static Piece createWhiteKing() {
+        return createWhite(KING);
+    }
+
+    public static Piece createBlackKing() {
+        return createBlack(KING);
+    }
+
+    private static Piece createWhite(Type type) {
+        return new Piece(WHITE, type);
+    }
+
+    private static Piece createBlack(Type type) {
+        return new Piece(BLACK, type);
     }
 
     public Color getColor() {
