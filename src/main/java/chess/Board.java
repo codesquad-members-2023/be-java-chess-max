@@ -23,4 +23,8 @@ public class Board {
 	public String findPawnColor(int index) {
 		return pawns.get(index).getColor();
 	}
+
+	public void initialize() {}
+
+	public void print() {}
 }
