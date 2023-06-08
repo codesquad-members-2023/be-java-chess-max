@@ -22,6 +22,14 @@ public abstract class Piece {
 		return color;
 	}
 
+	public boolean isBlack() {
+		return color == Color.BLACK;
+	}
+
+	public boolean isWhite() {
+		return color == Color.WHITE;
+	}
+
 	@Override
 	public String toString() {
 		if (color == Color.BLACK) {
