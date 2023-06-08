@@ -1,6 +1,8 @@
 package chess;
 
 import chess.piece.Piece;
+import chess.piece.Piece.Color;
+import chess.piece.Piece.Type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,7 @@ public class Rank {
     }
 
     public int countPieces() {
-        return (int) rank.stream().filter(piece -> piece.getType() != Piece.Type.BLANK).count();
+        return (int) rank.stream().filter(piece -> piece.getType() != Type.BLANK).count();
     }
 
     public static Rank createBlankRank() {
@@ -58,6 +60,13 @@ public class Rank {
 
     public static Rank initializeBlackPawns() {
         return new Rank(IntStream.range(0, 8).mapToObj(o -> Piece.createBlackPawn()).collect(Collectors.toList()));
+    }
+
+    public int countPiecesByColorAndType(Color color, Type type) {
+        return (int) this.rank
+                .stream()
+                .filter(piece -> piece.getType().equals(type) && piece.getColor().equals(color))
+                .count();
     }
 
     public String show() {

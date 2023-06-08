@@ -1,5 +1,8 @@
 package chess;
 
+import chess.piece.Piece.Color;
+import chess.piece.Piece.Type;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +28,10 @@ public class Board {
 
     public int countPieces() {
         return board.stream().mapToInt(Rank::countPieces).sum();
+    }
+
+    public int countPiecesByColorAndType(Color color, Type type) {
+        return board.stream().mapToInt(rank -> rank.countPiecesByColorAndType(color, type)).sum();
     }
 
     public String show() {
