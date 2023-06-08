@@ -121,77 +121,33 @@ public class Rank {
         rank[intIndex] = piece;
     }
 
-    public int countBlack() {
+    public int count(Piece.Color color) {
         int count = 0;
 
         for (Piece piece : rank) {
-            if (piece.isBlack()) {
+            if (piece.isColor(color)) {
                 count += 1;
             }
         }
         return count;
     }
 
-    public int countWhite() {
+    public int count(Piece.Type type) {
         int count = 0;
 
         for (Piece piece : rank) {
-            if (piece.isWhite()) {
+            if (piece.isType(type)) {
                 count += 1;
             }
         }
         return count;
     }
 
-    public int countPawn() {
+    public int count(Piece.Color color, Piece.Type type) {
         int count = 0;
 
         for (Piece piece : rank) {
-            if (piece.isPawn()) {
-                count += 1;
-            }
-        }
-        return count;
-    }
-
-    public int countKnight() {
-        int count = 0;
-
-        for (Piece piece : rank) {
-            if (piece.isKnight()) {
-                count += 1;
-            }
-        }
-        return count;
-    }
-
-    public int countBishop() {
-        int count = 0;
-
-        for (Piece piece : rank) {
-            if (piece.isBishop()) {
-                count += 1;
-            }
-        }
-        return count;
-    }
-
-    public int countQueen() {
-        int count = 0;
-
-        for (Piece piece : rank) {
-            if (piece.isQueen()) {
-                count += 1;
-            }
-        }
-        return count;
-    }
-
-    public int countKing() {
-        int count = 0;
-
-        for (Piece piece : rank) {
-            if (piece.isKing()) {
+            if (piece.isColor(color) && piece.isType(type)) {
                 count += 1;
             }
         }
@@ -213,7 +169,7 @@ public class Rank {
         double score = 0;
 
         for (Piece piece : rank) {
-            if (piece.isColor(color) && !piece.isPawn()) {
+            if (piece.isColor(color) && !piece.isType(Piece.Type.PAWN)) {
                 score += piece.getScore();
             }
         }
@@ -224,7 +180,7 @@ public class Rank {
         List<Character> index = new ArrayList<>();
 
         for (int i = 0; i < rank.length; i++) {
-            if (rank[i].isColor(color) && rank[i].isPawn()) {
+            if (rank[i].isColor(color) && rank[i].isType(Piece.Type.PAWN)) {
                 index.add((char) ('a' + i));
             }
         }

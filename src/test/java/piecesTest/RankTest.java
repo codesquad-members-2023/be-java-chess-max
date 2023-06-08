@@ -67,7 +67,7 @@ public class RankTest {
 
         Piece piece = rank.getPieceAt('e');
 
-        assertThat(piece.getColor()).isEqualTo(Piece.Color.WHITE);
-        assertThat(piece.getType()).isEqualTo(Piece.Type.KING);
+        assertThat(piece.isColor(Piece.Color.WHITE)).isTrue();
+        assertThat(piece.isType(Piece.Type.KING)).isTrue();
     }
 }

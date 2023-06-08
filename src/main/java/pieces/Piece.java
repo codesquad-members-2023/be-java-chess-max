@@ -94,48 +94,16 @@ public class Piece {
         return new Piece(Color.NOCOLOR, Type.NOTYPE);
     }
 
-    public boolean isBlack() {
-        return color == Color.BLACK;
+    public boolean isColor(Piece.Color color) {
+        return this.color == color;
     }
 
-    public boolean isWhite() {
-        return color == Color.WHITE;
-    }
-
-    public boolean isPawn() {
-        return type == Type.PAWN;
-    }
-
-    public boolean isRook() {
-        return type == Type.ROOK;
-    }
-
-    public boolean isKnight() {
-        return type == Type.KNIGHT;
-    }
-
-    public boolean isBishop() {
-        return type == Type.BISHOP;
-    }
-
-    public boolean isQueen() {
-        return type == Type.QUEEN;
-    }
-
-    public boolean isKing() {
-        return type == Type.KING;
+    public boolean isType(Piece.Type type) {
+        return this.type == type;
     }
 
     public boolean isBlank() {
         return color == Color.NOCOLOR && type == Type.NOTYPE;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public Type getType() {
-        return type;
     }
 
     public char getShape() {
@@ -147,13 +115,5 @@ public class Piece {
 
     public double getScore() {
         return type.score;
-    }
-
-    public boolean isColor(Piece.Color color) {
-        return this.color == color;
-    }
-
-    public boolean isType(Piece.Type type) {
-        return this.type == type;
     }
 }

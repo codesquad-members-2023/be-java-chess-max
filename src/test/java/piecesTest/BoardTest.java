@@ -123,8 +123,8 @@ class BoardTest {
 
         Piece piece = board.getPieceAt("c8");
 
-        assertThat(piece.getColor()).isEqualTo(Piece.Color.BLACK);
-        assertThat(piece.getType()).isEqualTo(Piece.Type.BISHOP);
+        assertThat(piece.isColor(Piece.Color.BLACK)).isTrue();
+        assertThat(piece.isType(Piece.Type.BISHOP)).isTrue();
     }
 
     @Test
