@@ -1,9 +1,10 @@
 package chess.board;
 
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardTest {
 
@@ -14,9 +15,9 @@ class BoardTest {
 		sut = new Board();
 	}
 
-	@DisplayName("체스판을 초기화할 때 체스판을 출력하면 검은색 Pawn과 흰색 Pawn이 각각 8개씩 존재한다.")
+	@DisplayName("체스판을 초기화할 때 체스판을 출력하면 체스판이 정상적으로 초기화됨을 확인한다.")
 	@Test
-	void givenInitializedBoard_whenPrintBoard_thenBoardContainsPawns() {
+	void givenInitializedBoard_whenPrintBoard_thenSuccessInitializeBoard() {
 		// given
 		sut.initialize();
 
@@ -24,9 +25,21 @@ class BoardTest {
 		String boardFigure = sut.print();
 
 		// then
-		SoftAssertions.assertSoftly(softAssertions -> {
-			softAssertions.assertThat(boardFigure).contains("PPPPPPPP");
-			softAssertions.assertThat(boardFigure).contains("pppppppp");
-		});
+		assertThat(boardFigure).isEqualTo(createInitialBoardFigure());
+	}
+
+	private String createInitialBoardFigure() {
+		StringBuilder figure = new StringBuilder();
+		String newLine = System.getProperty("line.separator");
+		figure
+				.append("RNBQKBNR").append(newLine)
+				.append("PPPPPPPP").append(newLine)
+				.append("........").append(newLine)
+				.append("........").append(newLine)
+				.append("........").append(newLine)
+				.append("........").append(newLine)
+				.append("pppppppp").append(newLine)
+				.append("rnbqkbnr").append(newLine);
+		return figure.toString();
 	}
 }
