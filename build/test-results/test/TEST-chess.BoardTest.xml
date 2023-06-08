@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="chess.BoardTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-06-08T07:27:23" hostname="DESKTOP-6BJ4TD2" time="0.042">
+<testsuite name="chess.BoardTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-06-08T07:39:14" hostname="DESKTOP-6BJ4TD2" time="0.026">
   <properties/>
-  <testcase name="체스판을 출력한다." classname="chess.BoardTest" time="0.042"/>
+  <testcase name="체스판을 출력한다." classname="chess.BoardTest" time="0.026"/>
   <system-out><![CDATA[........
 PPPPPPPP
 ........
