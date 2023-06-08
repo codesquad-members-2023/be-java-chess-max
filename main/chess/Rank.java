@@ -76,6 +76,10 @@ public class Rank {
         return rank.get(indexX);
     }
 
+    public List<Piece> findPiecesByColor(final Color color) {
+        return this.rank.stream().filter(piece -> piece.getColor().equals(color)).collect(Collectors.toList());
+    }
+
     public String show() {
         return this.rank.stream().map(Piece::getRepresentation).collect(Collectors.joining());
     }

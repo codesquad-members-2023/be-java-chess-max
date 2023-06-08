@@ -7,10 +7,13 @@ import chess.piece.Position;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static chess.piece.Piece.Type.PAWN;
 import static chess.util.StringUtil.NEW_LINE;
 
 public class Board {
@@ -33,7 +36,6 @@ public class Board {
         board.addAll(IntStream.range(0, 8).mapToObj(Rank::createBlankRank).collect(Collectors.toList()));
     }
 
-
     public int countPieces() {
         return board.stream().mapToInt(Rank::countPieces).sum();
     }
@@ -47,6 +49,10 @@ public class Board {
         return board.get(findPosition.getIndexY()).findPiece(findPosition.getIndexX());
     }
 
+    public List<Piece> findPiecesByColor(Color color) {
+        return board.stream().flatMap(rank -> rank.findPiecesByColor(color).stream()).collect(Collectors.toList());
+    }
+
     public String show() {
         final List<Rank> reversedBoard = new ArrayList<>(this.board);
         Collections.reverse(reversedBoard);
@@ -57,4 +63,28 @@ public class Board {
         final Position targetPosition = new Position(position);
         board.get(targetPosition.getIndexY()).move(targetPosition.getIndexX(), piece);
     }
+
+    public void move(final Position position, final Piece piece) {
+        board.get(position.getIndexY()).move(position.getIndexX(), piece);
+    }
+
+    public double calculatePoint(final Color color) {
+        return findPiecesByColor(color).stream().mapToDouble(o -> o.getType().getPoint()).sum() - calculateSameColorPawnInColumn(color);
+    }
+
+    public double calculateSameColorPawnInColumn(final Color color) {
+        final List<Integer> indexes = findPiecesByColor(color)
+                .stream().filter(piece -> piece.getType().equals(PAWN))
+                .map(piece -> piece.getPosition().getIndexX())
+                .collect(Collectors.toUnmodifiableList());
+
+        Map<Integer, Integer> count = new HashMap<>();
+        for (Integer index : indexes) {
+            count.put(index, count.getOrDefault(index, 0) + 1);
+        }
+
+        final int countPawns = count.values().stream().mapToInt(i -> i).filter(o -> o > 1).sum();
+        return 0.5 * countPawns;
+    }
+
 }

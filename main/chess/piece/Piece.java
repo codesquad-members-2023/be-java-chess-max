@@ -133,18 +133,25 @@ public class Piece {
     }
 
     public enum Type {
-        PAWN("p"),
-        KNIGHT("n"),
-        ROOK("r"),
-        BISHOP("b"),
-        QUEEN("q"),
-        KING("k"),
-        BLANK(".");
+        PAWN("p", 1.0),
+        KNIGHT("n", 2.5),
+        ROOK("r", 5.0),
+        BISHOP("b", 3.0),
+        QUEEN("q", 9.0),
+        KING("k", 0.0),
+        BLANK(".", 0.0);
 
         private final String representation;
+        private final double point;
 
-        Type(String representation) {
+        Type(String representation, double point) {
             this.representation = representation;
+            this.point = point;
+        }
+
+        public double getPoint() {
+            return point;
         }
     }
+
 }

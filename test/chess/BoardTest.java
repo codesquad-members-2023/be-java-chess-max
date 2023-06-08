@@ -75,4 +75,29 @@ class BoardTest {
         System.out.println(board.show());
     }
 
+    @Test
+    @DisplayName("calculatePoint: 체스판의 점수를 계산한다")
+    public void calculatePoint() {
+        board.initializeEmpty();
+
+        addPiece(Piece.createBlackPawn(new Position("b6")));
+        addPiece(Piece.createBlackQueen(new Position("e6")));
+        addPiece(Piece.createBlackKing(new Position("b8")));
+        addPiece(Piece.createBlackRook(new Position("c8")));
+
+        addPiece(Piece.createWhitePawn(new Position("f2")));
+        addPiece(Piece.createWhitePawn(new Position("f3")));
+        addPiece(Piece.createWhiteRook(new Position("e1")));
+        addPiece(Piece.createWhiteKing(new Position("f1")));
+
+        assertAll(() -> assertThat(board.calculatePoint(BLACK)).isEqualTo(15.0),
+                  () -> assertThat(board.calculatePoint(WHITE)).isEqualTo(6.0));
+
+        System.out.println(board.show());
+    }
+
+    private void addPiece(Piece piece) {
+        board.move(piece.getPosition(), piece);
+    }
+
 }
