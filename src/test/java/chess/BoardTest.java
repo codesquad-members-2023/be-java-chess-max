@@ -20,14 +20,27 @@ class BoardTest {
 	@Test
 	@DisplayName("체스 판은 여러 개의 폰을 저장할 수 있다.")
 	public void createPawn() {
-		verifyPawn(WHITE_COLOR, 1);
-		verifyPawn(BLACK_COLOR, 2);
+		Pawn whitePawn = new Pawn(WHITE_COLOR, WHITE_REPRESENTATION);
+		board.addWhitePawn(whitePawn);
+		assertThat(board.size()).isEqualTo(1);
+
+		Pawn blackPawn = new Pawn(BLACK_COLOR, BLACK_REPRESENTATION);
+		board.addBlackPawn(blackPawn);
+		assertThat(board.size()).isEqualTo(2);
 	}
 
-	private void verifyPawn(String color, int size) {
-		Pawn pawn = new Pawn(color);
-		board.add(pawn);
-		assertThat(board.size()).isEqualTo(size);
-		assertThat(board.findPawnColor(size-1)).isEqualTo(color);
+	@DisplayName("체스판을 초기화한다.")
+	@Test
+	public void initialize() {
+		board.initialize();
+		assertThat(board.getWhitePawnsResult()).isEqualTo("pppppppp");
+		assertThat(board.getBlackPawnsResult()).isEqualTo("PPPPPPPP");
+	}
+
+	@DisplayName("체스판을 출력한다.")
+	@Test
+	public void print() {
+		board.initialize();
+		System.out.println(board.print());
 	}
 }
