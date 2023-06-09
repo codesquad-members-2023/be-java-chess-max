@@ -33,4 +33,8 @@ public class Rank {
 				.map(Piece::toString)
 				.collect(Collectors.joining());
 	}
+
+	public void placePiece(final Piece piece, final int col) {
+		rank.set(col, piece);
+	}
 }

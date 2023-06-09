@@ -56,7 +56,7 @@ public class Board {
 			dummies.add(Dummy.of());
 		}
 		for (int row = 2; row < BOARD_SIZE - 2; row++) {
-			board.get(row).init(dummies);
+			board.get(row).init(new ArrayList<>(dummies));
 		}
 	}
 
@@ -69,6 +69,11 @@ public class Board {
 	public Piece findPiece(final String position) {
 		Position pos = new Position(position);
 		return board.get(pos.getX()).getPiece(pos.getY());
+	}
+
+	public void placePiece(final Piece piece, final String position) {
+		Position pos = new Position(position);
+		board.get(pos.getX()).placePiece(piece, pos.getY());
 	}
 
 	public String print() {
