@@ -1,6 +1,6 @@
 package chess.pieces;
 
-import chess.color.Color;
+import chess.pieces.color.Color;
 import chess.pieces.type.Type;
 
 public class Knight extends Piece {

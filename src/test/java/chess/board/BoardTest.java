@@ -1,6 +1,6 @@
 package chess.board;
 
-import chess.color.Color;
+import chess.pieces.color.Color;
 import chess.pieces.type.Type;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

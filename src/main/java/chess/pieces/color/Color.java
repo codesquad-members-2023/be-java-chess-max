@@ -1,4 +1,4 @@
-package chess.color;
+package chess.pieces.color;
 
 import chess.exception.BusinessException;
 import chess.exception.ErrorCode;
