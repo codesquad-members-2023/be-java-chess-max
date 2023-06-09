@@ -2,6 +2,7 @@ package chess.board;
 
 import chess.color.Color;
 import chess.pieces.*;
+import chess.pieces.type.Type;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,12 @@ public class Board {
 		for (int row = 2; row < BOARD_SIZE - 2; row++) {
 			board.get(row).init(dummies);
 		}
+	}
+
+	public int countPieces(Type type, Color color) {
+		return board.stream()
+				.mapToInt(rank -> rank.countPieces(type, color))
+				.sum();
 	}
 
 	public String print() {
