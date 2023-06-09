@@ -1,17 +1,23 @@
 package chess.board;
 
+import chess.exception.BusinessException;
+import chess.exception.ErrorCode;
+import chess.pieces.Piece;
 import chess.pieces.color.Color;
 import chess.pieces.type.Type;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoardTest {
 
@@ -20,13 +26,13 @@ class BoardTest {
 	@BeforeEach
 	void initBoard() {
 		sut = new Board();
+		sut.initialize();
 	}
 
 	@DisplayName("체스판을 초기화할 때 체스판을 출력하면 체스판이 정상적으로 초기화됨을 확인한다.")
 	@Test
 	void givenInitializedBoard_whenPrintBoard_thenSuccessInitializeBoard() {
 		// given
-		sut.initialize();
 
 		// when
 		String boardFigure = sut.print();
@@ -55,7 +61,6 @@ class BoardTest {
 	@ParameterizedTest
 	void givenPieceTypeAndColor_whenCountPieces_thenReturnsCountOfPieces(Type type, Color color, int expectedCount) {
 		// given
-		sut.initialize();
 
 		// when
 		int count = sut.countPieces(type, color);
@@ -79,5 +84,34 @@ class BoardTest {
 				Arguments.of(Type.KING, Color.BLACK, 1),
 				Arguments.of(Type.KING, Color.WHITE, 1)
 		);
+	}
+
+	@DisplayName("기물을 찾을 때 위치정보가 문자열로 주어지면 해당 위치의 기물을 반환한다.")
+	@Test
+	void givenPosition_whenFindPiece_thenReturnsPiece() {
+		// given
+		String position = "b8";
+
+		// when
+		Piece piece = sut.findPiece(position);
+
+		// then
+		SoftAssertions.assertSoftly(softAssertions -> {
+			softAssertions.assertThat(piece.getColor()).isEqualTo(Color.BLACK);
+			softAssertions.assertThat(piece.getType()).isEqualTo(Type.KNIGHT);
+		});
+	}
+
+	@DisplayName("기물을 찾을 때 올바르지 않은 위치정보가 문자열로 주어지면 예외를 던진다.")
+	@ValueSource(strings = {"i1", "f0", "d9"})
+	@ParameterizedTest
+	void givenInvalidPosition_whenFindPiece_thenThrowsException(String position) {
+		// given
+
+		// when & then
+		assertThatThrownBy(() -> sut.findPiece(position))
+				.isInstanceOf(BusinessException.class)
+				.extracting("errorCode")
+				.isEqualTo(ErrorCode.INVALID_POSITION);
 	}
 }
