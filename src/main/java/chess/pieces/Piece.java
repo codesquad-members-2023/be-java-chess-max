@@ -22,6 +22,10 @@ public abstract class Piece {
 		return color;
 	}
 
+	public Type getType() {
+		return type;
+	}
+
 	public boolean isBlack() {
 		return color == Color.BLACK;
 	}

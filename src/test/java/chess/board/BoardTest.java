@@ -30,7 +30,7 @@ class BoardTest {
 
 	private String createInitialBoardFigure() {
 		StringBuilder figure = new StringBuilder();
-		String newLine = System.getProperty("line.separator");
+		String newLine = System.lineSeparator();
 		figure
 				.append("RNBQKBNR").append(newLine)
 				.append("PPPPPPPP").append(newLine)
@@ -39,7 +39,7 @@ class BoardTest {
 				.append("........").append(newLine)
 				.append("........").append(newLine)
 				.append("pppppppp").append(newLine)
-				.append("rnbqkbnr").append(newLine);
+				.append("rnbqkbnr");
 		return figure.toString();
 	}
 }
