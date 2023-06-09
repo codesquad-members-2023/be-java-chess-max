@@ -29,4 +29,13 @@ class PieceTest {
 		assertThat(piece.getColor()).isEqualTo(color);
 		assertThat(piece.getRepresentation()).isEqualTo(representation);
 	}
+
+	@Test
+	@DisplayName("말의 색을 구분할 수 있다.")
+	public void checkColor() {
+		assertThat(Piece.createWhitePawn().isWhite()).isTrue();
+		assertThat(Piece.createWhiteBishop().isWhite()).isTrue();
+		assertThat(Piece.createBlackKnight().isBlack()).isTrue();
+		assertThat(Piece.createBlackQueen().isBlack()).isTrue();
+	}
 }
