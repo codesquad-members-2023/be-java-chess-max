@@ -1,77 +1,90 @@
 package chess;
 
 import chess.piece.Piece;
+import chess.piece.Piece.Color;
+import chess.piece.Piece.Type;
+import chess.piece.Position;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static chess.StringUtil.NEW_LINE;
+import static chess.piece.Piece.Type.PAWN;
+import static chess.util.StringUtil.NEW_LINE;
 
 public class Board {
 
-    private final List<Piece> whitePieces;
-    private final List<Piece> blackPieces;
-    private final List<Piece> whitePawns;
-    private final List<Piece> blackPawns;
-    public static final String BLANK_LINE = "........";
+    private final List<Rank> board;
 
     public Board() {
-        this.whitePieces = new ArrayList<>(8);
-        this.blackPieces = new ArrayList<>(8);
-        this.whitePawns = new ArrayList<>(8);
-        this.blackPawns = new ArrayList<>(8);
+        this.board = new ArrayList<>(8);
     }
 
     public void initialize() {
-        whitePawns.addAll(IntStream.range(0, 8).mapToObj(o -> Piece.createWhitePawn()).collect(Collectors.toList()));
-        blackPawns.addAll(IntStream.range(0, 8).mapToObj(o -> Piece.createBlackPawn()).collect(Collectors.toList()));
-
-        addWhitePieces(Piece.createWhiteRook());
-        addWhitePieces(Piece.createWhiteKnight());
-        addWhitePieces(Piece.createWhiteBishop());
-        addWhitePieces(Piece.createWhiteQueen());
-        addWhitePieces(Piece.createWhiteKing());
-        addWhitePieces(Piece.createWhiteBishop());
-        addWhitePieces(Piece.createWhiteKnight());
-        addWhitePieces(Piece.createWhiteRook());
-
-        addBlackPieces(Piece.createBlackRook());
-        addBlackPieces(Piece.createBlackKnight());
-        addBlackPieces(Piece.createBlackBishop());
-        addBlackPieces(Piece.createBlackQueen());
-        addBlackPieces(Piece.createBlackKing());
-        addBlackPieces(Piece.createBlackBishop());
-        addBlackPieces(Piece.createBlackKnight());
-        addBlackPieces(Piece.createBlackRook());
+        board.add(Rank.initializeWhitePieces(0));
+        board.add(Rank.initializeWhitePawns(1));
+        board.addAll(IntStream.range(0, 4).mapToObj(o -> Rank.createBlankRank(o + 2)).collect(Collectors.toList()));
+        board.add(Rank.initializeBlackPawns(6));
+        board.add(Rank.initializeBlackPieces(7));
     }
 
+    public void initializeEmpty() {
+        board.addAll(IntStream.range(0, 8).mapToObj(Rank::createBlankRank).collect(Collectors.toList()));
+    }
 
     public int countPieces() {
-        return this.whitePieces.size() + this.blackPieces.size() + this.blackPawns.size() + this.whitePawns.size();
+        return board.stream().mapToInt(Rank::countPieces).sum();
     }
 
-    private void addWhitePieces(Piece piece) {
-        whitePieces.add(piece);
+    public int countPiecesByColorAndType(Color color, Type type) {
+        return board.stream().mapToInt(rank -> rank.countPiecesByColorAndType(color, type)).sum();
     }
 
-    private void addBlackPieces(Piece piece) {
-        blackPieces.add(piece);
+    public Piece findPiece(String position) {
+        final Position findPosition = new Position(position);
+        return board.get(findPosition.getIndexY()).findPiece(findPosition.getIndexX());
+    }
+
+    public List<Piece> findPiecesByColor(Color color) {
+        return board.stream().flatMap(rank -> rank.findPiecesByColor(color).stream()).collect(Collectors.toList());
     }
 
     public String show() {
-        StringBuilder builder = new StringBuilder();
+        final List<Rank> reversedBoard = new ArrayList<>(this.board);
+        Collections.reverse(reversedBoard);
+        return reversedBoard.stream().map(Rank::show).collect(Collectors.joining(NEW_LINE));
+    }
 
-        builder.append(blackPieces.stream().map(Piece::getRepresentation).collect(Collectors.joining())).append(NEW_LINE);
-        builder.append(blackPawns.stream().map(Piece::getRepresentation).collect(Collectors.joining()))
-                .append(NEW_LINE);
-        IntStream.range(0, 4).forEach(o -> builder.append(BLANK_LINE).append(NEW_LINE));
-        builder.append(whitePawns.stream().map(Piece::getRepresentation).collect(Collectors.joining()))
-                .append(NEW_LINE);
-        builder.append(whitePieces.stream().map(Piece::getRepresentation).collect(Collectors.joining())).append(NEW_LINE);
+    public void move(final String position, final Piece piece) {
+        final Position targetPosition = new Position(position);
+        board.get(targetPosition.getIndexY()).move(targetPosition.getIndexX(), piece);
+    }
 
-        return builder.toString();
+    public void move(final Position position, final Piece piece) {
+        board.get(position.getIndexY()).move(position.getIndexX(), piece);
+    }
+
+    public double calculatePoint(final Color color) {
+        return findPiecesByColor(color).stream().mapToDouble(o -> o.getType().getPoint()).sum() - calculateSameColorPawnInColumn(color);
+    }
+
+    public double calculateSameColorPawnInColumn(final Color color) {
+        final List<Integer> indexes = findPiecesByColor(color)
+                .stream().filter(piece -> piece.getType().equals(PAWN))
+                .map(piece -> piece.getPosition().getIndexX())
+                .collect(Collectors.toUnmodifiableList());
+
+        Map<Integer, Integer> count = new HashMap<>();
+        for (Integer index : indexes) {
+            count.put(index, count.getOrDefault(index, 0) + 1);
+        }
+
+        final int countPawns = count.values().stream().mapToInt(i -> i).filter(o -> o > 1).sum();
+        return 0.5 * countPawns;
     }
 
 }
