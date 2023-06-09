@@ -2,6 +2,7 @@ package chess.board;
 
 import chess.exception.BusinessException;
 import chess.exception.ErrorCode;
+import chess.pieces.Pawn;
 import chess.pieces.Piece;
 import chess.pieces.color.Color;
 import chess.pieces.type.Type;
@@ -113,5 +114,22 @@ class BoardTest {
 				.isInstanceOf(BusinessException.class)
 				.extracting("errorCode")
 				.isEqualTo(ErrorCode.INVALID_POSITION);
+	}
+
+	@DisplayName("체스판 위에 기물을 배치할 때 임의의 기물이 주어지면 배치에 성공한다.")
+	@Test
+	void givenPiece_whenPlacePiece_thenSuccessPlacePiece() {
+		// given
+		Pawn pawn = Pawn.of(Color.BLACK);
+
+		// when
+		sut.placePiece(pawn, "a3");
+
+		// then
+		Piece piece = sut.findPiece("a3");
+		SoftAssertions.assertSoftly(softAssertions -> {
+			softAssertions.assertThat(piece.getType()).isEqualTo(Type.PAWN);
+			softAssertions.assertThat(piece.getColor()).isEqualTo(Color.BLACK);
+		});
 	}
 }
