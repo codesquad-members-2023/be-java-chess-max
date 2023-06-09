@@ -17,7 +17,7 @@ public class ChessGame {
 				case "start":
 					Board board = new Board();
 					board.initialize();
-					System.out.println(board.print());
+					System.out.println(board.showBoard());
 					break;
 				case "end":
 					System.out.println("체스 게임을 종료합니다.");

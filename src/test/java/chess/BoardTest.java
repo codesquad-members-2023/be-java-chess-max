@@ -1,13 +1,12 @@
 package chess;
 
-import static chess.pieces.Piece.*;
-import static org.assertj.core.api.Assertions.*;
-
+import chess.pieces.Piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.pieces.Piece;
+import static chess.utils.StringUtils.appendNewLine;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardTest {
 	private Board board;
@@ -33,14 +32,17 @@ class BoardTest {
 	@Test
 	public void initialize() {
 		board.initialize();
-		assertThat(board.getWhitePawnsResult()).isEqualTo("pppppppp");
-		assertThat(board.getBlackPawnsResult()).isEqualTo("PPPPPPPP");
+		assertThat(board.pieceCount()).isEqualTo(32);
+		String blankRank = appendNewLine("........");
+		assertThat(board.showBoard()).isEqualTo(appendNewLine("RNBQKBNR") + appendNewLine("PPPPPPPP")
+				+ blankRank + blankRank + blankRank + blankRank
+				+ appendNewLine("pppppppp") + appendNewLine("rnbqkbnr"));
 	}
 
 	@DisplayName("체스판을 출력한다.")
 	@Test
 	public void print() {
 		board.initialize();
-		System.out.println(board.print());
+		System.out.println(board.showBoard());
 	}
 }
