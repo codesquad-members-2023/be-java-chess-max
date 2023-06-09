@@ -23,6 +23,10 @@ public class Rank {
 				.count();
 	}
 
+	public Piece getPiece(final int col) {
+		return rank.get(col);
+	}
+
 	@Override
 	public String toString() {
 		return rank.stream()

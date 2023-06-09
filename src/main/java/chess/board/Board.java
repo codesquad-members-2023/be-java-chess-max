@@ -66,6 +66,11 @@ public class Board {
 				.sum();
 	}
 
+	public Piece findPiece(final String position) {
+		Position pos = new Position(position);
+		return board.get(pos.getX()).getPiece(pos.getY());
+	}
+
 	public String print() {
 		String boardFigure = board.stream()
 				.map(Object::toString)
