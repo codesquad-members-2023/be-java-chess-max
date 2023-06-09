@@ -17,7 +17,7 @@ public class Piece {
 
     private final Color color;
     private final Type type;
-    private final Position position;
+    private Position position;
 
     private Piece(Color color, Type type, Position position) {
         this.color = color;
@@ -113,6 +113,10 @@ public class Piece {
 
     public Position getPosition() {
         return position;
+    }
+
+    public void setPosition(final Position position) {
+        this.position = position;
     }
 
     @Override

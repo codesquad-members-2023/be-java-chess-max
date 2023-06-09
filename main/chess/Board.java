@@ -68,6 +68,15 @@ public class Board {
         board.get(position.getIndexY()).move(position.getIndexX(), piece);
     }
 
+    public void move(final String sourcePosition, final String targetPosition) {
+        final Piece piece = findPiece(sourcePosition);
+        piece.setPosition(new Position(targetPosition));
+        final Position source = new Position(sourcePosition);
+        final Position target = new Position(targetPosition);
+        board.get(source.getIndexY()).move(source.getIndexX(), Piece.createBlank(new Position(sourcePosition)));
+        board.get(target.getIndexY()).move(target.getIndexX(), piece);
+    }
+
     public double calculatePoint(final Color color) {
         return findPiecesByColor(color).stream().mapToDouble(o -> o.getType().getPoint()).sum() - calculateSameColorPawnInColumn(color);
     }
@@ -86,5 +95,4 @@ public class Board {
         final int countPawns = count.values().stream().mapToInt(i -> i).filter(o -> o > 1).sum();
         return 0.5 * countPawns;
     }
-
 }

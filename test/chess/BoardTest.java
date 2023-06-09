@@ -117,4 +117,17 @@ class BoardTest {
         board.move(piece.getPosition(), piece);
     }
 
+    @Test
+    @DisplayName("move: 기물을 특정 위치로 이동한다")
+    public void movePiece() {
+        board.initialize();
+
+        String sourcePosition = "b2";
+        String targetPosition = "b3";
+        board.move(sourcePosition, targetPosition);
+
+        assertAll(() -> assertThat(Piece.createBlank(new Position(sourcePosition))).isEqualTo(board.findPiece(sourcePosition)),
+                  () -> assertThat(Piece.createWhitePawn(new Position(targetPosition))).isEqualTo(board.findPiece(targetPosition)));
+    }
+
 }
