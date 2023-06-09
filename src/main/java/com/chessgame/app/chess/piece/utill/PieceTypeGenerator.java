@@ -9,6 +9,11 @@ public class PieceTypeGenerator {
 	private PieceTypeGenerator() {}
 
 	public static PieceType generate(PieceKind kind, PieceColor color) {
+
+		if(kind == PieceKind.EMPTY) return determineEmptyType();
+
+		if(color == PieceColor.NO_COLOR) throw new IllegalArgumentException(kind.name() + "은/는 항상 색이 있어야 한다.");
+
 		switch(kind) {
 			case KING:
 				return determineKingType(color);
@@ -23,7 +28,7 @@ public class PieceTypeGenerator {
 			case PAWN:
 				return determinePawnType(color);
 			default:
-				return determineEmptyType();
+				throw new IllegalArgumentException("switch문에서 인자로 받은 PieceKind의 case가 정의되지 않았습니다. 코드를 확인해 주세요.");
 		}
 	}
 

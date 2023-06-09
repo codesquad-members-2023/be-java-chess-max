@@ -7,9 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.chessgame.app.chess.piece.position.File;
-import com.chessgame.app.chess.piece.position.Position;
-import com.chessgame.app.chess.piece.position.Rank;
 import com.chessgame.app.chess.piece.type.PieceColor;
 import com.chessgame.app.chess.piece.type.PieceKind;
 import com.chessgame.app.chess.piece.type.PieceType;
@@ -22,9 +19,9 @@ class PawnTest {
 
 	@BeforeEach
 	void beforEach() {
-		whitePawn = new Piece(PieceKind.PAWN, PieceColor.WHITE, new Position(File.BLOCK, Rank.BLOCK));
-		balckPawn = new Piece(PieceKind.PAWN, PieceColor.BLACK, new Position(File.BLOCK, Rank.BLOCK));
-		pawn = new Piece(PieceKind.PAWN, new Position(File.BLOCK, Rank.BLOCK));
+		whitePawn = new Piece(PieceType.WHITE_PAWN);
+		balckPawn = new Piece(PieceType.BLACK_PAWN);
+		pawn = new Piece(PieceKind.PAWN);
 	}
 
 	@DisplayName("원하는 색의 Pawn을 생성할 수 있다.")

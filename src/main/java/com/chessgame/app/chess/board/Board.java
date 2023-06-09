@@ -1,7 +1,7 @@
 package com.chessgame.app.chess.board;
 
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.chessgame.app.chess.piece.Piece;
 import com.chessgame.app.chess.piece.position.Position;
@@ -15,47 +15,30 @@ public class Board {
 
 	private static final int MAX_SIZE = 8;
 
-	private final ArrayList<Piece> pieceStorage;
+	private final Map<Position, Piece> pieceStorage = new HashMap<>();
 
 	public Board() {
-		this.pieceStorage = new ArrayList<>();
+		this.pieceStorage.putAll(PieceInitializer.initialEmptyBoard());
 	}
 
 	public void initialize() {
-		pieceStorage.addAll(PieceInitializer.initialWhitePiece());
-		pieceStorage.addAll(PieceInitializer.initialBlackPiece());
-		pieceStorage.addAll(PieceInitializer.initialEmptyPiece());
+		pieceStorage.clear();
+		pieceStorage.putAll(PieceInitializer.initialPiece(PieceColor.WHITE));
+		pieceStorage.putAll(PieceInitializer.initialPiece(PieceColor.BLACK));
+		pieceStorage.putAll(PieceInitializer.initialEmptyPiece());
 	}
 
-	public void add(Piece piece) {
-		pieceStorage.add(piece);
+	public void put(Position position, Piece piece) {
+		pieceStorage.put(position, piece);
 	}
 
-	public Piece findPiece(Piece piece) {
-		for(Piece exist : pieceStorage) {
-			if(exist.equals(piece)) {
-				return exist;
-			}
-		}
-		throw new NoSuchElementException("해당하는 Piece를 찾을 수 없습니다.");
-	}
-
-	public Piece findPiece(PieceType type, Position position) {
-		return findPiece(new Piece(type, position));
-	}
-
-	public Piece findPiece(Position position) {
-		for(Piece exist : pieceStorage) {
-			if(exist.verifyPosition(position.getFile(), position.getRank())) {
-				return exist;
-			}
-		}
-		throw new NoSuchElementException("해당하는 위치의 Piece를 찾을 수 없습니다. Board에는 항상 64개의 Piece가 있어야 되기 떄문에 이런 경우가 생기면 안됩니다.");
+	public Piece findPieceBy(Position position) {
+		return pieceStorage.get(position);
 	}
 
 	public int countPieces(PieceKind kind, PieceColor color) {
 		int count = 0;
-		for(Piece piece : pieceStorage) {
+		for(Piece piece : pieceStorage.values()) {
 			if(piece.verify(kind, color)) {
 				count++;
 			}
@@ -71,10 +54,10 @@ public class Board {
 	public String getResult(Rank rank) {
 		StringBuilder sb = new StringBuilder(" ".repeat(MAX_SIZE));
 
-		for(Piece piece : pieceStorage) {
-			if(piece.verifyRank(rank)) {
-				int startIndex = piece.getFileValue() - 1;
-				sb.replace(startIndex, startIndex + 1, piece.getSymbol());
+		for(Map.Entry<Position, Piece> entry : pieceStorage.entrySet()) {
+			if(entry.getKey().verifyRank(rank)) {
+				int startIndex = entry.getKey().getFileValue() - 1;
+				sb.replace(startIndex, startIndex + 1, entry.getValue().getSymbol());
 			}
 		}
 
