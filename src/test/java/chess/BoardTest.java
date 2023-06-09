@@ -20,11 +20,11 @@ class BoardTest {
 	@Test
 	@DisplayName("체스 판은 여러 개의 폰을 저장할 수 있다.")
 	public void createPawn() {
-		Piece whitePawn = new Piece(WHITE_COLOR, WHITE_REPRESENTATION);
+		Piece whitePawn = Piece.createWhitePawn();
 		board.addWhitePawn(whitePawn);
 		assertThat(board.size()).isEqualTo(1);
 
-		Piece blackPawn = new Piece(BLACK_COLOR, BLACK_REPRESENTATION);
+		Piece blackPawn = Piece.createBlackPawn();
 		board.addBlackPawn(blackPawn);
 		assertThat(board.size()).isEqualTo(2);
 	}

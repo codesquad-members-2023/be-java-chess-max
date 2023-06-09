@@ -32,51 +32,51 @@ public class Piece {
 		return representation;
 	}
 
-	public Piece createWhitePawn() {
+	public static Piece createWhitePawn() {
 		return new Piece(WHITE_COLOR, WHITE_PAWN_REPRESENTATION);
 	}
 
-	public Piece createBlackPawn() {
+	public static Piece createBlackPawn() {
 		return new Piece(BLACK_COLOR, BLACK_PAWN_REPRESENTATION);
 	}
 
-	public Piece createWhiteKnight() {
+	public static Piece createWhiteKnight() {
 		return new Piece(WHITE_COLOR, WHITE_KNIGHT_REPRESENTATION);
 	}
 
-	public Piece createBlackKnight() {
+	public static Piece createBlackKnight() {
 		return new Piece(BLACK_COLOR, BLACK_KNIGHT_REPRESENTATION);
 	}
 
-	public Piece createWhiteRook() {
+	public static Piece createWhiteRook() {
 		return new Piece(WHITE_COLOR, WHITE_ROOK_REPRESENTATION);
 	}
 
-	public Piece createBlackRook() {
+	public static Piece createBlackRook() {
 		return new Piece(BLACK_COLOR, BLACK_ROOK_REPRESENTATION);
 	}
 
-	public Piece createWhiteBishop() {
+	public static Piece createWhiteBishop() {
 		return new Piece(WHITE_COLOR, WHITE_BISHOP_REPRESENTATION);
 	}
 
-	public Piece createBlackBishop() {
+	public static Piece createBlackBishop() {
 		return new Piece(BLACK_COLOR, BLACK_BISHOP_REPRESENTATION);
 	}
 
-	public Piece createWhiteQueen() {
+	public static Piece createWhiteQueen() {
 		return new Piece(WHITE_COLOR, WHITE_QUEEN_REPRESENTATION);
 	}
 
-	public Piece createBlackQueen() {
+	public static Piece createBlackQueen() {
 		return new Piece(BLACK_COLOR, BLACK_QUEEN_REPRESENTATION);
 	}
 
-	public Piece createWhiteKing() {
+	public static Piece createWhiteKing() {
 		return new Piece(WHITE_COLOR, WHITE_KING_REPRESENTATION);
 	}
 
-	public Piece createBlackKing() {
+	public static Piece createBlackKing() {
 		return new Piece(BLACK_COLOR, BLACK_KING_REPRESENTATION);
 	}
 }

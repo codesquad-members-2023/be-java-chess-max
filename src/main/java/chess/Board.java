@@ -32,11 +32,11 @@ public class Board {
 
 	public void initialize() {
 		for (int i = 0; i < PAWN_NUMBER; i++) {
-			Piece whitePawn = new Piece(Piece.WHITE_COLOR, Piece.WHITE_REPRESENTATION);
+			Piece whitePawn = Piece.createWhitePawn();
 			addWhitePawn(whitePawn);
 		}
 		for (int i = 0; i < PAWN_NUMBER; i++) {
-			Piece blackPawn = new Piece(Piece.BLACK_COLOR, Piece.BLACK_REPRESENTATION);
+			Piece blackPawn = Piece.createBlackPawn();
 			addBlackPawn(blackPawn);
 		}
 	}

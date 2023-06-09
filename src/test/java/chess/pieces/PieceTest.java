@@ -9,23 +9,24 @@ import org.junit.jupiter.api.Test;
 class PieceTest {
 
 	@Test
-	@DisplayName("지정한 색의 폰이 생성되어야 한다.")
+	@DisplayName("지정한 색의 말이 생성되어야 한다.")
 	public void create() {
-		verifyPawn(WHITE_COLOR, WHITE_REPRESENTATION);
-		verifyPawn(BLACK_COLOR, BLACK_REPRESENTATION);
+		verifyPiece(Piece.createWhitePawn(), WHITE_COLOR, WHITE_PAWN_REPRESENTATION);
+		verifyPiece(Piece.createBlackPawn(), BLACK_COLOR, BLACK_PAWN_REPRESENTATION);
+		verifyPiece(Piece.createWhiteKnight(), WHITE_COLOR, WHITE_KNIGHT_REPRESENTATION);
+		verifyPiece(Piece.createBlackKnight(), BLACK_COLOR, BLACK_KNIGHT_REPRESENTATION);
+		verifyPiece(Piece.createWhiteRook(), WHITE_COLOR, WHITE_ROOK_REPRESENTATION);
+		verifyPiece(Piece.createBlackRook(), BLACK_COLOR, BLACK_ROOK_REPRESENTATION);
+		verifyPiece(Piece.createWhiteBishop(), WHITE_COLOR, WHITE_BISHOP_REPRESENTATION);
+		verifyPiece(Piece.createBlackBishop(), BLACK_COLOR, BLACK_BISHOP_REPRESENTATION);
+		verifyPiece(Piece.createWhiteQueen(), WHITE_COLOR, WHITE_QUEEN_REPRESENTATION);
+		verifyPiece(Piece.createBlackQueen(), BLACK_COLOR, BLACK_QUEEN_REPRESENTATION);
+		verifyPiece(Piece.createWhiteKing(), WHITE_COLOR, WHITE_KING_REPRESENTATION);
+		verifyPiece(Piece.createBlackKing(), BLACK_COLOR, BLACK_KING_REPRESENTATION);
 	}
 
-	@Test
-	@DisplayName("폰의 기본 생성자 색깔은 흰색이다.")
-	public void createPawn() {
-		Piece pawn = new Piece();
-		assertThat(pawn.getColor()).isEqualTo(WHITE_COLOR);
-		assertThat(pawn.getRepresentation()).isEqualTo(WHITE_REPRESENTATION);
-	}
-
-	private void verifyPawn(String color, char representation) {
-		Piece pawn = new Piece(color, representation);
-		assertThat(pawn.getColor()).isEqualTo(color);
-		assertThat(pawn.getRepresentation()).isEqualTo(representation);
+	private void verifyPiece(Piece piece, String color, char representation) {
+		assertThat(piece.getColor()).isEqualTo(color);
+		assertThat(piece.getRepresentation()).isEqualTo(representation);
 	}
 }
