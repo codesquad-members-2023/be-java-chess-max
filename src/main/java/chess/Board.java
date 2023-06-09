@@ -81,6 +81,7 @@ public class Board {
 	public String getWhitePiecesResult() {
 		return getPiecesResult(whitePieces);
 	}
+
 	public String getWhitePawnsResult() {
 		return getPiecesResult(whitePawns);
 	}
@@ -88,6 +89,7 @@ public class Board {
 	public String getBlackPiecesResult() {
 		return getPiecesResult(blackPieces);
 	}
+
 	public String getBlackPawnsResult() {
 		return getPiecesResult(blackPawns);
 	}
