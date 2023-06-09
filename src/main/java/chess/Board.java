@@ -1,94 +1,110 @@
 package chess;
 
-import pieces.Pawn;
+import pieces.Piece;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static pieces.PieceColor.BLACK_COLOR;
-import static pieces.PieceColor.BLACK_REPRESENTATION;
+import static utils.StringUtils.appendNewLine;
 
 public class Board {
     private static final int BOARD_LENGTH = 8;
-    private final List<Pawn> whitePawns = new ArrayList<>();
-    private final List<Pawn> blackPawns = new ArrayList<>();
+    private final List<Piece> whitePieces = new ArrayList<>();
+    private final List<Piece> whitePawns = new ArrayList<>();
+    private final List<Piece> blackPieces = new ArrayList<>();
+    private final List<Piece> blackPawns = new ArrayList<>();
 
     public Board() {
     }
 
-    public void addWhitePawns(final Pawn pawn) {
-        whitePawns.add(pawn);
+    public void addWhitePawns(final Piece piece) {
+        whitePawns.add(piece);
     }
 
-    public void addBlackPawns(final Pawn pawn) {
-        blackPawns.add(pawn);
+    public void addBlackPawns(final Piece piece) {
+        blackPawns.add(piece);
     }
 
-    public int sizeOfWhitePawns() {
-        return whitePawns.size();
+    public void addWhitePieces(final Piece piece) {
+        whitePieces.add(piece);
     }
 
-    public int sizeOfBlackPawns() {
-        return blackPawns.size();
-    }
-
-    public Pawn findWhitePawn(final int index) {
-        return whitePawns.get(index);
-    }
-
-    public Pawn findBlackPawn(final int index) {
-        return blackPawns.get(index);
+    public void addBlackPieces(final Piece piece) {
+        blackPieces.add(piece);
     }
 
     public String getWhitePawnsResult() {
-        StringBuilder white = new StringBuilder();
-        for (Pawn whitePawn : whitePawns) {
-            white.append(whitePawn.getRepresentation());
-        }
-
-        return white.toString();
+        return createPiecesResult(whitePawns);
     }
 
     public String getBlackPawnsResult() {
-        StringBuilder black = new StringBuilder();
-        for (Pawn blackPawn : blackPawns) {
-            black.append(blackPawn.getRepresentation());
+        return createPiecesResult(blackPawns);
+    }
+
+    public String getWhitePiecesResult() {
+        return createPiecesResult(whitePieces);
+    }
+
+    public String getBlackPiecesResult() {
+        return createPiecesResult(blackPieces);
+    }
+
+    private String createPiecesResult(final List<Piece> pieces) {
+        StringBuilder sb = new StringBuilder();
+        for (Piece p : pieces) {
+            sb.append(p.getRepresentation());
         }
 
-        return black.toString();
+        return sb.toString();
     }
 
     public void initialize() {
         for (int i = 0; i < BOARD_LENGTH; i++) {
-            addWhitePawns(new Pawn());
-            addBlackPawns(new Pawn(BLACK_COLOR, BLACK_REPRESENTATION));
+            addWhitePawns(Piece.createWhitePawn());
+            addBlackPawns(Piece.createBlackPawn());
         }
+        addWhitePieces(Piece.createWhiteRook());
+        addWhitePieces(Piece.createWhiteKnight());
+        addWhitePieces(Piece.createWhiteBishop());
+        addWhitePieces(Piece.createWhiteQueen());
+        addWhitePieces(Piece.createWhiteKing());
+        addWhitePieces(Piece.createWhiteBishop());
+        addWhitePieces(Piece.createWhiteKnight());
+        addWhitePieces(Piece.createWhiteRook());
+        addBlackPieces(Piece.createBlackRook());
+        addBlackPieces(Piece.createBlackKnight());
+        addBlackPieces(Piece.createBlackBishop());
+        addBlackPieces(Piece.createBlackQueen());
+        addBlackPieces(Piece.createBlackKing());
+        addBlackPieces(Piece.createBlackBishop());
+        addBlackPieces(Piece.createBlackKnight());
+        addBlackPieces(Piece.createBlackRook());
 
+        // TODO: output 클래스 분리
         printChessBoard();
     }
 
-    private String getBlankLine() {
-        return "........";
+    public int pieceCount() {
+        return (createChessBoard().replace(".", "").replace("\n", "")).length();
     }
 
-    private String getNextLine() {
-        return "\n";
-    }
-
+    // TODO: 출력 메서드는 클래스 분리
     private void printChessBoard() {
         System.out.println(createChessBoard());
     }
 
-    private String createChessBoard() {
+    public String createChessBoard() {
+        final String BLANK_LINE = "........";
+
         StringBuilder sb = new StringBuilder();
-        sb.append(getBlankLine()).append(getNextLine())
-                .append(getBlackPawnsResult()).append(getNextLine())
-                .append(getBlankLine()).append(getNextLine())
-                .append(getBlankLine()).append(getNextLine())
-                .append(getBlankLine()).append(getNextLine())
-                .append(getBlankLine()).append(getNextLine())
-                .append(getWhitePawnsResult()).append(getNextLine())
-                .append(getBlankLine()).append(getNextLine());
+        sb.append(appendNewLine(getBlackPiecesResult()))
+                .append(appendNewLine(getBlackPawnsResult()))
+                .append(appendNewLine(BLANK_LINE))
+                .append(appendNewLine(BLANK_LINE))
+                .append(appendNewLine(BLANK_LINE))
+                .append(appendNewLine(BLANK_LINE))
+                .append(appendNewLine(getWhitePawnsResult()))
+                .append(appendNewLine(getWhitePiecesResult()));
 
         return sb.toString();
     }

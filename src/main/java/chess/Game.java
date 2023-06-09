@@ -1,11 +1,12 @@
 package chess;
 
+import java.io.InputStream;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class Game {
-    public static void run() {
-        Scanner sc = new Scanner(System.in);
+    public void start(final InputStream in) {
+        Scanner sc = new Scanner(in);
 
         // TODO: 다른 명령어가 또 들어올 수 있으니 일단 예외 처리는 나중에
         while (true) {
