@@ -1,26 +1,15 @@
 package chess.pieces;
 
 import chess.color.Color;
+import chess.pieces.type.Type;
 
 public class Pawn extends Piece {
 
-	public Pawn() {
+	private Pawn(final Color color) {
+		super(color, Type.PAWN);
 	}
 
-	public Pawn(final Color color) {
-		super(color);
-	}
-
-	public Pawn(final String color) {
-		super(Color.getColor(color));
-	}
-
-	public Color getColor() {
-		return color;
-	}
-
-	@Override
-	public String toString() {
-		return color == Color.WHITE ? "p" : "P";
+	public static Pawn of(Color color) {
+		return new Pawn(color);
 	}
 }
