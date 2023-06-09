@@ -1,5 +1,6 @@
 package chess;
 
+import java.chess.utils.StringUtils;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -43,21 +44,18 @@ public class Board {
 	public String print() {
 		StringBuilder stringBuilder = new StringBuilder();
 		makeBlankLine(stringBuilder);
-		stringBuilder.append(getBlackPawnsResult());
-		stringBuilder.append("\n");
+		stringBuilder.append(StringUtils.appendNewLine(getBlackPawnsResult()));
 		makeBlankLine(stringBuilder);
 		makeBlankLine(stringBuilder);
 		makeBlankLine(stringBuilder);
 		makeBlankLine(stringBuilder);
-		stringBuilder.append(getWhitePawnsResult());
-		stringBuilder.append("\n");
+		stringBuilder.append(StringUtils.appendNewLine(getWhitePawnsResult()));
 		makeBlankLine(stringBuilder);
 		return stringBuilder.toString();
 	}
 
 	private void makeBlankLine(StringBuilder stringBuilder) {
-		stringBuilder.append(BLANK_LINE);
-		stringBuilder.append("\n");
+		stringBuilder.append(StringUtils.appendNewLine(BLANK_LINE));
 	}
 
 	public String getWhitePawnsResult() {
