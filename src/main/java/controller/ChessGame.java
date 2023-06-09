@@ -1,3 +1,7 @@
+package controller;
+
+import pieces.Board;
+
 public class ChessGame {
 
     private final Board board;
@@ -10,7 +14,7 @@ public class ChessGame {
 
     public void play(String input) {
         if (input.equals("start")) {
-            board.initialize();
+            board.initializeDefaultBoard();
         }
         if (input.equals("end")) {
             keepPlaying = false;
