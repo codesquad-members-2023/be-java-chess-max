@@ -4,25 +4,25 @@ import java.chess.utils.StringUtils;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-import chess.pieces.Pawn;
+import chess.pieces.Piece;
 
 public class Board {
 	public final static int PAWN_NUMBER = 8;
 	public final static String BLANK_LINE = "........";
 
-	private final ArrayList<Pawn> whitePawns;
-	private final ArrayList<Pawn> blackPawns;
+	private final ArrayList<Piece> whitePawns;
+	private final ArrayList<Piece> blackPawns;
 
 	public Board() {
 		this.whitePawns = new ArrayList<>();
 		this.blackPawns = new ArrayList<>();
 	}
 
-	public void addWhitePawn(Pawn pawn) {
+	public void addWhitePawn(Piece pawn) {
 		whitePawns.add(pawn);
 	}
 
-	public void addBlackPawn(Pawn pawn) {
+	public void addBlackPawn(Piece pawn) {
 		blackPawns.add(pawn);
 	}
 
@@ -32,11 +32,11 @@ public class Board {
 
 	public void initialize() {
 		for (int i = 0; i < PAWN_NUMBER; i++) {
-			Pawn whitePawn = new Pawn(Pawn.WHITE_COLOR, Pawn.WHITE_REPRESENTATION);
+			Piece whitePawn = new Piece(Piece.WHITE_COLOR, Piece.WHITE_REPRESENTATION);
 			addWhitePawn(whitePawn);
 		}
 		for (int i = 0; i < PAWN_NUMBER; i++) {
-			Pawn blackPawn = new Pawn(Pawn.BLACK_COLOR, Pawn.BLACK_REPRESENTATION);
+			Piece blackPawn = new Piece(Piece.BLACK_COLOR, Piece.BLACK_REPRESENTATION);
 			addBlackPawn(blackPawn);
 		}
 	}
@@ -66,7 +66,7 @@ public class Board {
 		return getPawnsResult(blackPawns);
 	}
 
-	public String getPawnsResult(ArrayList<Pawn> pawns) {
+	public String getPawnsResult(ArrayList<Piece> pawns) {
 		return pawns.stream()
 			.map(p -> Character.toString(p.getRepresentation()))
 			.collect(Collectors.joining());
