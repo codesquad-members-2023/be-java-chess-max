@@ -5,7 +5,9 @@ import chess.pieces.color.Color;
 import chess.pieces.type.Type;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -19,6 +21,16 @@ public class Board {
 		this.board = new ArrayList<>();
 		for (int i = 0; i < BOARD_SIZE; i++) {
 			board.add(new Rank());
+		}
+	}
+
+	public void initializeEmpty() {
+		List<Piece> dummies = new ArrayList<>();
+		for (int i = 0; i < BOARD_SIZE; i++) {
+			dummies.add(Dummy.of());
+		}
+		for (int row = 0; row < BOARD_SIZE; row++) {
+			board.get(row).init(new ArrayList<>(dummies));
 		}
 	}
 
@@ -74,6 +86,39 @@ public class Board {
 	public void placePiece(final Piece piece, final String position) {
 		Position pos = new Position(position);
 		board.get(pos.getX()).placePiece(piece, pos.getY());
+	}
+
+	public float calculatePoint(Color color) {
+		Map<Type, Float> points = new HashMap<>();
+
+		float totalPoint = 0f;
+		for (int col = 0; col < BOARD_SIZE; col++) {
+			boolean isHalfPoint = false;
+			boolean isExistsPawn = false;
+			for (int row = 0; row < BOARD_SIZE; row++) {
+				Piece piece = board.get(row).getPiece(col);
+				if (piece.getColor() != color) {
+					continue;
+				}
+				Type type = piece.getType();
+				points.putIfAbsent(type, 0f);
+				points.computeIfPresent(type, (k, v) -> v + type.getPoint());
+				if (type == Type.PAWN) {
+					if (isExistsPawn) {
+						isHalfPoint = true;
+					}
+					isExistsPawn = true;
+				}
+			}
+			if (isHalfPoint) {
+				points.computeIfPresent(Type.PAWN, (k, v) -> v / 2);
+			}
+			totalPoint += points.values()
+					.stream()
+					.reduce(0f, Float::sum);
+			points.clear();
+		}
+		return totalPoint;
 	}
 
 	public String print() {
