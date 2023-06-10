@@ -1,0 +1,50 @@
+package chess.pieces;
+
+import chess.pieces.bishop.BlackBishop;
+import chess.pieces.bishop.WhiteBishop;
+import chess.pieces.king.BlackKing;
+import chess.pieces.king.WhiteKing;
+import chess.pieces.knight.BlackKnight;
+import chess.pieces.knight.WhiteKnight;
+import chess.pieces.pawn.BlackPawn;
+import chess.pieces.pawn.WhitePawn;
+import chess.pieces.queen.BlackQueen;
+import chess.pieces.queen.WhiteQueen;
+import chess.pieces.rook.BlackRook;
+import chess.pieces.rook.WhiteRook;
+
+public class PieceCreator {
+
+    private PieceCreator() {
+    }
+
+    public static Piece create(Type type, Color color) {
+        return switch (type) {
+            case PAWN -> switch (color) {
+                case WHITE -> new WhitePawn();
+                case BLACK -> new BlackPawn();
+            };
+            case KNIGHT -> switch (color) {
+                case WHITE -> new WhiteKnight();
+                case BLACK -> new BlackKnight();
+            };
+            case ROOK -> switch (color) {
+                case WHITE -> new WhiteRook();
+                case BLACK -> new BlackRook();
+            };
+
+            case BISHOP -> switch (color) {
+                case WHITE -> new WhiteBishop();
+                case BLACK -> new BlackBishop();
+            };
+            case QUEEN -> switch (color) {
+                case WHITE -> new WhiteQueen();
+                case BLACK -> new BlackQueen();
+            };
+            case KING -> switch (color) {
+                case WHITE -> new WhiteKing();
+                case BLACK -> new BlackKing();
+            };
+        };
+    }
+}
