@@ -19,8 +19,6 @@ import com.chessgame.app.chess.piece.utill.PositionGenerator;
 
 public class Board {
 
-	private static final int MAX_SIZE = 8;
-
 	private final Map<Position, Piece> pieceStorage = new HashMap<>();
 
 	public Board() {
@@ -62,13 +60,11 @@ public class Board {
 	}
 
 	public String getResult(Rank rank) {
-		StringBuilder sb = new StringBuilder(" ".repeat(MAX_SIZE));
+		StringBuilder sb = new StringBuilder();
 
-		for(Map.Entry<Position, Piece> entry : pieceStorage.entrySet()) {
-			if(entry.getKey().verifyRank(rank)) {
-				int startIndex = entry.getKey().getFileValue() - 1;
-				sb.replace(startIndex, startIndex + 1, entry.getValue().getSymbol());
-			}
+		for(File file : File.values()) {
+			if(file == File.BLOCK) continue;
+			sb.append(pieceStorage.get(new Position(file, rank)).getSymbol());
 		}
 
 		return sb.toString();
