@@ -105,4 +105,54 @@ class BoardTest {
 		softAssertions.assertAll();
 	}
 
+	@DisplayName("현재 체스판에 존재하는 검정 체스말들의 점수를 얻을 수 있다.")
+	@Test
+	void getBlackPiecePoint() {
+		board.put(new Position(File.A, Rank.R8), new Piece(PieceType.BLACK_KING));
+		board.put(new Position(File.B, Rank.R8), new Piece(PieceType.BLACK_ROOK));
+		board.put(new Position(File.A, Rank.R7), new Piece(PieceType.BLACK_PAWN));
+		board.put(new Position(File.C, Rank.R7), new Piece(PieceType.BLACK_PAWN));
+		board.put(new Position(File.D, Rank.R7), new Piece(PieceType.BLACK_BISHOP));
+		board.put(new Position(File.B, Rank.R6), new Piece(PieceType.BLACK_PAWN));
+		board.put(new Position(File.E, Rank.R6), new Piece(PieceType.BLACK_QUEEN));
+
+		assertThat(board.getScore(PieceColor.BLACK)).isEqualTo(20);
+	}
+
+	@DisplayName("현재 체스판에 존재하는 흰색 체스말들의 점수를 얻을 수 있다.")
+	@Test
+	void getWhitePiecePoint() {
+		board.put(new Position(File.E, Rank.R1), new Piece(PieceType.WHITE_ROOK));
+		board.put(new Position(File.F, Rank.R1), new Piece(PieceType.WHITE_KING));
+		board.put(new Position(File.F, Rank.R2), new Piece(PieceType.WHITE_PAWN));
+		board.put(new Position(File.G, Rank.R2), new Piece(PieceType.WHITE_PAWN));
+		board.put(new Position(File.F, Rank.R3), new Piece(PieceType.WHITE_PAWN));
+		board.put(new Position(File.H, Rank.R3), new Piece(PieceType.WHITE_PAWN));
+		board.put(new Position(File.F, Rank.R4), new Piece(PieceType.WHITE_KNIGHT));
+		board.put(new Position(File.G, Rank.R4), new Piece(PieceType.WHITE_QUEEN));
+
+		assertThat(board.getScore(PieceColor.WHITE)).isEqualTo(20);
+	}
+
+	@DisplayName("더블 폰에 해당하는 두 폰 체스말 중 하나만 0.5점이 적용된다.")
+	@Test
+	void verifyDoubledPawn() {
+		board.put(new Position(File.A, Rank.R8), new Piece(PieceType.BLACK_PAWN));
+		board.put(new Position(File.A, Rank.R7), new Piece(PieceType.BLACK_PAWN));
+
+		board.put(new Position(File.H, Rank.R8), new Piece(PieceType.BLACK_PAWN));
+		board.put(new Position(File.H, Rank.R7), new Piece(PieceType.BLACK_PAWN));
+		board.put(new Position(File.H, Rank.R6), new Piece(PieceType.BLACK_PAWN));
+
+		board.put(new Position(File.A, Rank.R1), new Piece(PieceType.WHITE_PAWN));
+		board.put(new Position(File.A, Rank.R2), new Piece(PieceType.WHITE_PAWN));
+
+		board.put(new Position(File.H, Rank.R1), new Piece(PieceType.WHITE_PAWN));
+		board.put(new Position(File.H, Rank.R2), new Piece(PieceType.WHITE_PAWN));
+		board.put(new Position(File.H, Rank.R3), new Piece(PieceType.WHITE_PAWN));
+
+		assertThat(board.getScore(PieceColor.BLACK)).isEqualTo(3.5);
+		assertThat(board.getScore(PieceColor.WHITE)).isEqualTo(3.5);
+	}
+
 }

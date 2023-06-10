@@ -36,11 +36,15 @@ public class Piece {
 		return type.getSymbol();
 	}
 
-	public boolean verify(PieceKind kind, PieceColor color) {
-		return verifyType(kind) && verifyColor(color);
+	public double getPoint() {
+		return getKind().getPoint();
 	}
 
-	public boolean verifyType(PieceKind kind) {
+	public boolean verify(PieceKind kind, PieceColor color) {
+		return verifyKind(kind) && verifyColor(color);
+	}
+
+	public boolean verifyKind(PieceKind kind) {
 		return type.getKind() == kind;
 	}
 

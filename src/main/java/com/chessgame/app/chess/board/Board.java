@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.chessgame.app.chess.piece.Piece;
+import com.chessgame.app.chess.piece.position.File;
 import com.chessgame.app.chess.piece.position.Position;
 import com.chessgame.app.chess.piece.position.Rank;
 import com.chessgame.app.chess.piece.type.PieceColor;
@@ -78,4 +79,44 @@ public class Board {
 		}
 		return sb.toString();
 	}
+
+	public double getScore(PieceColor color) {
+		double score = 0.0;
+		for(Map.Entry<Position, Piece> entry : pieceStorage.entrySet()) {
+			Position position = entry.getKey();
+			Piece piece = entry.getValue();
+
+			if(!piece.verifyColor(color)) {
+				continue;
+			}
+
+			if(!piece.verifyKind(PieceKind.PAWN)) {
+				score += piece.getPoint();
+			} else if(verifyDoubledPawn(position, color)) {
+				score += piece.getPoint() / 2;
+			} else {
+				score += piece.getPoint();
+			}
+
+		}
+
+		return score;
+	}
+
+	private boolean verifyDoubledPawn(Position position, PieceColor color) {
+		File file = position.getFile();
+		for(Rank rank : Rank.values()) {
+			if(rank == Rank.BLOCK) continue;
+
+			Piece piece = pieceStorage.get(new Position(file, rank));
+			if(position.getRankValue() > rank.getValue()
+				&& piece.verify(PieceKind.PAWN, color)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 }
