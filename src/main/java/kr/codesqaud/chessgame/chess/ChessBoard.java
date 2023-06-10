@@ -81,28 +81,19 @@ public class ChessBoard implements Board {
         }
     }
 
-    private void initializeBlank(int rank) {
-        PieceFactory pieceFactory = PieceFactory.getInstance();
-        for (int i = 0; i < SIZE; i++) {
-            String position = String.format("%s%d", (char) ('a' + i), rank);
-            addPiece(rank, pieceFactory.createBlank(createPosition(position)));
-        }
-    }
-
-    private void initializeRank() {
-        for (int i = 1; i <= SIZE; i++) {
-            ranks.add(new Rank(i));
-        }
-    }
-
-    public Piece findPiece(final Position position) {
-        return ranks.get(position.getRankIndex()).findPiece(position.getFileIndex());
-    }
-
     // position에 위치한 기물을 piece로 설정
     @Override
     public void move(final String position, final Piece piece) {
+        piece.setPosition(createPosition(position));
         move(createPosition(position), piece);
+    }
+
+    @Override
+    public void move(final String sourcePosition, final String targetPosition) {
+        Piece sourcePiece = findPiece(sourcePosition);
+        Piece targetPiece = findPiece(targetPosition);
+        move(targetPosition, sourcePiece);
+        move(sourcePosition, targetPiece);
     }
 
     @Override
@@ -126,11 +117,6 @@ public class ChessBoard implements Board {
 
     public Piece findPiece(final String position) {
         return findPiece(createPosition(position));
-    }
-
-    public void move(final Position position, final Piece piece) {
-        ranks.get(position.getRankIndex())
-            .setPiece(position.getFileIndex(), piece);
     }
 
     public double calculatePoint(final Color color) {
@@ -158,13 +144,6 @@ public class ChessBoard implements Board {
         return score;
     }
 
-    private boolean existPawnInVeritable(final Position position) {
-        int file = position.getFile(); // a=1, b=2, ... pawn
-        return ranks.stream()
-            .filter(rank -> !rank.isMatchRank(position.getRank()))
-            .anyMatch(rank -> Objects.equals(rank.findPiece(file).getType(), Type.PAWN));
-    }
-
     // 컬러를 기준으로 점수가 높은 순서로 정렬하여 반환합니다.
     public List<Piece> sortDecreaseByColor(final Color color) {
         return ranks.stream()
@@ -181,5 +160,35 @@ public class ChessBoard implements Board {
             .filter(piece -> Objects.equals(piece.getColor(), color))
             .sorted(Comparator.comparingDouble(p -> p.getType().getDefaultPoint()))
             .collect(Collectors.toUnmodifiableList());
+    }
+
+    private void initializeBlank(int rank) {
+        PieceFactory pieceFactory = PieceFactory.getInstance();
+        for (int i = 0; i < SIZE; i++) {
+            String position = String.format("%s%d", (char) ('a' + i), rank);
+            addPiece(rank, pieceFactory.createBlank(createPosition(position)));
+        }
+    }
+
+    private void initializeRank() {
+        for (int i = 1; i <= SIZE; i++) {
+            ranks.add(new Rank(i));
+        }
+    }
+
+    public Piece findPiece(final Position position) {
+        return ranks.get(position.getRankIndex()).findPiece(position.getFileIndex());
+    }
+
+    public void move(final Position position, final Piece piece) {
+        ranks.get(position.getRankIndex())
+            .setPiece(position.getFileIndex(), piece);
+    }
+
+    private boolean existPawnInVeritable(final Position position) {
+        int file = position.getFile(); // a=1, b=2, ... pawn
+        return ranks.stream()
+            .filter(rank -> !rank.isMatchRank(position.getRank()))
+            .anyMatch(rank -> Objects.equals(rank.findPiece(file).getType(), Type.PAWN));
     }
 }

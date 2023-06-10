@@ -13,6 +13,8 @@ public interface Board {
 
     void move(final String position, final Piece piece);
 
+    void move(final String sourcePosition, final String targetPosition);
+
     String showBoard();
 
     int getPieceCount(final Color color, final Type type);

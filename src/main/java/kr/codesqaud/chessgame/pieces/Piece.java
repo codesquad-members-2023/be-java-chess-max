@@ -6,7 +6,7 @@ public class Piece {
 
     private final Color color;
     private final Type type;
-    private final Position position;
+    private Position position;
 
     Piece(final Color color, final Type type, final Position position) {
         this.color = color;
@@ -26,6 +26,10 @@ public class Piece {
         return position;
     }
 
+    public void setPosition(final Position position) {
+        this.position = position;
+    }
+
     public String getRepresentation() {
         if (isWhite()) {
             return type.getWhiteRepresentation();
@@ -42,6 +46,11 @@ public class Piece {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(getColor(), getType(), getPosition());
+    }
+
+    @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
@@ -52,11 +61,6 @@ public class Piece {
         Piece piece = (Piece) o;
         return getColor() == piece.getColor() && getType() == piece.getType() && Objects.equals(getPosition(),
             piece.getPosition());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getColor(), getType(), getPosition());
     }
 
     @Override

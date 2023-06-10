@@ -25,12 +25,12 @@ class ChessBoardTest {
 
     private static final Logger logger = LoggerFactory.getLogger(ChessBoardTest.class);
 
-    private Board chessBoard;
+    private ChessBoard board;
     private PieceFactory pieceFactory;
 
     @BeforeEach
     public void setup() {
-        chessBoard = new ChessBoard();
+        board = new ChessBoard();
         pieceFactory = PieceFactory.getInstance();
     }
 
@@ -40,12 +40,12 @@ class ChessBoardTest {
         // given
 
         // when
-        chessBoard.initialize();
+        board.initialize();
         // then
         String expectedBoard = Files.readString(Paths.get("src/test/resources/chessBoard.txt"));
         SoftAssertions assertions = new SoftAssertions();
-        assertions.assertThat(chessBoard.size()).isEqualTo(64);
-        assertions.assertThat(chessBoard.showBoard()).isEqualTo(expectedBoard);
+        assertions.assertThat(board.size()).isEqualTo(64);
+        assertions.assertThat(board.showBoard()).isEqualTo(expectedBoard);
         assertions.assertAll();
     }
 
@@ -53,20 +53,20 @@ class ChessBoardTest {
     @DisplayName("기물의 색상과 종류가 주어질때 Board가 가지고 있는 기물의 개수를 요청했을때 개수를 응답한다")
     public void getPieceCount() {
         // given
-        chessBoard.initialize();
+        board.initialize();
         // when
-        int blackPawnCount = chessBoard.getPieceCount(Color.BLACK, Type.PAWN);
-        int blackRookCount = chessBoard.getPieceCount(Color.BLACK, Type.ROOK);
-        int blackKnightCount = chessBoard.getPieceCount(Color.BLACK, Type.KNIGHT);
-        int blackBishopCount = chessBoard.getPieceCount(Color.BLACK, Type.BISHOP);
-        int blackQueenCount = chessBoard.getPieceCount(Color.BLACK, Type.QUEEN);
-        int blackKingCount = chessBoard.getPieceCount(Color.BLACK, Type.KING);
-        int whitePawnCount = chessBoard.getPieceCount(Color.WHITE, Type.PAWN);
-        int whiteRookCount = chessBoard.getPieceCount(Color.WHITE, Type.ROOK);
-        int whiteKnightCount = chessBoard.getPieceCount(Color.WHITE, Type.KNIGHT);
-        int whiteBishopCount = chessBoard.getPieceCount(Color.WHITE, Type.BISHOP);
-        int whiteQueenCount = chessBoard.getPieceCount(Color.WHITE, Type.QUEEN);
-        int whiteKingCount = chessBoard.getPieceCount(Color.WHITE, Type.KING);
+        int blackPawnCount = board.getPieceCount(Color.BLACK, Type.PAWN);
+        int blackRookCount = board.getPieceCount(Color.BLACK, Type.ROOK);
+        int blackKnightCount = board.getPieceCount(Color.BLACK, Type.KNIGHT);
+        int blackBishopCount = board.getPieceCount(Color.BLACK, Type.BISHOP);
+        int blackQueenCount = board.getPieceCount(Color.BLACK, Type.QUEEN);
+        int blackKingCount = board.getPieceCount(Color.BLACK, Type.KING);
+        int whitePawnCount = board.getPieceCount(Color.WHITE, Type.PAWN);
+        int whiteRookCount = board.getPieceCount(Color.WHITE, Type.ROOK);
+        int whiteKnightCount = board.getPieceCount(Color.WHITE, Type.KNIGHT);
+        int whiteBishopCount = board.getPieceCount(Color.WHITE, Type.BISHOP);
+        int whiteQueenCount = board.getPieceCount(Color.WHITE, Type.QUEEN);
+        int whiteKingCount = board.getPieceCount(Color.WHITE, Type.KING);
         // then
         SoftAssertions assertions = new SoftAssertions();
         assertions.assertThat(blackPawnCount).isEqualTo(8);
@@ -88,13 +88,13 @@ class ChessBoardTest {
     @DisplayName("위치가 주어질때 Board 객체에게 위치에 따른 기물을 조회하면 해당 위치에 있는 기물(빈칸 포함)을 응답합니다.")
     public void findPiece() {
         // given
-        chessBoard.initialize();
+        board.initialize();
         // when
-        Piece blackRook = chessBoard.findPiece("a8");
-        Piece blackRook2 = chessBoard.findPiece("h8");
-        Piece whiteRook = chessBoard.findPiece("a1");
-        Piece whiteRook2 = chessBoard.findPiece("h1");
-        Piece emptyPiece = chessBoard.findPiece("a6");
+        Piece blackRook = board.findPiece("a8");
+        Piece blackRook2 = board.findPiece("h8");
+        Piece whiteRook = board.findPiece("a1");
+        Piece whiteRook2 = board.findPiece("h1");
+        Piece emptyPiece = board.findPiece("a6");
         // then
         SoftAssertions assertions = new SoftAssertions();
         assertions.assertThat(blackRook).isEqualTo(pieceFactory.createBlackRook(createPosition("a8")));
@@ -109,23 +109,23 @@ class ChessBoardTest {
     @DisplayName("빈 체스판이 주어지고 흑백룩을 특정 위치로 이동시킨다")
     public void move() {
         // given
-        chessBoard.initializeEmpty();
+        board.initializeEmpty();
         String position = "b5";
         Piece piece = pieceFactory.createBlackRook(createPosition(position));
         // when
-        chessBoard.move(position, piece);
+        board.move(position, piece);
         // then
         SoftAssertions assertions = new SoftAssertions();
-        assertions.assertThat(chessBoard.findPiece(position)).isEqualTo(piece);
+        assertions.assertThat(board.findPiece(position)).isEqualTo(piece);
         assertions.assertAll();
-        logger.debug("board : \r\n{}", chessBoard.showBoard());
+        logger.debug("board : \r\n{}", board.showBoard());
     }
 
     @Test
     @DisplayName("체스판 위에 기물이 주어지고 남아있는 기물에 대한 점수를 요청했을때 점수합계를 응답합니다.")
     public void calculatePoint() {
         // given
-        chessBoard.initializeEmpty();
+        board.initializeEmpty();
         // when
         addPiece("b6", pieceFactory.createBlackPawn(createPosition("b6")));
         addPiece("e6", pieceFactory.createBlackQueen(createPosition("e6")));
@@ -137,8 +137,8 @@ class ChessBoardTest {
         addPiece("e1", pieceFactory.createWhiteRook(createPosition("e1")));
         addPiece("f1", pieceFactory.createWhiteKing(createPosition("f1")));
 
-        double blackScore = chessBoard.calculatePoint(Color.BLACK);
-        double whiteScore = chessBoard.calculatePoint(Color.WHITE);
+        double blackScore = board.calculatePoint(Color.BLACK);
+        double whiteScore = board.calculatePoint(Color.WHITE);
         // then
         SoftAssertions assertions = new SoftAssertions();
         assertions.assertThat(blackScore).isEqualTo(15.0, offset(0.01));
@@ -150,7 +150,7 @@ class ChessBoardTest {
     @DisplayName("체스판 위에 기물이 주어지고 흑색과 백색을 구분해서 점수가 높은 순서로 정렬을 요청시 높은 순서로 정렬되어 응답한다")
     public void sortByColor() {
         // given
-        chessBoard.initializeEmpty();
+        board.initializeEmpty();
         // when
         addPiece("b6", pieceFactory.createBlackPawn(createPosition("b6")));
         addPiece("e6", pieceFactory.createBlackQueen(createPosition("e6")));
@@ -162,8 +162,8 @@ class ChessBoardTest {
         addPiece("e1", pieceFactory.createWhiteRook(createPosition("e1")));
         addPiece("f1", pieceFactory.createWhiteKing(createPosition("f1")));
         // when
-        List<Piece> decreasePieces = chessBoard.sortDecreaseByColor(Color.BLACK);
-        List<Piece> increasePieces = chessBoard.sortIncreaseByColor(Color.BLACK);
+        List<Piece> decreasePieces = board.sortDecreaseByColor(Color.BLACK);
+        List<Piece> increasePieces = board.sortIncreaseByColor(Color.BLACK);
         // then
         List<Piece> expectedDecreasePiece = new ArrayList<>();
         expectedDecreasePiece.add(pieceFactory.createBlackQueen(createPosition("e6")));
@@ -187,6 +187,25 @@ class ChessBoardTest {
         assertions.assertAll();
     }
 
+
+    @Test
+    @DisplayName("출발 좌표와 도착좌표가 주어지고 기물 이동 요청시 기물이 도착 좌표를 갖게 된다")
+    public void givenSourceAndTargetPositionWhenMoveThenPieceHasTargetPosition() {
+        // given
+        board.initialize();
+        String sourcePosition = "b2";
+        String targetPosition = "b3";
+        // when
+        board.move(sourcePosition, targetPosition);
+        // then
+        SoftAssertions assertions = new SoftAssertions();
+        assertions.assertThat(board.findPiece(sourcePosition))
+            .isEqualTo(pieceFactory.createBlank(createPosition(sourcePosition)));
+        assertions.assertThat(board.findPiece(targetPosition))
+            .isEqualTo(pieceFactory.createWhitePawn(createPosition(targetPosition)));
+        assertions.assertAll();
+    }
+
     @Test
     @Disabled
     @DisplayName("board.findPiece 메소드를 100번 호출했을때 속도 측정 테스트")
@@ -196,12 +215,12 @@ class ChessBoardTest {
         // when
         // 100만번 기준 2.239초
         for (int i = 0; i < 1000000; i++) {
-            chessBoard.findPiece("h1");
+            this.board.findPiece("h1");
         }
         // then
     }
 
     private void addPiece(String position, Piece piece) {
-        chessBoard.move(position, piece);
+        board.move(position, piece);
     }
 }
