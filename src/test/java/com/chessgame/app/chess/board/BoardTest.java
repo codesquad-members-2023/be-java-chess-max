@@ -2,6 +2,8 @@ package com.chessgame.app.chess.board;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.stream.Collectors;
+
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -153,6 +155,40 @@ class BoardTest {
 
 		assertThat(board.getScore(PieceColor.BLACK)).isEqualTo(3.5);
 		assertThat(board.getScore(PieceColor.WHITE)).isEqualTo(3.5);
+	}
+
+	@DisplayName("체스판에 존재하는 체스말들을 점수 오름차순으로 정렬할 수 있다.")
+	@Test
+	void sortByPointAscending() {
+		board.initialize();
+
+		String sortedPiece;
+		sortedPiece = board.sortByPointAscending(PieceColor.WHITE)
+			.stream()
+			.map(
+				piece
+					-> piece.getType().getSymbol()
+			)
+			.collect(Collectors.joining());
+
+		assertThat(sortedPiece).isEqualTo("♔♙♙♙♙♙♙♙♙♘♘♗♗♖♖♕");
+	}
+
+	@DisplayName("체스판에 존재하는 체스말들을 점수 내림차순으로 정렬할 수 있다.")
+	@Test
+	void sortByPointDescending() {
+		board.initialize();
+
+		String sortedPiece;
+		sortedPiece = board.sortByPointDescending(PieceColor.BLACK)
+			.stream()
+			.map(
+				piece
+					-> piece.getType().getSymbol()
+			)
+			.collect(Collectors.joining());
+
+		assertThat(sortedPiece).isEqualTo("♛♜♜♝♝♞♞♟♟♟♟♟♟♟♟♚");
 	}
 
 }

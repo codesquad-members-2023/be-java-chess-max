@@ -1,7 +1,11 @@
 package com.chessgame.app.chess.board;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.chessgame.app.chess.piece.Piece;
 import com.chessgame.app.chess.piece.position.File;
@@ -117,6 +121,23 @@ public class Board {
 		}
 
 		return false;
+	}
+
+	public List<Piece> sortByPointAscending(PieceColor color) {
+		return sortByPoint(color, (o1, o2) -> (int)Math.floor(o1.getPoint() - o2.getPoint()));
+	}
+
+	public List<Piece> sortByPointDescending(PieceColor color) {
+		return sortByPoint(color, (o1, o2) -> (int)Math.floor(o2.getPoint() - o1.getPoint()));
+	}
+
+	private List<Piece> sortByPoint(PieceColor color, Comparator<Piece> comparator) {
+		return new ArrayList<>(pieceStorage.values())
+			.stream()
+			.filter(piece -> !piece.verifyKind(PieceKind.EMPTY))
+			.filter(piece -> piece.verifyColor(color))
+			.sorted(comparator)
+			.collect(Collectors.toList());
 	}
 
 }
