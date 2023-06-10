@@ -1,32 +1,18 @@
 package kr.codesqaud.chessgame.chess;
 
-import java.util.Objects;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Objects;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ChessGame {
 
     private static final Logger logger = LoggerFactory.getLogger(ChessGame.class);
 
-    private static ChessGame chessGame;
-
-    private ChessGame() {
-
-    }
-
-    public static ChessGame getInstance() {
-        if (chessGame == null) {
-            chessGame = new ChessGame();
-        }
-        return chessGame;
-    }
-
-    public void start(final InputStream in) {
+    public void run(final InputStream in) {
         System.out.println("체스게임을 시작합니다.");
         System.out.println("게임 시작: start, 게임 종료: end");
 
@@ -45,8 +31,7 @@ public class ChessGame {
 
     private boolean processCommand(final String command) {
         if (Objects.equals(command, "start")) {
-            Board board = new Board();
-            board.initialize();
+            Board board = new ChessBoard();
             System.out.println(board.showBoard());
             return true;
         } else if (Objects.equals(command, "end")) {
