@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.util.Objects;
 import kr.codesqaud.chessgame.chess.Board;
 import kr.codesqaud.chessgame.chess.ChessBoard;
+import kr.codesqaud.chessgame.chess.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +16,11 @@ public class ChessGameController {
     private static final Logger logger = LoggerFactory.getLogger(ChessGameController.class);
 
     private Board board;
+    private View view;
+
+    public ChessGameController(final View view) {
+        this.view = view;
+    }
 
     public void service(final InputStream in) {
         System.out.println("체스게임을 시작합니다.");
@@ -44,7 +50,7 @@ public class ChessGameController {
         if (Objects.equals(command, "start")) {
             board = new ChessBoard();
             board.initialize();
-            board.printBoard();
+            view.showBoard(board);
         } else if (command.startsWith("move")) {
             processMoveCommand(command);
         } else {
@@ -58,6 +64,6 @@ public class ChessGameController {
         final String BLANK = " ";
         String[] commands = command.split(BLANK);
         board.move(commands[SOURCE_POSITION_INDEX], commands[TARGET_POSITION_INDEX]);
-        board.printBoard();
+        view.showBoard(board);
     }
 }
