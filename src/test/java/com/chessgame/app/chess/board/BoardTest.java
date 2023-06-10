@@ -97,4 +97,12 @@ class BoardTest {
 		softAssertions.assertAll();
 	}
 
+	@DisplayName("문자열 위치 정보로 체스말을 찾을때 잘못된 문자열이 입력되면 예외가 발생한다.")
+	@Test
+	void findPieceByStringFailure() {
+		softAssertions.assertThatThrownBy(() -> board.findPieceBy(" 3")).isInstanceOf(IllegalArgumentException.class);
+		softAssertions.assertThatThrownBy(() -> board.findPieceBy("a9")).isInstanceOf(IllegalArgumentException.class);
+		softAssertions.assertAll();
+	}
+
 }
