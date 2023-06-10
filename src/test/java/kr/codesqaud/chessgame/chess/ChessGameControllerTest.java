@@ -13,7 +13,7 @@ class ChessGameControllerTest {
     public void start() throws FileNotFoundException {
         // given
         FileInputStream in = new FileInputStream("src/test/resources/commands.txt");
-        ChessGameController chessGameController = new ChessGameController();
+        ChessGameController chessGameController = new ChessGameController(new ConsoleView());
         // when
         chessGameController.service(in);
         // then
