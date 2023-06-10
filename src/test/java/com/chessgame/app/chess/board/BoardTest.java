@@ -66,4 +66,24 @@ class BoardTest {
 		softAssertions.assertAll();
 	}
 
+	@DisplayName("문자열 위치 정보를 통해 원하는 위치에 있는 체스말을 찾을 수 있다.")
+	@Test
+	void findPieceByString() {
+		board.initialize();
+
+		softAssertions.assertThat(board.findPieceBy("a1").getType()).isEqualTo(PieceType.WHITE_ROOK);
+		softAssertions.assertThat(board.findPieceBy("b1").getType()).isEqualTo(PieceType.WHITE_KNIGHT);
+
+		softAssertions.assertThat(board.findPieceBy("e8").getType()).isEqualTo(PieceType.BLACK_KING);
+		softAssertions.assertThat(board.findPieceBy("f8").getType()).isEqualTo(PieceType.BLACK_BISHOP);
+
+		softAssertions.assertThat(board.findPieceBy("h2").getType()).isEqualTo(PieceType.WHITE_PAWN);
+		softAssertions.assertThat(board.findPieceBy("a7").getType()).isEqualTo(PieceType.BLACK_PAWN);
+
+		softAssertions.assertThat(board.findPieceBy("a3").getType()).isEqualTo(PieceType.EMPTY);
+		softAssertions.assertThat(board.findPieceBy("c5").getType()).isEqualTo(PieceType.EMPTY);
+
+		softAssertions.assertAll();
+	}
+
 }

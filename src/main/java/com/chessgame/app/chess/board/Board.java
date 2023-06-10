@@ -10,6 +10,7 @@ import com.chessgame.app.chess.piece.type.PieceColor;
 import com.chessgame.app.chess.piece.type.PieceKind;
 import com.chessgame.app.chess.piece.type.PieceType;
 import com.chessgame.app.chess.piece.utill.PieceInitializer;
+import com.chessgame.app.chess.piece.utill.PositionGenerator;
 
 public class Board {
 
@@ -34,6 +35,10 @@ public class Board {
 
 	public Piece findPieceBy(Position position) {
 		return pieceStorage.get(position);
+	}
+
+	public Piece findPieceBy(String positionString) {
+		return findPieceBy(PositionGenerator.generate(positionString));
 	}
 
 	public int countPieces(PieceKind kind, PieceColor color) {
