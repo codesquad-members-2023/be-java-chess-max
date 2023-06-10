@@ -1,5 +1,7 @@
 package com.chessgame.app.chess.board;
 
+import static org.assertj.core.api.Assertions.*;
+
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,7 +40,7 @@ class BoardTest {
 
 	@DisplayName("체스판에 체스말를 추가할 수 있고, 위치 정보를 통해 추가된 체스말를 확인할 수 있다.")
 	@Test
-	void crete() {
+	void put() {
 		board.put(whitePawnPosition, whitePawn);
 		board.put(blackPawnPosition, blackPawn);
 
@@ -48,6 +50,15 @@ class BoardTest {
 		softAssertions.assertThat(board.countPieces(PieceKind.PAWN, PieceColor.BLACK)).isEqualTo(1);
 		softAssertions.assertThat(board.findPieceBy(blackPawnPosition)).isEqualTo(blackPawn);
 		softAssertions.assertAll();
+	}
+
+	@DisplayName("체스판의 같은 위치에 체스말을 추가하면 새로 추가한 체스말로 교체된다. 기존에 있던 체스말은 사라진다.")
+	@Test
+	void putInSamePosition() {
+		board.put(whitePawnPosition, whitePawn);
+		board.put(whitePawnPosition, blackPawn);
+
+		assertThat(board.findPieceBy(whitePawnPosition)).isEqualTo(blackPawn);
 	}
 
 	@DisplayName("체스판을 초기화 하면 모든 체스말들이 제자리에 배치된다.")
