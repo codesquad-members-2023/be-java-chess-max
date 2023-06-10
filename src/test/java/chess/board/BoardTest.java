@@ -2,8 +2,7 @@ package chess.board;
 
 import chess.exception.BusinessException;
 import chess.exception.ErrorCode;
-import chess.pieces.Pawn;
-import chess.pieces.Piece;
+import chess.pieces.*;
 import chess.pieces.color.Color;
 import chess.pieces.type.Type;
 import org.assertj.core.api.SoftAssertions;
@@ -131,5 +130,40 @@ class BoardTest {
 			softAssertions.assertThat(piece.getType()).isEqualTo(Type.PAWN);
 			softAssertions.assertThat(piece.getColor()).isEqualTo(Color.BLACK);
 		});
+	}
+
+	@DisplayName("포인트를 계산할 때 임의의 초기화된 체스판이 주어지면 총 점수를 반환한다.")
+	@Test
+	void givenInitializedBoard_whenCalculatePoint_thenReturnsTotalPoint() {
+		// given
+		initializeChessBoard();
+
+		// when
+		float blackPoint = sut.calculatePoint(Color.BLACK);
+		float whitePoint = sut.calculatePoint(Color.WHITE);
+
+		// then
+		SoftAssertions.assertSoftly(softAssertions -> {
+			softAssertions.assertThat(blackPoint).isEqualTo(15.0F);
+			softAssertions.assertThat(whitePoint).isEqualTo(19.5F);
+		});
+	}
+
+	private void initializeChessBoard() {
+		sut.initializeEmpty();
+
+		sut.placePiece(Pawn.of(Color.BLACK), "b6");
+		sut.placePiece(Queen.of(Color.BLACK), "e6");
+		sut.placePiece(King.of(Color.BLACK), "b8");
+		sut.placePiece(Rook.of(Color.BLACK), "c8");
+
+		sut.placePiece(Knight.of(Color.WHITE), "f4");
+		sut.placePiece(Queen.of(Color.WHITE), "g4");
+		sut.placePiece(Pawn.of(Color.WHITE), "f2");
+		sut.placePiece(Pawn.of(Color.WHITE), "f3");
+		sut.placePiece(Pawn.of(Color.WHITE), "h3");
+		sut.placePiece(Pawn.of(Color.WHITE), "g2");
+		sut.placePiece(Rook.of(Color.WHITE), "e1");
+		sut.placePiece(King.of(Color.WHITE), "f1");
 	}
 }
