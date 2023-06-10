@@ -97,6 +97,11 @@ public class ChessBoard implements Board {
     }
 
     @Override
+    public void printBoard() {
+        System.out.println(showBoard());
+    }
+
+    @Override
     public String showBoard() {
         return ranks.stream()
             .sorted(Comparator.reverseOrder())

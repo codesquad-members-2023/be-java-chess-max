@@ -1,10 +1,12 @@
-package kr.codesqaud.chessgame.chess;
+package kr.codesqaud.chessgame.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Objects;
+import kr.codesqaud.chessgame.chess.Board;
+import kr.codesqaud.chessgame.chess.ChessBoard;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,45 +16,48 @@ public class ChessGameController {
 
     private Board board;
 
-    public void run(final InputStream in) {
+    public void service(final InputStream in) {
         System.out.println("체스게임을 시작합니다.");
         System.out.println("게임 시작: start, 게임 종료: end");
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
-            String command;
-            boolean gameContinue = true;
-            // command를 안쪽에
-            while (gameContinue && (command = br.readLine()) != null) {
+            while (true) {
+                String command = br.readLine();
+
+                if (checkEndCommand(command)) {
+                    break;
+                }
+
                 logger.debug("command : {}", command);
-                gameContinue = processCommand(command);
+                processCommand(command);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private boolean processCommand(final String command) {
+    private boolean checkEndCommand(final String command) {
+        return Objects.equals(command, "end");
+    }
+
+    private void processCommand(final String command) {
         if (Objects.equals(command, "start")) {
             board = new ChessBoard();
             board.initialize();
-            System.out.println(board.showBoard());
-            return true;
-        } else if (Objects.equals(command, "end")) {
-            System.out.println("게임을 종료하였습니다.");
-            return false;
+            board.printBoard();
         } else if (command.startsWith("move")) {
             processMoveCommand(command);
         } else {
             System.out.printf("%s 명령어는 지원하지 않습니다.%n", command);
         }
-        return true;
     }
 
     private void processMoveCommand(final String command) {
         final int SOURCE_POSITION_INDEX = 1;
         final int TARGET_POSITION_INDEX = 2;
-        String[] commands = command.split(" ");
+        final String BLANK = " ";
+        String[] commands = command.split(BLANK);
         board.move(commands[SOURCE_POSITION_INDEX], commands[TARGET_POSITION_INDEX]);
-        System.out.println(board.showBoard());
+        board.printBoard();
     }
 }

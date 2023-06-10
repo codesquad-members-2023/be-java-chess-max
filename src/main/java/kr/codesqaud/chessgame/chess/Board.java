@@ -15,6 +15,8 @@ public interface Board {
 
     void move(final String sourcePosition, final String targetPosition);
 
+    void printBoard();
+
     String showBoard();
 
     int getPieceCount(final Color color, final Type type);

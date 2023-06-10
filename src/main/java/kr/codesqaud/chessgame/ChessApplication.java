@@ -1,11 +1,11 @@
 package kr.codesqaud.chessgame;
 
-import kr.codesqaud.chessgame.chess.ChessGameController;
+import kr.codesqaud.chessgame.controller.ChessGameController;
 
 public class ChessApplication {
 
     public static void main(String[] args) {
         final ChessGameController chessGameController = new ChessGameController();
-        chessGameController.run(System.in);
+        chessGameController.service(System.in);
     }
 }

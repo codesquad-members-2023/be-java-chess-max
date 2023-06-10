@@ -2,6 +2,7 @@ package kr.codesqaud.chessgame.chess;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import kr.codesqaud.chessgame.controller.ChessGameController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ class ChessGameControllerTest {
         FileInputStream in = new FileInputStream("src/test/resources/commands.txt");
         ChessGameController chessGameController = new ChessGameController();
         // when
-        chessGameController.run(in);
+        chessGameController.service(in);
         // then
     }
 }
