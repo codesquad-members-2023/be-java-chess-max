@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import kr.codesqaud.chessgame.pieces.Color;
 import kr.codesqaud.chessgame.pieces.Piece;
 import kr.codesqaud.chessgame.pieces.PieceFactory;
@@ -18,19 +19,18 @@ import kr.codesqaud.chessgame.utils.StringUtils;
 public class ChessBoard implements Board {
 
     public static final int SIZE = 8;
-    private final List<Rank> ranks = new ArrayList<>(SIZE);
-
-    private int pieceCount = 0;
+    private final List<Rank> ranks;
+    private int pieceCount;
+    private ChessGame game;
 
     public ChessBoard() {
-
+        ranks = new ArrayList<>(SIZE);
+        pieceCount = 0;
+        game = new ChessGame();
     }
 
-    private void addPiece(final int rank, final Piece piece) {
-        pieceCount++;
-        ranks.get(rank - 1).addPiece(piece);
-    }
-
+    // 체스판 초기화
+    @Override
     public void initialize() {
         initializeRank();
 
@@ -73,21 +73,7 @@ public class ChessBoard implements Board {
         addPiece(1, pieceFactory.createWhiteRook(createPosition("h1")));
     }
 
-    public void initializeEmpty() {
-        initializeRank();
-
-        for (int i = 1; i <= SIZE; i++) {
-            initializeBlank(i);
-        }
-    }
-
-    // position에 위치한 기물을 piece로 설정
-    @Override
-    public void move(final String position, final Piece piece) {
-        piece.setPosition(createPosition(position));
-        move(createPosition(position), piece);
-    }
-
+    // sourcePosition에서 targetPosition으로 기물 이동
     @Override
     public void move(final String sourcePosition, final String targetPosition) {
         Piece sourcePiece = findPiece(sourcePosition);
@@ -96,11 +82,7 @@ public class ChessBoard implements Board {
         move(sourcePosition, targetPiece);
     }
 
-    @Override
-    public void printBoard() {
-        System.out.println(showBoard());
-    }
-
+    // 체스판 위에 기물 상태를 문자열로 반환
     @Override
     public String showBoard() {
         return ranks.stream()
@@ -110,43 +92,67 @@ public class ChessBoard implements Board {
             .collect(Collectors.joining());
     }
 
-    public int getPieceCount(final Color color, final Type type) {
+    // Position 위치로 기물 이동
+    public void move(final String position, final Piece piece) {
+        piece.setPosition(createPosition(position));
+        move(createPosition(position), piece);
+    }
+
+    // Position 위치로 기물 이동
+    public void move(final Position position, final Piece piece) {
+        ranks.get(position.getRankIndex())
+            .setPiece(position.getFileIndex(), piece);
+    }
+
+    // 빈 체스판 초기화
+    public void initializeEmpty() {
+        initializeRank();
+        IntStream.rangeClosed(1, SIZE)
+            .forEach(this::initializeBlank);
+    }
+
+    // 빈칸 초기화
+    private void initializeBlank(int rank) {
+        PieceFactory pieceFactory = PieceFactory.getInstance();
+        IntStream.range(0, SIZE)
+            .mapToObj(i -> String.format("%s%d", (char) ('a' + i), rank))
+            .forEach(position -> addPiece(rank, pieceFactory.createBlank(createPosition(position))));
+    }
+
+    // Rank 객체 초기화
+    private void initializeRank() {
+        IntStream.rangeClosed(1, SIZE)
+            .mapToObj(Rank::new)
+            .forEach(ranks::add);
+    }
+
+    // 입력받은 RANK에 기물 추가
+    private void addPiece(final int rank, final Piece piece) {
+        pieceCount++;
+        ranks.get(rank - 1).addPiece(piece);
+    }
+
+    // Color와 기물 종류에 따른 기물 개수를 반환
+    public int countPiece(final Color color, final Type type) {
         return ranks.stream()
             .mapToInt(rank -> rank.getPieceCount(color, type))
             .sum();
     }
 
+    // 체스판 위에 있는 기물들 개수 반환
     public int size() {
         return pieceCount;
     }
 
+    // 입력받은 Position에 따른 기물 객체 반환
     public Piece findPiece(final String position) {
         return findPiece(createPosition(position));
     }
 
-    public double calculatePoint(final Color color) {
-        final double PAWN_SCORE = 0.5;
-        double score = 0.0;
-        for (Rank rank : ranks) {
-            for (Piece piece : rank.getPieces()) {
-                // 색깔이 동일하고 폰이 아닌경우
-                if (Objects.equals(piece.getColor(), color) &&
-                    !Objects.equals(piece.getType(), Type.PAWN)) {
-                    score += piece.getType().getDefaultPoint();
-                    continue;
-                }
-                // 색깔도 동일하고 폰인 경우
-                if (Objects.equals(piece.getColor(), color) &&
-                    Objects.equals(piece.getType(), Type.PAWN)) {
-                    if (existPawnInVeritable(piece.getPosition())) {
-                        score += PAWN_SCORE;
-                    } else {
-                        score += piece.getType().getDefaultPoint();
-                    }
-                }
-            }
-        }
-        return score;
+    // 입력받은 Position에 따른 기물 객체 반환
+    public Piece findPiece(final Position position) {
+        return ranks.get(position.getRankIndex())
+            .findPiece(position.getFileIndex());
     }
 
     // 컬러를 기준으로 점수가 높은 순서로 정렬하여 반환합니다.
@@ -167,33 +173,8 @@ public class ChessBoard implements Board {
             .collect(Collectors.toUnmodifiableList());
     }
 
-    private void initializeBlank(int rank) {
-        PieceFactory pieceFactory = PieceFactory.getInstance();
-        for (int i = 0; i < SIZE; i++) {
-            String position = String.format("%s%d", (char) ('a' + i), rank);
-            addPiece(rank, pieceFactory.createBlank(createPosition(position)));
-        }
-    }
-
-    private void initializeRank() {
-        for (int i = 1; i <= SIZE; i++) {
-            ranks.add(new Rank(i));
-        }
-    }
-
-    public Piece findPiece(final Position position) {
-        return ranks.get(position.getRankIndex()).findPiece(position.getFileIndex());
-    }
-
-    public void move(final Position position, final Piece piece) {
-        ranks.get(position.getRankIndex())
-            .setPiece(position.getFileIndex(), piece);
-    }
-
-    private boolean existPawnInVeritable(final Position position) {
-        int file = position.getFile(); // a=1, b=2, ... pawn
-        return ranks.stream()
-            .filter(rank -> !rank.isMatchRank(position.getRank()))
-            .anyMatch(rank -> Objects.equals(rank.findPiece(file).getType(), Type.PAWN));
+    // 색상을 기준으로 기물들의 점수합을 반환
+    public double calculatePoint(final Color color) {
+        return game.calculatePoint(ranks, color);
     }
 }
