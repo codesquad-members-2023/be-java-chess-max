@@ -4,7 +4,6 @@ import static chess.pieces.Color.WHITE;
 import static chess.pieces.Representation.WHITE_ROOK;
 
 import chess.pieces.Color;
-import chess.pieces.Representation;
 
 public class WhiteRook extends Rook {
 
@@ -14,7 +13,7 @@ public class WhiteRook extends Rook {
     }
 
     @Override
-    public Representation getRepresentation() {
-        return WHITE_ROOK;
+    public String getRepresentation() {
+        return WHITE_ROOK.getValue();
     }
 }

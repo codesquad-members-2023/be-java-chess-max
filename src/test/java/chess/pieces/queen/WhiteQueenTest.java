@@ -23,7 +23,7 @@ class WhiteQueenTest {
     void getRepresentation() {
         WhiteQueen whiteQueen = new WhiteQueen();
 
-        assertThat(whiteQueen.getRepresentation()).isEqualTo(Representation.WHITE_QUEEN);
+        assertThat(whiteQueen.getRepresentation()).isEqualTo(Representation.WHITE_QUEEN.getValue());
     }
 
 }

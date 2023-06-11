@@ -13,7 +13,7 @@ public class WhiteBishop extends Bishop {
     }
 
     @Override
-    public Representation getRepresentation() {
-        return Representation.WHITE_BISHOP;
+    public String getRepresentation() {
+        return Representation.WHITE_BISHOP.getValue();
     }
 }

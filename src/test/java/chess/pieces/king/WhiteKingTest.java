@@ -22,6 +22,6 @@ class WhiteKingTest {
     void getRepresentation() {
         WhiteKing whiteKing = new WhiteKing();
 
-        assertThat(whiteKing.getRepresentation()).isEqualTo(Representation.WHITE_KING);
+        assertThat(whiteKing.getRepresentation()).isEqualTo(Representation.WHITE_KING.getValue());
     }
 }

@@ -21,7 +21,7 @@ class BlackQueenTest {
     @Test
     void getRepresentation() {
         BlackQueen blackQueen = new BlackQueen();
-        assertThat(blackQueen.getRepresentation()).isEqualTo(Representation.BLACK_QUEEN);
+        assertThat(blackQueen.getRepresentation()).isEqualTo(Representation.BLACK_QUEEN.getValue());
     }
 
 }

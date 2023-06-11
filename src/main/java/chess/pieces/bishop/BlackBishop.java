@@ -13,8 +13,8 @@ public class BlackBishop extends Bishop {
     }
 
     @Override
-    public Representation getRepresentation() {
-        return Representation.BLACK_BISHOP;
+    public String getRepresentation() {
+        return Representation.BLACK_BISHOP.getValue();
     }
 
 }

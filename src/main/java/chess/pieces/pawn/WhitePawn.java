@@ -13,7 +13,7 @@ public class WhitePawn extends Pawn {
     }
 
     @Override
-    public Representation getRepresentation() {
-        return Representation.WHITE_PAWN;
+    public String getRepresentation() {
+        return Representation.WHITE_PAWN.getValue();
     }
 }

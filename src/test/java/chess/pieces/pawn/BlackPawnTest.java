@@ -21,6 +21,6 @@ class BlackPawnTest {
     @Test
     void getRepresentation() {
         BlackPawn blackPawn = new BlackPawn();
-        assertThat(blackPawn.getRepresentation()).isEqualTo(Representation.BLACK_PAWN);
+        assertThat(blackPawn.getRepresentation()).isEqualTo(Representation.BLACK_PAWN.getValue());
     }
 }

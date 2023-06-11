@@ -22,6 +22,6 @@ class WhiteBishopTest {
     void getRepresentation() {
         WhiteBishop whiteBishop = new WhiteBishop();
 
-        assertThat(whiteBishop.getRepresentation()).isEqualTo(Representation.WHITE_BISHOP);
+        assertThat(whiteBishop.getRepresentation()).isEqualTo(Representation.WHITE_BISHOP.getValue());
     }
 }

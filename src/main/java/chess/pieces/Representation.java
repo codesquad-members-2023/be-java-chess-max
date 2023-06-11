@@ -6,7 +6,8 @@ public enum Representation {
     WHITE_KNIGHT("n"), BLACK_KNIGHT("N"),
     WHITE_BISHOP("b"), BLACK_BISHOP("B"),
     WHITE_QUEEN("q"), BLACK_QUEEN("Q"),
-    WHITE_KING("k"), BLACK_KING("K");
+    WHITE_KING("k"), BLACK_KING("K"),
+    BLANK_PIECE(".");
 
     private final String value;
 

@@ -23,28 +23,35 @@ public class PieceCreator {
             case PAWN -> switch (color) {
                 case WHITE -> new WhitePawn();
                 case BLACK -> new BlackPawn();
+                case NONE -> throw new IllegalArgumentException();
             };
             case KNIGHT -> switch (color) {
                 case WHITE -> new WhiteKnight();
                 case BLACK -> new BlackKnight();
+                case NONE -> throw new IllegalArgumentException();
             };
             case ROOK -> switch (color) {
                 case WHITE -> new WhiteRook();
                 case BLACK -> new BlackRook();
+                case NONE -> throw new IllegalArgumentException();
             };
 
             case BISHOP -> switch (color) {
                 case WHITE -> new WhiteBishop();
                 case BLACK -> new BlackBishop();
+                case NONE -> throw new IllegalArgumentException();
             };
             case QUEEN -> switch (color) {
                 case WHITE -> new WhiteQueen();
                 case BLACK -> new BlackQueen();
+                case NONE -> throw new IllegalArgumentException();
             };
             case KING -> switch (color) {
                 case WHITE -> new WhiteKing();
                 case BLACK -> new BlackKing();
+                case NONE -> throw new IllegalArgumentException();
             };
+            case BLANK -> new BlankPiece();
         };
     }
 }

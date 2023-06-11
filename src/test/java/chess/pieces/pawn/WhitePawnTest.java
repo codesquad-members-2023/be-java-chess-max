@@ -22,6 +22,6 @@ class WhitePawnTest {
     void getRepresentation() {
         WhitePawn whitePawn = new WhitePawn();
 
-        assertThat(whitePawn.getRepresentation()).isEqualTo(Representation.WHITE_PAWN);
+        assertThat(whitePawn.getRepresentation()).isEqualTo(Representation.WHITE_PAWN.getValue());
     }
 }

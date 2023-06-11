@@ -1,12 +1,12 @@
 package chess;
 
+import chess.pieces.BlankPiece;
 import chess.pieces.Color;
 import chess.pieces.Piece;
 import chess.pieces.PieceCreator;
 import chess.pieces.Type;
 import chess.pieces.pawn.Pawn;
 import java.util.Arrays;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -14,7 +14,6 @@ import java.util.function.Function;
 public class Board {
 
     public static final String NEXT_LINE = "\n";
-    public static final String EMPTY_DELIMITER = ".";
     public static final String COLUMN_DELIMITER = "abcdefgh";
     public static final String SPACING = "  ";
     public static final String RANK_FORMAT = "%d (rank %d)";
@@ -29,6 +28,12 @@ public class Board {
 
     private Piece[][] initialize() {
         Piece[][] pieces = new Piece[LAST_LINE][LAST_LINE];
+        for (Piece[] rowPieces : pieces) {
+            for (int i = 0; i < LAST_LINE; i++) {
+                rowPieces[i] = new BlankPiece();
+            }
+        }
+
         initMainPieces(pieces[0], Color.BLACK);
         initPawnPieces(pieces[FIRST_LINE], Color.BLACK);
         initPawnPieces(pieces[6], Color.WHITE);
@@ -74,8 +79,7 @@ public class Board {
         return rowPieces -> {
             StringBuilder sb = new StringBuilder();
             Arrays.stream(rowPieces)
-                    .map(piece -> piece == null ? EMPTY_DELIMITER
-                            : piece.getRepresentation().getValue())
+                    .map(Piece::getRepresentation)
                     .forEach(sb::append);
             return sb.toString();
         };
@@ -87,18 +91,16 @@ public class Board {
                 : String.valueOf(index);
     }
 
-    public Optional<Piece> findPiece(Position position) {
+    public Piece findPiece(Position position) {
         int row = position.getRow();
         int column = position.getColumn();
-        Piece piece = pieces[row][column];
-        return Optional.ofNullable(piece);
+        return pieces[row][column];
     }
 
-    public boolean move(Position position, Piece piece) {
+    public void move(Position position, Piece piece) {
         int row = position.getRow();
         int column = position.getColumn();
         pieces[row][column] = piece;
-        return true;
     }
 
     public double calculatePoint(Color color) {
@@ -133,4 +135,11 @@ public class Board {
                         : piece.getScore())
                 .reduce((double) 0, Double::sum);
     }
+
+    public void move(Position sourcePosition, Position targetPosition) {
+        Piece target = findPiece(sourcePosition);
+        move(sourcePosition, new BlankPiece());
+        move(targetPosition, target);
+    }
+
 }

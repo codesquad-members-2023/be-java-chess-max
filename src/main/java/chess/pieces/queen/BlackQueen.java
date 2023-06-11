@@ -4,7 +4,6 @@ import static chess.pieces.Color.BLACK;
 import static chess.pieces.Representation.BLACK_QUEEN;
 
 import chess.pieces.Color;
-import chess.pieces.Representation;
 
 public class BlackQueen extends Queen {
 
@@ -14,7 +13,7 @@ public class BlackQueen extends Queen {
     }
 
     @Override
-    public Representation getRepresentation() {
-        return BLACK_QUEEN;
+    public String getRepresentation() {
+        return BLACK_QUEEN.getValue();
     }
 }

@@ -11,7 +11,7 @@ public class BlackKing extends King {
     }
 
     @Override
-    public Representation getRepresentation() {
-        return Representation.BLACK_KING;
+    public String getRepresentation() {
+        return Representation.BLACK_KING.getValue();
     }
 }

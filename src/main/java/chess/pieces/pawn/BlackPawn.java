@@ -14,7 +14,7 @@ public class BlackPawn extends Pawn {
     }
 
     @Override
-    public Representation getRepresentation() {
-        return Representation.BLACK_PAWN;
+    public String getRepresentation() {
+        return Representation.BLACK_PAWN.getValue();
     }
 }
