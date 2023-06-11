@@ -5,11 +5,16 @@ import chess.pieces.Piece;
 import chess.pieces.PieceCreator;
 import chess.pieces.Type;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Board {
+
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     public static final String NEXT_LINE = "\n";
     public static final String EMPTY_DELIMITER = ".";
@@ -25,7 +30,7 @@ public class Board {
     }
 
 
-    public Piece[][] initialize() {
+    private Piece[][] initialize() {
         Piece[][] pieces = new Piece[LAST_LINE][LAST_LINE];
         initMainPieces(pieces[0], Color.BLACK);
         initPawnPieces(pieces[FIRST_LINE], Color.BLACK);
@@ -83,5 +88,18 @@ public class Board {
         int index = atomicInteger.getAndDecrement();
         return index == LAST_LINE || index == FIRST_LINE ? String.format(RANK_FORMAT, index, index)
                 : String.valueOf(index);
+    }
+
+    public Optional<Piece> findPiece(String targetPosition) {
+        try {
+            Position position = Position.parse(targetPosition);
+            int row = position.getRow();
+            int column = position.getColumn();
+            Piece piece = pieces[row][column];
+            return Optional.ofNullable(piece);
+        } catch (IllegalArgumentException e) {
+            logger.log(Level.WARNING, e.getMessage());
+            return Optional.empty();
+        }
     }
 }
