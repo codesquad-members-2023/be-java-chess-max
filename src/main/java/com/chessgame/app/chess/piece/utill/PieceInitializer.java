@@ -1,6 +1,7 @@
 package com.chessgame.app.chess.piece.utill;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.chessgame.app.chess.piece.Piece;
 import com.chessgame.app.chess.piece.position.File;
@@ -8,51 +9,123 @@ import com.chessgame.app.chess.piece.position.Position;
 import com.chessgame.app.chess.piece.position.Rank;
 import com.chessgame.app.chess.piece.type.PieceColor;
 import com.chessgame.app.chess.piece.type.PieceKind;
+import com.chessgame.app.chess.piece.type.PieceType;
 
 public class PieceInitializer {
 
 	private PieceInitializer() {}
 
-	public static List<Piece> initialWhitePiece() {
-		return List.of(
-			new Piece(PieceKind.KING, new Position(File.E, Rank.R1)),
-			new Piece(PieceKind.QUEEN, new Position(File.D, Rank.R1)),
-			new Piece(PieceKind.ROOK, new Position(File.A, Rank.R1)),
-			new Piece(PieceKind.ROOK, new Position(File.H, Rank.R1)),
-			new Piece(PieceKind.BISHOP, new Position(File.C, Rank.R1)),
-			new Piece(PieceKind.BISHOP, new Position(File.F, Rank.R1)),
-			new Piece(PieceKind.KNIGHT, new Position(File.B, Rank.R1)),
-			new Piece(PieceKind.KNIGHT, new Position(File.G, Rank.R1)),
-			new Piece(PieceKind.PAWN, new Position(File.A, Rank.R2)),
-			new Piece(PieceKind.PAWN, new Position(File.B, Rank.R2)),
-			new Piece(PieceKind.PAWN, new Position(File.C, Rank.R2)),
-			new Piece(PieceKind.PAWN, new Position(File.D, Rank.R2)),
-			new Piece(PieceKind.PAWN, new Position(File.E, Rank.R2)),
-			new Piece(PieceKind.PAWN, new Position(File.F, Rank.R2)),
-			new Piece(PieceKind.PAWN, new Position(File.G, Rank.R2)),
-			new Piece(PieceKind.PAWN, new Position(File.H, Rank.R2))
+	public static Map<Position, Piece> initialEmptyBoard() {
+		Map<Position, Piece> map = new HashMap<>();
+
+		for(Rank rank : Rank.values()) {
+			if(rank == Rank.BLOCK) continue;
+			map.putAll(initialEmptyRank(rank));
+		}
+
+		return map;
+	}
+
+	private static Map<Position, Piece> initialEmptyRank(Rank rank) {
+		Map<Position, Piece> map = new HashMap<>();
+
+		for(File file : File.values()) {
+			if(file == File.BLOCK) continue;
+			map.put(new Position(file, rank), new Piece(PieceType.EMPTY));
+		}
+
+		return map;
+	}
+
+	public static Map<Position, Piece> initialPiece(PieceColor color) {
+		Map<Position, Piece> map = new HashMap<>();
+
+		map.putAll(initialKing(color));
+		map.putAll(initialQueen(color));
+		map.putAll(initialRook(color));
+		map.putAll(initialBishop(color));
+		map.putAll(initialKnight(color));
+		map.putAll(initialPawn(color));
+
+		return map;
+	}
+
+	public static Map<Position, Piece> initialEmptyPiece() {
+		Map<Position, Piece> map = new HashMap<>();
+
+		map.putAll(initialEmptyRank(Rank.R3));
+		map.putAll(initialEmptyRank(Rank.R4));
+		map.putAll(initialEmptyRank(Rank.R5));
+		map.putAll(initialEmptyRank(Rank.R6));
+
+		return map;
+	}
+
+	private static Map<Position, Piece> initialKing(PieceColor color) {
+
+		Rank rank = determineRankOneOrEight(color);
+		PieceType type = PieceTypeGenerator.generate(PieceKind.KING, color);
+
+		return Map.of(new Position(File.E, rank), new Piece(type));
+	}
+
+	private static Map<Position, Piece> initialQueen(PieceColor color) {
+
+		Rank rank = determineRankOneOrEight(color);
+		PieceType type = PieceTypeGenerator.generate(PieceKind.QUEEN, color);
+
+		return Map.of(new Position(File.D, rank), new Piece(type));
+	}
+
+	private static Map<Position, Piece> initialRook(PieceColor color) {
+
+		Rank rank = determineRankOneOrEight(color);
+		PieceType type = PieceTypeGenerator.generate(PieceKind.ROOK, color);
+
+		return Map.of(
+			new Position(File.A, rank), new Piece(type),
+			new Position(File.H, rank), new Piece(type)
 		);
 	}
 
-	public static List<Piece> initialBlackPiece() {
-		return List.of(
-			new Piece(PieceKind.KING, PieceColor.BLACK, new Position(File.E, Rank.R8)),
-			new Piece(PieceKind.QUEEN, PieceColor.BLACK, new Position(File.D, Rank.R8)),
-			new Piece(PieceKind.ROOK, PieceColor.BLACK, new Position(File.A, Rank.R8)),
-			new Piece(PieceKind.ROOK, PieceColor.BLACK, new Position(File.H, Rank.R8)),
-			new Piece(PieceKind.BISHOP, PieceColor.BLACK, new Position(File.C, Rank.R8)),
-			new Piece(PieceKind.BISHOP, PieceColor.BLACK, new Position(File.F, Rank.R8)),
-			new Piece(PieceKind.KNIGHT, PieceColor.BLACK, new Position(File.B, Rank.R8)),
-			new Piece(PieceKind.KNIGHT, PieceColor.BLACK, new Position(File.G, Rank.R8)),
-			new Piece(PieceKind.PAWN, PieceColor.BLACK, new Position(File.A, Rank.R7)),
-			new Piece(PieceKind.PAWN, PieceColor.BLACK, new Position(File.B, Rank.R7)),
-			new Piece(PieceKind.PAWN, PieceColor.BLACK, new Position(File.C, Rank.R7)),
-			new Piece(PieceKind.PAWN, PieceColor.BLACK, new Position(File.D, Rank.R7)),
-			new Piece(PieceKind.PAWN, PieceColor.BLACK, new Position(File.E, Rank.R7)),
-			new Piece(PieceKind.PAWN, PieceColor.BLACK, new Position(File.F, Rank.R7)),
-			new Piece(PieceKind.PAWN, PieceColor.BLACK, new Position(File.G, Rank.R7)),
-			new Piece(PieceKind.PAWN, PieceColor.BLACK, new Position(File.H, Rank.R7))
+	private static Map<Position, Piece> initialBishop(PieceColor color) {
+
+		Rank rank = determineRankOneOrEight(color);
+		PieceType type = PieceTypeGenerator.generate(PieceKind.BISHOP, color);
+
+		return Map.of(
+			new Position(File.C, rank), new Piece(type),
+			new Position(File.F, rank), new Piece(type)
 		);
+	}
+
+	private static Map<Position, Piece> initialKnight(PieceColor color) {
+
+		Rank rank = determineRankOneOrEight(color);
+		PieceType type = PieceTypeGenerator.generate(PieceKind.KNIGHT, color);
+
+		return Map.of(
+			new Position(File.B, rank), new Piece(type),
+			new Position(File.G, rank), new Piece(type)
+		);
+	}
+
+	private static Map<Position, Piece> initialPawn(PieceColor color) {
+
+		Rank rank = (color == PieceColor.WHITE)? Rank.R2 : Rank.R7;
+		PieceType type = PieceTypeGenerator.generate(PieceKind.PAWN, color);
+
+		Map<Position, Piece> map = new HashMap<>();
+		for(File file : File.values()) {
+			if(file == File.BLOCK) continue;
+			map.put(new Position(file, rank), new Piece(type));
+		}
+
+		return map;
+	}
+
+	private static Rank determineRankOneOrEight(PieceColor color) {
+		return (color == PieceColor.WHITE)? Rank.R1 : Rank.R8;
 	}
 
 }

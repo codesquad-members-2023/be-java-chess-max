@@ -1,38 +1,53 @@
 package com.chessgame.app.chess.board;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.chessgame.app.chess.piece.Piece;
+import com.chessgame.app.chess.piece.position.File;
+import com.chessgame.app.chess.piece.position.Position;
 import com.chessgame.app.chess.piece.position.Rank;
 import com.chessgame.app.chess.piece.type.PieceColor;
 import com.chessgame.app.chess.piece.type.PieceKind;
+import com.chessgame.app.chess.piece.type.PieceType;
 import com.chessgame.app.chess.piece.utill.PieceInitializer;
+import com.chessgame.app.chess.piece.utill.PositionGenerator;
 
 public class Board {
 
-	private final ArrayList<Piece> pieceStorage;
+	private final Map<Position, Piece> pieceStorage = new HashMap<>();
 
 	public Board() {
-		this.pieceStorage = new ArrayList<>();
+		this.pieceStorage.putAll(PieceInitializer.initialEmptyBoard());
 	}
 
 	public void initialize() {
-		pieceStorage.addAll(PieceInitializer.initialWhitePiece());
-		pieceStorage.addAll(PieceInitializer.initialBlackPiece());
+		pieceStorage.clear();
+		pieceStorage.putAll(PieceInitializer.initialPiece(PieceColor.WHITE));
+		pieceStorage.putAll(PieceInitializer.initialPiece(PieceColor.BLACK));
+		pieceStorage.putAll(PieceInitializer.initialEmptyPiece());
 	}
 
-	public void add(Piece piece) {
-		pieceStorage.add(piece);
+	public void put(Position position, Piece piece) {
+		pieceStorage.put(position, piece);
 	}
 
-	public Piece findPiece(int index) {
-		return pieceStorage.get(index);
+	public Piece findPieceBy(Position position) {
+		return pieceStorage.get(position);
 	}
 
-	public int countPieces(PieceKind clazz, PieceColor color) {
+	public Piece findPieceBy(String positionString) {
+		return findPieceBy(PositionGenerator.generate(positionString));
+	}
+
+	public int countPieces(PieceKind kind, PieceColor color) {
 		int count = 0;
-		for(Piece piece : pieceStorage) {
-			if(piece.verify(clazz, color)) {
+		for(Piece piece : pieceStorage.values()) {
+			if(piece.verify(kind, color)) {
 				count++;
 			}
 		}
@@ -40,14 +55,16 @@ public class Board {
 		return count;
 	}
 
-	public String getResult(Rank rank) {
-		StringBuilder sb = new StringBuilder("▭▭▭▭▭▭▭▭");
+	public int countPieces(PieceType type) {
+		return countPieces(type.getKind(), type.getColor());
+	}
 
-		for(Piece piece : pieceStorage) {
-			if(piece.verifyRank(rank)) {
-				int startIndex = piece.getFileValue() - 1;
-				sb.replace(startIndex, startIndex + 1, piece.getSymbol());
-			}
+	public String getResult(Rank rank) {
+		StringBuilder sb = new StringBuilder();
+
+		for(File file : File.values()) {
+			if(file == File.BLOCK) continue;
+			sb.append(pieceStorage.get(new Position(file, rank)).getSymbol());
 		}
 
 		return sb.toString();
@@ -62,4 +79,61 @@ public class Board {
 		}
 		return sb.toString();
 	}
+
+	public double getScore(PieceColor color) {
+		double score = 0.0;
+		for(Map.Entry<Position, Piece> entry : pieceStorage.entrySet()) {
+			Position position = entry.getKey();
+			Piece piece = entry.getValue();
+
+			if(!piece.verifyColor(color)) {
+				continue;
+			}
+
+			if(!piece.verifyKind(PieceKind.PAWN)) {
+				score += piece.getPoint();
+			} else if(verifyDoubledPawn(position, color)) {
+				score += piece.getPoint() / 2;
+			} else {
+				score += piece.getPoint();
+			}
+
+		}
+
+		return score;
+	}
+
+	private boolean verifyDoubledPawn(Position position, PieceColor color) {
+		File file = position.getFile();
+		for(Rank rank : Rank.values()) {
+			if(rank == Rank.BLOCK) continue;
+
+			Piece piece = pieceStorage.get(new Position(file, rank));
+			if(position.getRankValue() > rank.getValue()
+				&& piece.verify(PieceKind.PAWN, color)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public List<Piece> sortByPointAscending(PieceColor color) {
+		return sortByPoint(color, (o1, o2) -> (int)Math.floor(o1.getPoint() - o2.getPoint()));
+	}
+
+	public List<Piece> sortByPointDescending(PieceColor color) {
+		return sortByPoint(color, (o1, o2) -> (int)Math.floor(o2.getPoint() - o1.getPoint()));
+	}
+
+	private List<Piece> sortByPoint(PieceColor color, Comparator<Piece> comparator) {
+		return new ArrayList<>(pieceStorage.values())
+			.stream()
+			.filter(piece -> !piece.verifyKind(PieceKind.EMPTY))
+			.filter(piece -> piece.verifyColor(color))
+			.sorted(comparator)
+			.collect(Collectors.toList());
+	}
+
 }

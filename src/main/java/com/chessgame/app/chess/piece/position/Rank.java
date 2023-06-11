@@ -12,4 +12,8 @@ public enum Rank {
 	public int getValue() {
 		return value;
 	}
+
+	public String getStringValue() {
+		return String.valueOf(value);
+	}
 }
