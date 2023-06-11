@@ -2,6 +2,10 @@ package chess;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.pieces.Color;
+import chess.pieces.Piece;
+import chess.pieces.PieceCreator;
+import chess.pieces.Type;
 import chess.pieces.pawn.BlackPawn;
 import chess.pieces.pawn.WhitePawn;
 import chess.pieces.queen.WhiteQueen;
@@ -34,11 +38,45 @@ class BoardTest {
     @Test
     void findPiece() {
         Board board = new Board();
-        assertThat(board.findPiece("a8")).containsInstanceOf(BlackRook.class);
-        assertThat(board.findPiece("c7")).containsInstanceOf(BlackPawn.class);
-        assertThat(board.findPiece("c4")).isEmpty();
-        assertThat(board.findPiece("c2")).containsInstanceOf(WhitePawn.class);
-        assertThat(board.findPiece("d1")).containsInstanceOf(WhiteQueen.class);
+
+        assertThat(board.findPiece(Position.parse("a8"))).containsInstanceOf(BlackRook.class);
+        assertThat(board.findPiece(Position.parse("c7"))).containsInstanceOf(BlackPawn.class);
+        assertThat(board.findPiece(Position.parse("c4"))).isEmpty();
+        assertThat(board.findPiece(Position.parse("c2"))).containsInstanceOf(WhitePawn.class);
+        assertThat(board.findPiece(Position.parse("d1"))).containsInstanceOf(WhiteQueen.class);
 
     }
+
+    @DisplayName("임의의 기물을 체스판 위에 추가")
+    @Test
+    void move() {
+        // given
+        Board board = new Board();
+        Position position = Position.parse("b5");
+        Piece piece = PieceCreator.create(Type.ROOK, Color.BLACK);
+
+        // when
+        board.move(position, piece);
+
+        // then
+        assertThat(board.findPiece(position)).contains(piece);
+    }
+
+    @DisplayName("체스 프로그램 점수 계산하기")
+    @Test
+    public void calculatePoint() {
+        Board board = new Board();
+
+        assertThat(board.calculatePoint(Color.BLACK)).isEqualTo(38);
+        board.move(Position.parse("a8"), null);
+        assertThat(board.calculatePoint(Color.BLACK)).isEqualTo(33);
+        board.move(Position.parse("a7"), new BlackRook());
+        assertThat(board.calculatePoint(Color.BLACK)).isEqualTo(33.5);
+
+        assertThat(board.calculatePoint(Color.WHITE)).isEqualTo(38);
+
+        board.move(Position.parse("b1"), null);
+        assertThat(board.calculatePoint(Color.WHITE)).isEqualTo(35.5);
+    }
 }
+

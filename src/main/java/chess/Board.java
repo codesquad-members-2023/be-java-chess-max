@@ -4,17 +4,14 @@ import chess.pieces.Color;
 import chess.pieces.Piece;
 import chess.pieces.PieceCreator;
 import chess.pieces.Type;
+import chess.pieces.pawn.Pawn;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Board {
-
-    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     public static final String NEXT_LINE = "\n";
     public static final String EMPTY_DELIMITER = ".";
@@ -90,16 +87,50 @@ public class Board {
                 : String.valueOf(index);
     }
 
-    public Optional<Piece> findPiece(String targetPosition) {
-        try {
-            Position position = Position.parse(targetPosition);
-            int row = position.getRow();
-            int column = position.getColumn();
-            Piece piece = pieces[row][column];
-            return Optional.ofNullable(piece);
-        } catch (IllegalArgumentException e) {
-            logger.log(Level.WARNING, e.getMessage());
-            return Optional.empty();
-        }
+    public Optional<Piece> findPiece(Position position) {
+        int row = position.getRow();
+        int column = position.getColumn();
+        Piece piece = pieces[row][column];
+        return Optional.ofNullable(piece);
+    }
+
+    public boolean move(Position position, Piece piece) {
+        int row = position.getRow();
+        int column = position.getColumn();
+        pieces[row][column] = piece;
+        return true;
+    }
+
+    public double calculatePoint(Color color) {
+        return Arrays.stream(pieces)
+                .map(getRowScore(color))
+                .reduce((double) 0, Double::sum);
+    }
+
+    private static Function<Piece[], Double> getRowScore(Color color) {
+        return pieceRow -> {
+            Double sum = getTotalRowScore(color, pieceRow);
+            Double pawn = getTotalRowPawnScore(color, pieceRow);
+            if (sum.equals(pawn)) {
+                return sum;
+            }
+            return sum - (pawn / 2);
+        };
+    }
+
+    private static Double getTotalRowPawnScore(Color color, Piece[] pieceRow) {
+        return Arrays.stream(pieceRow)
+                .filter(piece -> piece instanceof Pawn)
+                .filter(piece -> piece.verifyColor(color))
+                .map(Piece::getScore)
+                .reduce((double) 0, Double::sum);
+    }
+
+    private static Double getTotalRowScore(Color color, Piece[] pieceRow) {
+        return Arrays.stream(pieceRow)
+                .map(piece -> piece == null || !piece.verifyColor(color)
+                        ? 0
+                        : piece.getScore())
+                .reduce((double) 0, Double::sum);
     }
 }
