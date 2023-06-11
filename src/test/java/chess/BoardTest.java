@@ -39,7 +39,11 @@ class BoardTest {
                         pppppppp  2
                         rnbqkbnr  1 (rank 1)
 
-                        abcdefgh"""
+                        abcdefgh
+                                                
+                        WHITE : 38.0점
+                        BLACK : 38.0점
+                        """
         );
     }
 
