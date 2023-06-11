@@ -6,6 +6,8 @@ import chess.pieces.PieceCreator;
 import chess.pieces.Type;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class Board {
 
@@ -40,7 +42,7 @@ public class Board {
 
     private void initMainPieces(Piece[] pieces, Color color) {
         pieces[0] = PieceCreator.create(Type.ROOK, color);
-        pieces[FIRST_LINE] = PieceCreator.create(Type.KNIGHT, color);
+        pieces[1] = PieceCreator.create(Type.KNIGHT, color);
         pieces[2] = PieceCreator.create(Type.BISHOP, color);
         pieces[3] = PieceCreator.create(Type.QUEEN, color);
         pieces[4] = PieceCreator.create(Type.KING, color);
@@ -54,19 +56,27 @@ public class Board {
         var stringBuilder = new StringBuilder();
         AtomicInteger atomicInteger = new AtomicInteger(LAST_LINE);
         Arrays.stream(this.pieces)
-                .map(
-                        rowPieces -> {
-                            StringBuilder sb = new StringBuilder();
-                            Arrays.stream(rowPieces)
-                                    .map(piece -> piece == null ? EMPTY_DELIMITER
-                                            : piece.getRepresentation().getValue())
-                                    .forEach(sb::append);
-                            return sb.toString();
-                        })
-                .forEach(s -> stringBuilder.append(s).append(SPACING)
-                        .append(getSuffix(atomicInteger)).append(NEXT_LINE));
+                .map(getRowInfo())
+                .forEach(RowInfoToString(stringBuilder, atomicInteger));
         stringBuilder.append(NEXT_LINE).append(COLUMN_DELIMITER);
         return stringBuilder.toString();
+    }
+
+    private static Consumer<String> RowInfoToString(StringBuilder stringBuilder,
+            AtomicInteger atomicInteger) {
+        return s -> stringBuilder.append(s).append(SPACING)
+                .append(getSuffix(atomicInteger)).append(NEXT_LINE);
+    }
+
+    private static Function<Piece[], String> getRowInfo() {
+        return rowPieces -> {
+            StringBuilder sb = new StringBuilder();
+            Arrays.stream(rowPieces)
+                    .map(piece -> piece == null ? EMPTY_DELIMITER
+                            : piece.getRepresentation().getValue())
+                    .forEach(sb::append);
+            return sb.toString();
+        };
     }
 
     private static String getSuffix(AtomicInteger atomicInteger) {
