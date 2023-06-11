@@ -1,6 +1,6 @@
 package chess.pieces;
 
-import chess.color.Color;
+import chess.pieces.color.Color;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

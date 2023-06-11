@@ -1,6 +1,6 @@
 package chess.pieces;
 
-import chess.color.Color;
+import chess.pieces.color.Color;
 import chess.pieces.type.Type;
 
 public abstract class Piece {
@@ -20,6 +20,10 @@ public abstract class Piece {
 
 	public Color getColor() {
 		return color;
+	}
+
+	public Type getType() {
+		return type;
 	}
 
 	public boolean isBlack() {
