@@ -1,6 +1,6 @@
 package chess.pieces.bishop;
 
-import static chess.pieces.Color.*;
+import static chess.pieces.Color.WHITE;
 
 import chess.pieces.Color;
 import chess.pieces.Representation;

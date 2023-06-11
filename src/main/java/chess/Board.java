@@ -38,32 +38,6 @@ public class Board {
         pieces[7] = PieceCreator.create(Type.ROOK, color);
     }
 
-    public void initialize() {
-        Piece[][] pieces = new Piece[LAST_LINE][LAST_LINE];
-        for (Piece[] rowPieces : pieces) {
-            for (int i = 0; i < LAST_LINE; i++) {
-                rowPieces[i] = new BlankPiece();
-            }
-        }
-
-        initMainPieces(pieces[0], Color.BLACK);
-        initPawnPieces(pieces[1], Color.BLACK);
-        initPawnPieces(pieces[6], Color.WHITE);
-        initMainPieces(pieces[7], Color.WHITE);
-        this.pieces = pieces;
-    }
-
-
-    public String print() {
-        var stringBuilder = new StringBuilder();
-        AtomicInteger atomicInteger = new AtomicInteger(LAST_LINE);
-        Arrays.stream(this.pieces)
-                .map(getRowInfo())
-                .forEach(RowInfoToString(stringBuilder, atomicInteger));
-        stringBuilder.append(NEXT_LINE).append(COLUMN_DELIMITER);
-        return stringBuilder.toString();
-    }
-
     private static Consumer<String> RowInfoToString(StringBuilder stringBuilder,
             AtomicInteger atomicInteger) {
         return s -> stringBuilder.append(s).append(SPACING)
@@ -84,24 +58,6 @@ public class Board {
         int index = atomicInteger.getAndDecrement();
         return index == LAST_LINE || index == FIRST_LINE ? String.format(RANK_FORMAT, index, index)
                 : String.valueOf(index);
-    }
-
-    public Piece findPiece(Position position) {
-        int row = position.getRow();
-        int column = position.getColumn();
-        return pieces[row][column];
-    }
-
-    public void move(Position position, Piece piece) {
-        int row = position.getRow();
-        int column = position.getColumn();
-        pieces[row][column] = piece;
-    }
-
-    public double calculatePoint(Color color) {
-        return Arrays.stream(pieces)
-                .map(getRowScore(color))
-                .reduce((double) 0, Double::sum);
     }
 
     private static Function<Piece[], Double> getRowScore(Color color) {
@@ -128,6 +84,49 @@ public class Board {
                 .map(piece -> piece == null || !piece.verifyColor(color)
                         ? 0
                         : piece.getScore())
+                .reduce((double) 0, Double::sum);
+    }
+
+    public void initialize() {
+        Piece[][] pieces = new Piece[LAST_LINE][LAST_LINE];
+        for (Piece[] rowPieces : pieces) {
+            for (int i = 0; i < LAST_LINE; i++) {
+                rowPieces[i] = new BlankPiece();
+            }
+        }
+
+        initMainPieces(pieces[0], Color.BLACK);
+        initPawnPieces(pieces[1], Color.BLACK);
+        initPawnPieces(pieces[6], Color.WHITE);
+        initMainPieces(pieces[7], Color.WHITE);
+        this.pieces = pieces;
+    }
+
+    public String print() {
+        var stringBuilder = new StringBuilder();
+        AtomicInteger atomicInteger = new AtomicInteger(LAST_LINE);
+        Arrays.stream(this.pieces)
+                .map(getRowInfo())
+                .forEach(RowInfoToString(stringBuilder, atomicInteger));
+        stringBuilder.append(NEXT_LINE).append(COLUMN_DELIMITER);
+        return stringBuilder.toString();
+    }
+
+    public Piece findPiece(Position position) {
+        int row = position.getRow();
+        int column = position.getColumn();
+        return pieces[row][column];
+    }
+
+    public void move(Position position, Piece piece) {
+        int row = position.getRow();
+        int column = position.getColumn();
+        pieces[row][column] = piece;
+    }
+
+    public double calculatePoint(Color color) {
+        return Arrays.stream(pieces)
+                .map(getRowScore(color))
                 .reduce((double) 0, Double::sum);
     }
 

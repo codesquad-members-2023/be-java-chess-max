@@ -1,6 +1,6 @@
 package chess.pieces.bishop;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.pieces.Color;
 import chess.pieces.Representation;
@@ -22,6 +22,7 @@ class WhiteBishopTest {
     void getRepresentation() {
         WhiteBishop whiteBishop = new WhiteBishop();
 
-        assertThat(whiteBishop.getRepresentation()).isEqualTo(Representation.WHITE_BISHOP.getValue());
+        assertThat(whiteBishop.getRepresentation()).isEqualTo(
+                Representation.WHITE_BISHOP.getValue());
     }
 }

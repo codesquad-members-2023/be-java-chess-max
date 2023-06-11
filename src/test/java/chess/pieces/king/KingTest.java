@@ -1,11 +1,12 @@
 package chess.pieces.king;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class KingTest {
+
     @DisplayName("King의 score는 0점입니다")
     @Test
     void getScore() {

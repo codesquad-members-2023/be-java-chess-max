@@ -22,6 +22,7 @@ class WhiteKnightTest {
     void getRepresentation() {
         WhiteKnight whiteKnight = new WhiteKnight();
 
-        assertThat(whiteKnight.getRepresentation()).isEqualTo(Representation.WHITE_KNIGHT.getValue());
+        assertThat(whiteKnight.getRepresentation()).isEqualTo(
+                Representation.WHITE_KNIGHT.getValue());
     }
 }
