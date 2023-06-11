@@ -11,15 +11,23 @@ import chess.pieces.pawn.BlackPawn;
 import chess.pieces.pawn.WhitePawn;
 import chess.pieces.queen.WhiteQueen;
 import chess.pieces.rook.BlackRook;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BoardTest {
 
+    Board board;
+
+    @BeforeEach
+    void setBoard() {
+        board = new Board();
+        board.initialize();
+    }
+
     @DisplayName("Board 초기화 출력")
     @Test
     void initAndPrint() {
-        Board board = new Board();
         assertThat(board.print()).isEqualTo(
                 """
                         RNBQKBNR  8 (rank 8)
@@ -38,8 +46,6 @@ class BoardTest {
     @DisplayName("주어진 위치의 기물을 조회")
     @Test
     void findPiece() {
-        Board board = new Board();
-
         assertThat(board.findPiece(Position.parse("a8"))).isInstanceOf(BlackRook.class);
         assertThat(board.findPiece(Position.parse("c7"))).isInstanceOf(BlackPawn.class);
         assertThat(board.findPiece(Position.parse("c4"))).isInstanceOf(BlankPiece.class);
@@ -52,7 +58,6 @@ class BoardTest {
     @Test
     void movePiece() {
         // given
-        Board board = new Board();
         Position position = Position.parse("b5");
         Piece piece = PieceCreator.create(Type.ROOK, Color.BLACK);
 
@@ -67,7 +72,6 @@ class BoardTest {
     @Test
     public void calculatePoint() {
         // given
-        Board board = new Board();
         assertThat(board.calculatePoint(Color.BLACK)).isEqualTo(38);
         assertThat(board.calculatePoint(Color.WHITE)).isEqualTo(38);
 
@@ -90,7 +94,6 @@ class BoardTest {
     @Test
     void move() {
         // given
-        Board board = new Board();
         Position sourcePosition = Position.parse("b2");
         Position targetPosition = Position.parse("b3");
 

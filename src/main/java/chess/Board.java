@@ -19,35 +19,15 @@ public class Board {
     public static final String RANK_FORMAT = "%d (rank %d)";
     public static final int LAST_LINE = 8;
     public static final int FIRST_LINE = 1;
-    private final Piece[][] pieces;
+    private Piece[][] pieces;
 
-    public Board() {
-        this.pieces = initialize();
-    }
-
-
-    private Piece[][] initialize() {
-        Piece[][] pieces = new Piece[LAST_LINE][LAST_LINE];
-        for (Piece[] rowPieces : pieces) {
-            for (int i = 0; i < LAST_LINE; i++) {
-                rowPieces[i] = new BlankPiece();
-            }
-        }
-
-        initMainPieces(pieces[0], Color.BLACK);
-        initPawnPieces(pieces[FIRST_LINE], Color.BLACK);
-        initPawnPieces(pieces[6], Color.WHITE);
-        initMainPieces(pieces[7], Color.WHITE);
-        return pieces;
-    }
-
-    private void initPawnPieces(Piece[] pieces, Color color) {
+    private static void initPawnPieces(Piece[] pieces, Color color) {
         for (int i = 0; i < pieces.length; i++) {
             pieces[i] = PieceCreator.create(Type.PAWN, color);
         }
     }
 
-    private void initMainPieces(Piece[] pieces, Color color) {
+    private static void initMainPieces(Piece[] pieces, Color color) {
         pieces[0] = PieceCreator.create(Type.ROOK, color);
         pieces[1] = PieceCreator.create(Type.KNIGHT, color);
         pieces[2] = PieceCreator.create(Type.BISHOP, color);
@@ -56,6 +36,21 @@ public class Board {
         pieces[5] = PieceCreator.create(Type.BISHOP, color);
         pieces[6] = PieceCreator.create(Type.KNIGHT, color);
         pieces[7] = PieceCreator.create(Type.ROOK, color);
+    }
+
+    public void initialize() {
+        Piece[][] pieces = new Piece[LAST_LINE][LAST_LINE];
+        for (Piece[] rowPieces : pieces) {
+            for (int i = 0; i < LAST_LINE; i++) {
+                rowPieces[i] = new BlankPiece();
+            }
+        }
+
+        initMainPieces(pieces[0], Color.BLACK);
+        initPawnPieces(pieces[1], Color.BLACK);
+        initPawnPieces(pieces[6], Color.WHITE);
+        initMainPieces(pieces[7], Color.WHITE);
+        this.pieces = pieces;
     }
 
 
