@@ -9,19 +9,23 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import kr.codesqaud.chessgame.pieces.Color;
+import kr.codesqaud.chessgame.exception.InvalidMovingPieceException;
 import kr.codesqaud.chessgame.pieces.Piece;
 import kr.codesqaud.chessgame.pieces.PieceFactory;
 import kr.codesqaud.chessgame.pieces.Position;
-import kr.codesqaud.chessgame.pieces.Type;
+import kr.codesqaud.chessgame.pieces.config.Color;
+import kr.codesqaud.chessgame.pieces.config.Type;
 import kr.codesqaud.chessgame.utils.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ChessBoard implements Board {
 
     public static final int SIZE = 8;
+    private static final Logger logger = LoggerFactory.getLogger(ChessBoard.class);
     private final List<Rank> ranks;
+    private final ChessGame game;
     private int pieceCount;
-    private ChessGame game;
 
     public ChessBoard() {
         ranks = new ArrayList<>(SIZE);
@@ -78,6 +82,7 @@ public class ChessBoard implements Board {
     public void move(final String sourcePosition, final String targetPosition) {
         Piece sourcePiece = findPiece(sourcePosition);
         Piece targetPiece = findPiece(targetPosition);
+        validateMovingPiece(sourcePiece, targetPiece);
         move(targetPosition, sourcePiece);
         move(sourcePosition, targetPiece);
     }
@@ -90,6 +95,23 @@ public class ChessBoard implements Board {
             .map(Rank::getPieceResult)
             .map(StringUtils::appendNewLine)
             .collect(Collectors.joining());
+    }
+
+    private void validateMovingPiece(Piece sourcePiece, Piece targetPiece) {
+        // 기물인지 검증
+        if (Objects.equals(sourcePiece.getType(), Type.NO_PIECE)) {
+            throw new InvalidMovingPieceException("빈칸을 선택하셨습니다. : " + sourcePiece.getPosition());
+        }
+
+        // 이동하려는 위치에 같은 색상의 기물이 있는지 검증
+        if (Objects.equals(sourcePiece.getColor(), targetPiece.getColor())) {
+            throw new InvalidMovingPieceException(
+                "이동하고자 하는 기물이 같은 색상입니다. 선택 : " + sourcePiece.getPosition() + ", 이동 : " + targetPiece.getPosition());
+        }
+
+        if (!sourcePiece.isMovable(targetPiece.getPosition())) {
+            throw new InvalidMovingPieceException("해당 기물이 이동할 수 없는 위치입니다.");
+        }
     }
 
     // Position 위치로 기물 이동
