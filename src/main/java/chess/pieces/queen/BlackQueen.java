@@ -7,6 +7,10 @@ import chess.pieces.Color;
 
 public class BlackQueen extends Queen {
 
+    public BlackQueen() {
+        super(BLACK);
+    }
+
     @Override
     public boolean verifyColor(Color color) {
         return BLACK.equals(color);

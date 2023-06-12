@@ -7,6 +7,10 @@ import chess.pieces.Color;
 
 public class BlackRook extends Rook {
 
+    public BlackRook() {
+        super(BLACK);
+    }
+
     @Override
     public boolean verifyColor(Color color) {
         return BLACK.equals(color);

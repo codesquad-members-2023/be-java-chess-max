@@ -1,5 +1,8 @@
 package chess.pieces;
 
+import chess.Board;
+import chess.Position;
+
 public class BlankPiece implements Piece {
 
     @Override
@@ -15,5 +18,15 @@ public class BlankPiece implements Piece {
     @Override
     public double getScore() {
         return 0;
+    }
+
+    @Override
+    public Color getColor() {
+        return Color.NONE;
+    }
+
+    @Override
+    public Position[] getCanMovePositions(Position position, Board board) {
+        return new Position[0];
     }
 }

@@ -7,6 +7,10 @@ import chess.pieces.Representation;
 
 public class WhiteBishop extends Bishop {
 
+    public WhiteBishop() {
+        super(WHITE);
+    }
+
     @Override
     public boolean verifyColor(Color color) {
         return WHITE.equals(color);

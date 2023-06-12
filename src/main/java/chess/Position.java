@@ -1,5 +1,6 @@
 package chess;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Position {
@@ -31,5 +32,21 @@ public class Position {
 
     public int getColumn() {
         return column;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Position position)) {
+            return false;
+        }
+        return getRow() == position.getRow() && getColumn() == position.getColumn();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getRow(), getColumn());
     }
 }
