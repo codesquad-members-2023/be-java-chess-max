@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import kr.codesqaud.chessgame.pieces.Color;
 import kr.codesqaud.chessgame.pieces.Piece;
-import kr.codesqaud.chessgame.pieces.Type;
+import kr.codesqaud.chessgame.pieces.config.Color;
+import kr.codesqaud.chessgame.pieces.config.Type;
 
 public class Rank implements Comparable<Rank> {
 

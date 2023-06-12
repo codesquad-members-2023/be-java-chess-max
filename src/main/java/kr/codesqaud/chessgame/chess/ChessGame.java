@@ -1,14 +1,14 @@
 package kr.codesqaud.chessgame.chess;
 
-import static kr.codesqaud.chessgame.pieces.Type.PAWN;
+import static kr.codesqaud.chessgame.pieces.config.Type.PAWN;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
-import kr.codesqaud.chessgame.pieces.Color;
 import kr.codesqaud.chessgame.pieces.Piece;
 import kr.codesqaud.chessgame.pieces.Position;
-import kr.codesqaud.chessgame.pieces.Type;
+import kr.codesqaud.chessgame.pieces.config.Color;
+import kr.codesqaud.chessgame.pieces.config.Type;
 
 public class ChessGame {
 

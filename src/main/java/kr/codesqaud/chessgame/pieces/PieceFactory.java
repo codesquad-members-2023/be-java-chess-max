@@ -1,12 +1,15 @@
 package kr.codesqaud.chessgame.pieces;
 
-import static kr.codesqaud.chessgame.pieces.Type.BISHOP;
-import static kr.codesqaud.chessgame.pieces.Type.KING;
-import static kr.codesqaud.chessgame.pieces.Type.KNIGHT;
-import static kr.codesqaud.chessgame.pieces.Type.NO_PIECE;
-import static kr.codesqaud.chessgame.pieces.Type.PAWN;
-import static kr.codesqaud.chessgame.pieces.Type.QUEEN;
-import static kr.codesqaud.chessgame.pieces.Type.ROOK;
+import static kr.codesqaud.chessgame.pieces.config.Type.BISHOP;
+import static kr.codesqaud.chessgame.pieces.config.Type.KING;
+import static kr.codesqaud.chessgame.pieces.config.Type.KNIGHT;
+import static kr.codesqaud.chessgame.pieces.config.Type.NO_PIECE;
+import static kr.codesqaud.chessgame.pieces.config.Type.PAWN;
+import static kr.codesqaud.chessgame.pieces.config.Type.QUEEN;
+import static kr.codesqaud.chessgame.pieces.config.Type.ROOK;
+
+import kr.codesqaud.chessgame.pieces.config.Color;
+import kr.codesqaud.chessgame.pieces.config.Type;
 
 public class PieceFactory {
 
