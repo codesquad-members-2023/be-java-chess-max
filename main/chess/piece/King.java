@@ -7,8 +7,6 @@ import java.util.stream.Collectors;
 import static chess.piece.Color.BLACK;
 import static chess.piece.Color.WHITE;
 import static chess.piece.Type.KING;
-import static chess.util.StringUtil.BOARD_END_INDEX;
-import static chess.util.StringUtil.BOARD_START_INDEX;
 
 public class King implements Piece {
 
@@ -71,7 +69,7 @@ public class King implements Piece {
         return Direction.linearDirection()
                 .stream()
                 .map(direction -> new Position(direction.getxDegree() + position.getIndexX(), direction.getyDegree() + position.getIndexY()))
-                .filter(position -> position.getIndexX() >= BOARD_START_INDEX && position.getIndexY() >= BOARD_START_INDEX && position.getIndexX() <= BOARD_END_INDEX && position.getIndexY() <= BOARD_END_INDEX)
+                .filter(Position::isValidBoardPosition)
                 .collect(Collectors.toUnmodifiableList());
     }
 
