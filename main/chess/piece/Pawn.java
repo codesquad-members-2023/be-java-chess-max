@@ -1,6 +1,8 @@
 package chess.piece;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static chess.piece.Color.BLACK;
 import static chess.piece.Color.WHITE;
@@ -60,6 +62,16 @@ public class Pawn implements Piece {
     @Override
     public void setPosition(final Position position) {
         this.position = position;
+    }
+
+    @Override
+    public List<Position> getValidMovePositions() {
+        List<Direction> directions = color == WHITE ? Direction.whitePawnDirection() : Direction.blackPawnDirection();
+
+        return directions.stream()
+                .map(direction -> new Position(direction.getxDegree() + position.getIndexX(), direction.getyDegree() + position.getIndexY()))
+                .filter(Position::isValidBoardPosition)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     @Override
