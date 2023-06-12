@@ -96,7 +96,13 @@ public class Board {
 
 	public String getPiecesResult(ArrayList<Piece> pieces) {
 		return pieces.stream()
-			.map(p -> Character.toString(p.getRepresentation()))
+			.map(p -> {
+				if (p.getColor().equals(Piece.Color.WHITE)) {
+					return Character.toString(p.getRepresentation().getWhiteRepresentation());
+				} else {
+					return Character.toString(p.getRepresentation().getBlackRepresentation());
+				}
+			})
 			.collect(Collectors.joining());
 	}
 
