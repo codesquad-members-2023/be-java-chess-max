@@ -98,9 +98,9 @@ public class Board {
 		return pieces.stream()
 			.map(p -> {
 				if (p.getColor().equals(Piece.Color.WHITE)) {
-					return Character.toString(p.getRepresentation().getWhiteRepresentation());
+					return Character.toString(p.getType().getWhiteRepresentation());
 				} else {
-					return Character.toString(p.getRepresentation().getBlackRepresentation());
+					return Character.toString(p.getType().getBlackRepresentation());
 				}
 			})
 			.collect(Collectors.joining());

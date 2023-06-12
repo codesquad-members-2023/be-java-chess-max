@@ -3,19 +3,19 @@ package chess.pieces;
 public class Piece {
 
 	private Color color;
-	private Type representation;
+	private Type type;
 
-	private Piece(Color color, Type representation) {
+	private Piece(Color color, Type type) {
 		this.color = color;
-		this.representation = representation;
+		this.type = type;
 	}
 
 	public Color getColor() {
 		return color;
 	}
 
-	public Type getRepresentation() {
-		return representation;
+	public Type getType() {
+		return type;
 	}
 
 	public static Piece createWhitePawn() {
@@ -64,6 +64,10 @@ public class Piece {
 
 	public static Piece createBlackKing() {
 		return new Piece(Color.BLACK, Type.KING);
+	}
+
+	public static Piece createBlank() {
+		return new Piece(Color.NO_COLOR, Type.NO_PIECE);
 	}
 
 	public boolean isWhite() {

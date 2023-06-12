@@ -10,7 +10,7 @@ class PieceTest {
 
 	@Test
 	@DisplayName("검은색 말은 대문자로 표시되어야 한다.")
-	public void getRepresentationPerPiece() throws Exception {
+	public void getRepresentationPerPiece() {
 		assertThat('p').isEqualTo(Type.PAWN.getWhiteRepresentation());
 		assertThat('P').isEqualTo(Type.PAWN.getBlackRepresentation());
 	}
@@ -18,23 +18,25 @@ class PieceTest {
 	@Test
 	@DisplayName("지정한 색의 말이 생성되어야 한다.")
 	public void create() {
-		verifyPiece(Piece.createWhitePawn(), Color.WHITE, Type.PAWN);
-		verifyPiece(Piece.createBlackPawn(), Color.BLACK, Type.PAWN);
-		verifyPiece(Piece.createWhiteKnight(), Color.WHITE, Type.KNIGHT);
-		verifyPiece(Piece.createBlackKnight(), Color.BLACK, Type.KNIGHT);
-		verifyPiece(Piece.createWhiteRook(), Color.WHITE, Type.ROOK);
-		verifyPiece(Piece.createBlackRook(), Color.BLACK, Type.ROOK);
-		verifyPiece(Piece.createWhiteBishop(), Color.WHITE, Type.BISHOP);
-		verifyPiece(Piece.createBlackBishop(), Color.BLACK, Type.BISHOP);
-		verifyPiece(Piece.createWhiteQueen(), Color.WHITE, Type.QUEEN);
-		verifyPiece(Piece.createBlackQueen(), Color.BLACK, Type.QUEEN);
-		verifyPiece(Piece.createWhiteKing(), Color.WHITE, Type.KING);
-		verifyPiece(Piece.createBlackKing(), Color.BLACK, Type.KING);
+		verifyPiece(Piece.createWhitePawn(), Piece.createBlackPawn(), Type.PAWN);
+		verifyPiece(Piece.createWhiteKnight(), Piece.createBlackKnight(), Type.KNIGHT);
+		verifyPiece(Piece.createWhiteRook(), Piece.createBlackRook(), Type.ROOK);
+		verifyPiece(Piece.createWhiteBishop(), Piece.createBlackBishop(), Type.BISHOP);
+		verifyPiece(Piece.createWhiteQueen(), Piece.createBlackQueen(), Type.QUEEN);
+		verifyPiece(Piece.createWhiteKing(), Piece.createBlackKing(), Type.KING);
+
+		Piece blank = Piece.createBlank();
+		assertThat(blank.isWhite()).isFalse();
+		assertThat(blank.isBlack()).isFalse();
+		assertThat(blank.getType()).isEqualTo(Type.NO_PIECE);
 	}
 
-	private void verifyPiece(Piece piece, Color color, Type representation) {
-		assertThat(piece.getColor()).isEqualTo(color);
-		assertThat(piece.getRepresentation()).isEqualTo(representation);
+	private void verifyPiece(Piece whitePiece, Piece blackPiece, Type type) {
+		assertThat(whitePiece.isWhite()).isTrue();
+		assertThat(whitePiece.getType()).isEqualTo(type);
+
+		assertThat(blackPiece.isBlack()).isTrue();
+		assertThat(blackPiece.getType()).isEqualTo(type);
 	}
 
 	@Test
