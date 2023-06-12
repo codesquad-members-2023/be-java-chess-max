@@ -1,16 +1,23 @@
 package chess;
 
+import chess.piece.Bishop;
+import chess.piece.Blank;
+import chess.piece.Color;
+import chess.piece.King;
+import chess.piece.Knight;
+import chess.piece.Pawn;
 import chess.piece.Piece;
-import chess.piece.Piece.Color;
-import chess.piece.Piece.Type;
 import chess.piece.Position;
+import chess.piece.Queen;
+import chess.piece.Rook;
+import chess.piece.Type;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static chess.piece.Piece.Type.BLANK;
+import static chess.piece.Type.BLANK;
 
 public class Rank {
     private final List<Piece> rank;
@@ -20,55 +27,55 @@ public class Rank {
     }
 
     public int countPieces() {
-        return (int) rank.stream().filter(piece -> piece.getType() != BLANK).count();
+        return (int) rank.stream().filter(piece -> !piece.isType(BLANK)).count();
     }
 
     public static Rank createBlankRank(int index) {
-        return new Rank(IntStream.range(0, 8).mapToObj(o -> Piece.createBlank(new Position(o, index))).collect(Collectors.toList()));
+        return new Rank(IntStream.range(0, 8).mapToObj(o -> Blank.create(new Position(o, index))).collect(Collectors.toList()));
     }
 
     public static Rank initializeWhitePieces(int index) {
         List<Piece> white = new ArrayList<>(8);
 
-        white.add(Piece.createWhiteRook(new Position(0, index)));
-        white.add(Piece.createWhiteKnight(new Position(1, index)));
-        white.add(Piece.createWhiteBishop(new Position(2, index)));
-        white.add(Piece.createWhiteQueen(new Position(3, index)));
-        white.add(Piece.createWhiteKing(new Position(4, index)));
-        white.add(Piece.createWhiteBishop(new Position(5, index)));
-        white.add(Piece.createWhiteKnight(new Position(6, index)));
-        white.add(Piece.createWhiteRook(new Position(7, index)));
+        white.add(Rook.createWhite(new Position(0, index)));
+        white.add(Knight.createWhite(new Position(1, index)));
+        white.add(Bishop.createWhite(new Position(2, index)));
+        white.add(Queen.createWhite(new Position(3, index)));
+        white.add(King.createWhite(new Position(4, index)));
+        white.add(Bishop.createWhite(new Position(5, index)));
+        white.add(Knight.createWhite(new Position(6, index)));
+        white.add(Rook.createWhite(new Position(7, index)));
 
         return new Rank(white);
     }
 
     public static Rank initializeWhitePawns(int index) {
-        return new Rank(IntStream.range(0, 8).mapToObj(o -> Piece.createWhitePawn(new Position(o, index))).collect(Collectors.toList()));
+        return new Rank(IntStream.range(0, 8).mapToObj(o -> Pawn.createWhite(new Position(o, index))).collect(Collectors.toList()));
     }
 
     public static Rank initializeBlackPieces(int index) {
         List<Piece> black = new ArrayList<>(8);
 
-        black.add(Piece.createBlackRook(new Position(0, index)));
-        black.add(Piece.createBlackKnight(new Position(1, index)));
-        black.add(Piece.createBlackBishop(new Position(2, index)));
-        black.add(Piece.createBlackQueen(new Position(3, index)));
-        black.add(Piece.createBlackKing(new Position(4, index)));
-        black.add(Piece.createBlackBishop(new Position(5, index)));
-        black.add(Piece.createBlackKnight(new Position(6, index)));
-        black.add(Piece.createBlackRook(new Position(7, index)));
+        black.add(Rook.createBlack(new Position(0, index)));
+        black.add(Knight.createBlack(new Position(1, index)));
+        black.add(Bishop.createBlack(new Position(2, index)));
+        black.add(Queen.createBlack(new Position(3, index)));
+        black.add(King.createBlack(new Position(4, index)));
+        black.add(Bishop.createBlack(new Position(5, index)));
+        black.add(Knight.createBlack(new Position(6, index)));
+        black.add(Rook.createBlack(new Position(7, index)));
 
         return new Rank(black);
     }
 
     public static Rank initializeBlackPawns(int index) {
-        return new Rank(IntStream.range(0, 8).mapToObj(o -> Piece.createBlackPawn(new Position(o, index))).collect(Collectors.toList()));
+        return new Rank(IntStream.range(0, 8).mapToObj(o -> Pawn.createBlack(new Position(o, index))).collect(Collectors.toList()));
     }
 
     public int countPiecesByColorAndType(Color color, Type type) {
         return (int) this.rank
                 .stream()
-                .filter(piece -> piece.getType().equals(type) && piece.getColor().equals(color))
+                .filter(piece -> piece.isType(type) && piece.isColor(color))
                 .count();
     }
 
@@ -77,14 +84,14 @@ public class Rank {
     }
 
     public List<Piece> findPiecesByColor(final Color color) {
-        return this.rank.stream().filter(piece -> piece.getColor().equals(color)).collect(Collectors.toList());
+        return this.rank.stream().filter(piece -> piece.isColor(color)).collect(Collectors.toList());
     }
 
     public String show() {
         return this.rank.stream().map(Piece::getRepresentation).collect(Collectors.joining());
     }
 
-    public void move(final int indexX, final Piece piece) {
+    public void put(final int indexX, final Piece piece) {
         this.rank.set(indexX, piece);
     }
 }

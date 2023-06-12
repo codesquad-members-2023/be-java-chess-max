@@ -1,9 +1,10 @@
 package chess;
 
+import chess.piece.Blank;
+import chess.piece.Color;
 import chess.piece.Piece;
-import chess.piece.Piece.Color;
-import chess.piece.Piece.Type;
 import chess.piece.Position;
+import chess.piece.Type;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static chess.piece.Piece.Type.PAWN;
+import static chess.piece.Type.PAWN;
 import static chess.util.StringUtil.NEW_LINE;
 
 public class Board {
@@ -59,31 +60,29 @@ public class Board {
         return reversedBoard.stream().map(Rank::show).collect(Collectors.joining(NEW_LINE));
     }
 
-    public void move(final String position, final Piece piece) {
+    public void put(final String position, final Piece piece) {
         final Position targetPosition = new Position(position);
-        board.get(targetPosition.getIndexY()).move(targetPosition.getIndexX(), piece);
+        board.get(targetPosition.getIndexY()).put(targetPosition.getIndexX(), piece);
     }
 
-    public void move(final Position position, final Piece piece) {
-        board.get(position.getIndexY()).move(position.getIndexX(), piece);
+    public void put(final Position targetPosition, final Piece piece) {
+        board.get(targetPosition.getIndexY()).put(targetPosition.getIndexX(), piece);
     }
 
     public void move(final String sourcePosition, final String targetPosition) {
-        final Piece piece = findPiece(sourcePosition);
-        piece.setPosition(new Position(targetPosition));
-        final Position source = new Position(sourcePosition);
-        final Position target = new Position(targetPosition);
-        board.get(source.getIndexY()).move(source.getIndexX(), Piece.createBlank(new Position(sourcePosition)));
-        board.get(target.getIndexY()).move(target.getIndexX(), piece);
+        final Piece sourcePiece = findPiece(sourcePosition);
+        sourcePiece.setPosition(new Position(targetPosition));
+        put(sourcePosition, Blank.create(new Position(sourcePosition)));
+        put(targetPosition, sourcePiece);
     }
 
     public double calculatePoint(final Color color) {
-        return findPiecesByColor(color).stream().mapToDouble(o -> o.getType().getPoint()).sum() - calculateSameColorPawnInColumn(color);
+        return findPiecesByColor(color).stream().mapToDouble(Piece::getPoint).sum() - calculateSameColorPawnInColumn(color);
     }
 
     public double calculateSameColorPawnInColumn(final Color color) {
         final List<Integer> indexes = findPiecesByColor(color)
-                .stream().filter(piece -> piece.getType().equals(PAWN))
+                .stream().filter(piece -> piece.isType(PAWN))
                 .map(piece -> piece.getPosition().getIndexX())
                 .collect(Collectors.toUnmodifiableList());
 
