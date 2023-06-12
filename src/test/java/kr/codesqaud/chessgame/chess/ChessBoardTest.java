@@ -9,13 +9,15 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import kr.codesqaud.chessgame.pieces.Color;
+import kr.codesqaud.chessgame.exception.InvalidMovingPieceException;
+import kr.codesqaud.chessgame.exception.InvalidPositionException;
 import kr.codesqaud.chessgame.pieces.Piece;
 import kr.codesqaud.chessgame.pieces.PieceFactory;
-import kr.codesqaud.chessgame.pieces.Type;
+import kr.codesqaud.chessgame.pieces.Position;
+import kr.codesqaud.chessgame.pieces.config.Color;
+import kr.codesqaud.chessgame.pieces.config.Type;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -209,19 +211,65 @@ class ChessBoardTest {
     }
 
     @Test
-    @Disabled
-    @DisplayName("board.findPiece 메소드를 100번 호출했을때 속도 측정 테스트")
-    public void findPiece_speed() {
+    @DisplayName("킹이 주어지고 이동을 요청했을때 상하좌우 대각선으로 한칸을 이동할 수 있다")
+    public void move_king() {
         // given
-        Board board = new ChessBoard();
+        board.initializeEmpty();
+        String sourcePosition = "e8";
+        String targetPosition = "e7";
+        Position position = createPosition(sourcePosition);
+        board.move(position, pieceFactory.createBlackKing(position));
         // when
-        // 100만번 기준 2.239초
-        for (int i = 0; i < 1000000; i++) {
-            this.board.findPiece("h1");
-        }
+        board.move(sourcePosition, targetPosition);
+        // then
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThat(board.findPiece(sourcePosition))
+                .isEqualTo(pieceFactory.createBlank(createPosition(sourcePosition)));
+            softAssertions.assertThat(board.findPiece(targetPosition))
+                .isEqualTo(pieceFactory.createBlackKing(createPosition(targetPosition)));
+        });
+    }
+
+    @Test
+    @DisplayName("킹이 주어지고 부적절한 이동 요청시 예외가 발생한다")
+    public void move_king_fail() {
+        // given
+        board.initialize();
+        // when
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThatThrownBy(() -> {
+                board.move("e8", "e9"); // 체스판 밖으로 이동하는 경우
+            }).isInstanceOf(InvalidPositionException.class);
+
+            softAssertions.assertThatThrownBy(() -> {
+                board.move("e8", "e7"); // 이동하려는 위치에 같은 편의 기물이 있는 경우
+            }).isInstanceOf(InvalidMovingPieceException.class);
+
+            softAssertions.assertThatThrownBy(() -> {
+                board.move("e8", "e6"); // King이 2칸 앞으로 이동하려는 경우
+            }).isInstanceOf(InvalidMovingPieceException.class);
+        });
         // then
     }
 
+    @Test
+    @DisplayName("체스판 위에 퀸 기물이 주어지고 직선으로 몇칸 이동 요청시 해당 위치로 이동한다")
+    public void move_queen() {
+        // given
+        board.initializeEmpty();
+        String sourcePosition = "d8";
+        String targetPosition = "d6";
+        Position d8 = createPosition(sourcePosition);
+        board.move(d8, pieceFactory.createBlackQueen(d8));
+        // when
+        board.move(sourcePosition, targetPosition);
+        // then
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThat(board.findPiece(sourcePosition)).isEqualTo(pieceFactory.createBlank(d8));
+            softAssertions.assertThat(board.findPiece(targetPosition))
+                .isEqualTo(pieceFactory.createBlackQueen(createPosition(targetPosition)));
+        });
+    }
 
     private void addPiece(String position, Piece piece) {
         board.move(position, piece);
