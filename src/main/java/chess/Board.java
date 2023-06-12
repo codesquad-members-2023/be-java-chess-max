@@ -93,6 +93,14 @@ public class Board {
 		return stringBuilder.toString();
 	}
 
+	public int count(Piece.Color color, Piece.Type type) {
+		int count = 0;
+		for (Rank rank : ranks) {
+			count += rank.count(color, type);
+		}
+		return count;
+	}
+
 	private void makeBlankLine(StringBuilder stringBuilder) {
 		stringBuilder.append(StringUtils.appendNewLine(BLANK_LINE));
 	}

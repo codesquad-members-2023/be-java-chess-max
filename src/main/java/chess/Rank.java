@@ -26,4 +26,14 @@ public class Rank {
 			})
 			.collect(Collectors.joining());
 	}
+
+	public int count(Piece.Color color, Piece.Type type) {
+		int count = 0;
+		for (Piece piece: pieces) {
+			if(piece.getColor().equals(color) && piece.getType().equals(type)) {
+				count++;
+			}
+		}
+		return count;
+	}
 }
