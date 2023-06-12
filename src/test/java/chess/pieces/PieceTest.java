@@ -18,12 +18,12 @@ class PieceTest {
 	@Test
 	@DisplayName("지정한 색의 말이 생성되어야 한다.")
 	public void create() {
-		verifyPiece(Piece.createWhitePawn(), Piece.createBlackPawn(), Type.PAWN);
-		verifyPiece(Piece.createWhiteKnight(), Piece.createBlackKnight(), Type.KNIGHT);
-		verifyPiece(Piece.createWhiteRook(), Piece.createBlackRook(), Type.ROOK);
-		verifyPiece(Piece.createWhiteBishop(), Piece.createBlackBishop(), Type.BISHOP);
-		verifyPiece(Piece.createWhiteQueen(), Piece.createBlackQueen(), Type.QUEEN);
-		verifyPiece(Piece.createWhiteKing(), Piece.createBlackKing(), Type.KING);
+		verifyPiece(Type.PAWN);
+		verifyPiece(Type.KNIGHT);
+		verifyPiece(Type.ROOK);
+		verifyPiece(Type.BISHOP);
+		verifyPiece(Type.QUEEN);
+		verifyPiece(Type.KING);
 
 		Piece blank = Piece.createBlank();
 		assertThat(blank.isWhite()).isFalse();
@@ -31,10 +31,12 @@ class PieceTest {
 		assertThat(blank.getType()).isEqualTo(Type.NO_PIECE);
 	}
 
-	private void verifyPiece(Piece whitePiece, Piece blackPiece, Type type) {
+	private void verifyPiece(Type type) {
+		Piece whitePiece = createWhite(type);
 		assertThat(whitePiece.isWhite()).isTrue();
 		assertThat(whitePiece.getType()).isEqualTo(type);
 
+		Piece blackPiece = createBlack(type);
 		assertThat(blackPiece.isBlack()).isTrue();
 		assertThat(blackPiece.getType()).isEqualTo(type);
 	}
@@ -42,17 +44,17 @@ class PieceTest {
 	@Test
 	@DisplayName("말의 색을 구분할 수 있다.")
 	public void checkColor() {
-		assertThat(Piece.createWhitePawn().isWhite()).isTrue();
-		assertThat(Piece.createWhiteRook().isWhite()).isTrue();
-		assertThat(Piece.createWhiteBishop().isWhite()).isTrue();
-		assertThat(Piece.createWhiteKnight().isWhite()).isTrue();
-		assertThat(Piece.createWhiteQueen().isWhite()).isTrue();
-		assertThat(Piece.createWhiteKing().isWhite()).isTrue();
-		assertThat(Piece.createBlackPawn().isBlack()).isTrue();
-		assertThat(Piece.createBlackRook().isBlack()).isTrue();
-		assertThat(Piece.createBlackBishop().isBlack()).isTrue();
-		assertThat(Piece.createBlackKnight().isBlack()).isTrue();
-		assertThat(Piece.createBlackQueen().isBlack()).isTrue();
-		assertThat(Piece.createBlackKing().isBlack()).isTrue();
+		assertThat(Piece.createWhite(Type.PAWN).isWhite()).isTrue();
+		assertThat(Piece.createWhite(Type.ROOK).isWhite()).isTrue();
+		assertThat(Piece.createWhite(Type.BISHOP).isWhite()).isTrue();
+		assertThat(Piece.createWhite(Type.KNIGHT).isWhite()).isTrue();
+		assertThat(Piece.createWhite(Type.QUEEN).isWhite()).isTrue();
+		assertThat(Piece.createWhite(Type.KING).isWhite()).isTrue();
+		assertThat(Piece.createBlack(Type.PAWN).isBlack()).isTrue();
+		assertThat(Piece.createBlack(Type.ROOK).isBlack()).isTrue();
+		assertThat(Piece.createBlack(Type.BISHOP).isBlack()).isTrue();
+		assertThat(Piece.createBlack(Type.KNIGHT).isBlack()).isTrue();
+		assertThat(Piece.createBlack(Type.QUEEN).isBlack()).isTrue();
+		assertThat(Piece.createBlack(Type.KING).isBlack()).isTrue();
 	}
 }

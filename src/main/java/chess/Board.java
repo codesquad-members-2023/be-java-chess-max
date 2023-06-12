@@ -35,30 +35,30 @@ public class Board {
 	}
 
 	public void initialize() {
-		whitePieces.add(Piece.createWhiteRook());
-		whitePieces.add(Piece.createWhiteKnight());
-		whitePieces.add(Piece.createWhiteBishop());
-		whitePieces.add(Piece.createWhiteQueen());
-		whitePieces.add(Piece.createWhiteKing());
-		whitePieces.add(Piece.createWhiteBishop());
-		whitePieces.add(Piece.createWhiteKnight());
-		whitePieces.add(Piece.createWhiteRook());
+		whitePieces.add(Piece.createWhite(Piece.Type.ROOK));
+		whitePieces.add(Piece.createWhite(Piece.Type.KNIGHT));
+		whitePieces.add(Piece.createWhite(Piece.Type.BISHOP));
+		whitePieces.add(Piece.createWhite(Piece.Type.QUEEN));
+		whitePieces.add(Piece.createWhite(Piece.Type.KING));
+		whitePieces.add(Piece.createWhite(Piece.Type.BISHOP));
+		whitePieces.add(Piece.createWhite(Piece.Type.KNIGHT));
+		whitePieces.add(Piece.createWhite(Piece.Type.ROOK));
 		for (int i = 0; i < PAWN_NUMBER; i++) {
-			Piece whitePawn = Piece.createWhitePawn();
+			Piece whitePawn = Piece.createWhite(Piece.Type.PAWN);
 			addWhitePawn(whitePawn);
 		}
 		for (int i = 0; i < PAWN_NUMBER; i++) {
-			Piece blackPawn = Piece.createBlackPawn();
+			Piece blackPawn = Piece.createBlack(Piece.Type.PAWN);
 			addBlackPawn(blackPawn);
 		}
-		blackPieces.add(Piece.createBlackRook());
-		blackPieces.add(Piece.createBlackKnight());
-		blackPieces.add(Piece.createBlackBishop());
-		blackPieces.add(Piece.createBlackQueen());
-		blackPieces.add(Piece.createBlackKing());
-		blackPieces.add(Piece.createBlackBishop());
-		blackPieces.add(Piece.createBlackKnight());
-		blackPieces.add(Piece.createBlackRook());
+		blackPieces.add(Piece.createBlack(Piece.Type.ROOK));
+		blackPieces.add(Piece.createBlack(Piece.Type.KNIGHT));
+		blackPieces.add(Piece.createBlack(Piece.Type.BISHOP));
+		blackPieces.add(Piece.createBlack(Piece.Type.QUEEN));
+		blackPieces.add(Piece.createBlack(Piece.Type.KING));
+		blackPieces.add(Piece.createBlack(Piece.Type.BISHOP));
+		blackPieces.add(Piece.createBlack(Piece.Type.KNIGHT));
+		blackPieces.add(Piece.createBlack(Piece.Type.ROOK));
 	}
 
 	public String showBoard() {
