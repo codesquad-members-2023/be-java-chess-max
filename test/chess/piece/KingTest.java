@@ -35,4 +35,14 @@ class KingTest {
                   () -> assertThat(white.isColor(BLACK)).isFalse());
     }
 
+    @Test
+    @DisplayName("getValidMovePositions: 주변 기물들을 무시하고 킹이 움직일 수 있는 Position을 반환한다")
+    public void getValidMovePositions() {
+        King king = King.createWhite(new Position("a1"));
+        assertThat(king.getValidMovePositions()).containsExactlyInAnyOrder(new Position("a2"), new Position("b1"));
+
+        king.setPosition(new Position("b1"));
+        assertThat(king.getValidMovePositions()).containsExactlyInAnyOrder(new Position("a1"), new Position("b2"), new Position("c1"));
+    }
+
 }

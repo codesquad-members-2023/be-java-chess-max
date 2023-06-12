@@ -1,5 +1,7 @@
 package chess.piece;
 
+import java.util.List;
+
 public interface Piece {
 
     boolean isColor(Color color);
@@ -8,5 +10,6 @@ public interface Piece {
     Position getPosition();
     double getPoint();
     void setPosition(Position position);
+    List<Position> getValidMovePositions();
 
 }
