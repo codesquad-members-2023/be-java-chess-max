@@ -1,10 +1,15 @@
 package chess.piece;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static chess.piece.Color.BLACK;
 import static chess.piece.Color.WHITE;
 import static chess.piece.Type.BISHOP;
+import static chess.util.StringUtil.BOARD_END_INDEX;
+import static chess.util.StringUtil.BOARD_START_INDEX;
 
 public class Bishop implements Piece {
 
@@ -60,6 +65,20 @@ public class Bishop implements Piece {
     @Override
     public void setPosition(final Position position) {
         this.position = position;
+    }
+
+    @Override
+    public List<Position> getValidMovePositions() {
+        List<Position> positions = new ArrayList<>();
+
+        for (int i = BOARD_START_INDEX; i <= BOARD_END_INDEX; i++) {
+            positions.add(new Position(position.getIndexX() - i, position.getIndexY() - i));
+            positions.add(new Position(position.getIndexX() - i, position.getIndexY() + i));
+            positions.add(new Position(position.getIndexX() + i, position.getIndexY() - i));
+            positions.add(new Position(position.getIndexX() + i, position.getIndexY() + i));
+        }
+
+        return positions.stream().filter(p -> !p.equals(this.position) && p.isValidBoardPosition()).collect(Collectors.toUnmodifiableList());
     }
 
     @Override
