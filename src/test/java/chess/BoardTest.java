@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.pieces.Piece;
+import chess.pieces.Position;
 
 class BoardTest {
 	private Board board;
@@ -56,7 +57,7 @@ class BoardTest {
 
 		String position = "b5";
 		Piece piece = Piece.createBlack(Piece.Type.ROOK);
-		board.move(position, piece);
+		board.move(new Position(position), piece);
 
 		assertThat(board.findPiece(position)).isEqualTo(piece);
 		System.out.println(board.showBoard());
@@ -85,6 +86,6 @@ class BoardTest {
 	}
 
 	private void addPiece(String position, Piece piece) {
-		board.move(position, piece);
+		board.move(new Position(position), piece);
 	}
 }

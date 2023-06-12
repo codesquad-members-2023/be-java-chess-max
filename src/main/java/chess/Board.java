@@ -131,9 +131,8 @@ public class Board {
 		}
 	}
 
-	public void move(String position, Piece piece) {
-		Position p = new Position(position);
-		ranks.get(p.getY()).setPiece(p.getX(), piece);
+	public void move(Position position, Piece piece) {
+		ranks.get(position.getY()).setPiece(position.getX(), piece);
 	}
 
 	public double calculatePoint(Piece.Color color) {
