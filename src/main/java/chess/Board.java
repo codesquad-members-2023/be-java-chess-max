@@ -10,88 +10,91 @@ public class Board {
 	public final static int PAWN_NUMBER = 8;
 	public final static String BLANK_LINE = "........";
 
-	private final ArrayList<Piece> whitePieces;
-	private final ArrayList<Piece> whitePawns;
-	private final ArrayList<Piece> blackPawns;
-	private final ArrayList<Piece> blackPieces;
+	private final ArrayList<Rank> ranks;
 
 	public Board() {
-		this.whitePieces = new ArrayList<>();
-		this.whitePawns = new ArrayList<>();
-		this.blackPieces = new ArrayList<>();
-		this.blackPawns = new ArrayList<>();
-	}
-
-	public void addWhitePawn(Piece pawn) {
-		whitePawns.add(pawn);
-	}
-
-	public void addBlackPawn(Piece pawn) {
-		blackPawns.add(pawn);
-	}
-
-	public int size() {
-		return whitePawns.size() + blackPawns.size();
+		this.ranks = new ArrayList<>();
 	}
 
 	public void initialize() {
-		whitePieces.add(Piece.createWhite(Piece.Type.ROOK));
-		whitePieces.add(Piece.createWhite(Piece.Type.KNIGHT));
-		whitePieces.add(Piece.createWhite(Piece.Type.BISHOP));
-		whitePieces.add(Piece.createWhite(Piece.Type.QUEEN));
-		whitePieces.add(Piece.createWhite(Piece.Type.KING));
-		whitePieces.add(Piece.createWhite(Piece.Type.BISHOP));
-		whitePieces.add(Piece.createWhite(Piece.Type.KNIGHT));
-		whitePieces.add(Piece.createWhite(Piece.Type.ROOK));
-		for (int i = 0; i < PAWN_NUMBER; i++) {
-			Piece whitePawn = Piece.createWhite(Piece.Type.PAWN);
-			addWhitePawn(whitePawn);
-		}
+		ranks.add(initWhitePieces());
+		ranks.add(initWhitePawns());
+		ranks.add(initBlank());
+		ranks.add(initBlank());
+		ranks.add(initBlank());
+		ranks.add(initBlank());
+		ranks.add(initBlackPawns());
+		ranks.add(initBlackPieces());
+	}
+
+	private Rank initBlackPieces() {
+		Rank blackPieces = new Rank();
+		blackPieces.addPieces(Piece.createBlack(Piece.Type.ROOK));
+		blackPieces.addPieces(Piece.createBlack(Piece.Type.KNIGHT));
+		blackPieces.addPieces(Piece.createBlack(Piece.Type.BISHOP));
+		blackPieces.addPieces(Piece.createBlack(Piece.Type.QUEEN));
+		blackPieces.addPieces(Piece.createBlack(Piece.Type.KING));
+		blackPieces.addPieces(Piece.createBlack(Piece.Type.BISHOP));
+		blackPieces.addPieces(Piece.createBlack(Piece.Type.KNIGHT));
+		blackPieces.addPieces(Piece.createBlack(Piece.Type.ROOK));
+		return blackPieces;
+	}
+
+	private Rank initBlackPawns() {
+		Rank blackPawns = new Rank();
 		for (int i = 0; i < PAWN_NUMBER; i++) {
 			Piece blackPawn = Piece.createBlack(Piece.Type.PAWN);
-			addBlackPawn(blackPawn);
+			blackPawns.addPieces(blackPawn);
 		}
-		blackPieces.add(Piece.createBlack(Piece.Type.ROOK));
-		blackPieces.add(Piece.createBlack(Piece.Type.KNIGHT));
-		blackPieces.add(Piece.createBlack(Piece.Type.BISHOP));
-		blackPieces.add(Piece.createBlack(Piece.Type.QUEEN));
-		blackPieces.add(Piece.createBlack(Piece.Type.KING));
-		blackPieces.add(Piece.createBlack(Piece.Type.BISHOP));
-		blackPieces.add(Piece.createBlack(Piece.Type.KNIGHT));
-		blackPieces.add(Piece.createBlack(Piece.Type.ROOK));
+
+		return blackPawns;
+	}
+
+	private Rank initBlank() {
+		Rank blanks = new Rank();
+		for (int i = 0; i < PAWN_NUMBER; i++) {
+			Piece blank = Piece.createBlank();
+			blanks.addPieces(blank);
+		}
+
+		return blanks;
+	}
+
+	private Rank initWhitePawns() {
+		Rank whitePawns = new Rank();
+		for (int i = 0; i < PAWN_NUMBER; i++) {
+			Piece whitePawn = Piece.createWhite(Piece.Type.PAWN);
+			whitePawns.addPieces(whitePawn);
+		}
+
+		return whitePawns;
+	}
+
+	private Rank initWhitePieces() {
+		Rank whitePieces = new Rank();
+
+		whitePieces.addPieces(Piece.createWhite(Piece.Type.ROOK));
+		whitePieces.addPieces(Piece.createWhite(Piece.Type.KNIGHT));
+		whitePieces.addPieces(Piece.createWhite(Piece.Type.BISHOP));
+		whitePieces.addPieces(Piece.createWhite(Piece.Type.QUEEN));
+		whitePieces.addPieces(Piece.createWhite(Piece.Type.KING));
+		whitePieces.addPieces(Piece.createWhite(Piece.Type.BISHOP));
+		whitePieces.addPieces(Piece.createWhite(Piece.Type.KNIGHT));
+		whitePieces.addPieces(Piece.createWhite(Piece.Type.ROOK));
+
+		return whitePieces;
 	}
 
 	public String showBoard() {
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(StringUtils.appendNewLine(getBlackPiecesResult()));
-		stringBuilder.append(StringUtils.appendNewLine(getBlackPawnsResult()));
-		makeBlankLine(stringBuilder);
-		makeBlankLine(stringBuilder);
-		makeBlankLine(stringBuilder);
-		makeBlankLine(stringBuilder);
-		stringBuilder.append(StringUtils.appendNewLine(getWhitePawnsResult()));
-		stringBuilder.append(StringUtils.appendNewLine(getWhitePiecesResult()));
+		for (Rank rank: ranks) {
+			stringBuilder.append(StringUtils.appendNewLine(rank.toString()));
+		}
 		return stringBuilder.toString();
 	}
 
 	private void makeBlankLine(StringBuilder stringBuilder) {
 		stringBuilder.append(StringUtils.appendNewLine(BLANK_LINE));
-	}
-
-	public String getWhitePiecesResult() {
-		return getPiecesResult(whitePieces);
-	}
-
-	public String getWhitePawnsResult() {
-		return getPiecesResult(whitePawns);
-	}
-
-	public String getBlackPiecesResult() {
-		return getPiecesResult(blackPieces);
-	}
-
-	public String getBlackPawnsResult() {
-		return getPiecesResult(blackPawns);
 	}
 
 	public String getPiecesResult(ArrayList<Piece> pieces) {
@@ -104,9 +107,5 @@ public class Board {
 				}
 			})
 			.collect(Collectors.joining());
-	}
-
-	public int pieceCount() {
-		return whitePieces.size() + whitePawns.size() + blackPieces.size() + blackPawns.size();
 	}
 }
