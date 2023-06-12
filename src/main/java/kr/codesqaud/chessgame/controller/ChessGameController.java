@@ -8,6 +8,7 @@ import java.util.Objects;
 import kr.codesqaud.chessgame.chess.Board;
 import kr.codesqaud.chessgame.chess.ChessBoard;
 import kr.codesqaud.chessgame.chess.View;
+import kr.codesqaud.chessgame.exception.InvalidMovingPieceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,7 +64,13 @@ public class ChessGameController {
         final int TARGET_POSITION_INDEX = 2;
         final String BLANK = " ";
         String[] commands = command.split(BLANK);
-        board.move(commands[SOURCE_POSITION_INDEX], commands[TARGET_POSITION_INDEX]);
+
+        try {
+            board.move(commands[SOURCE_POSITION_INDEX], commands[TARGET_POSITION_INDEX]);
+        } catch (InvalidMovingPieceException e) {
+            view.showMessage(e.getMessage());
+        }
+
         view.showBoard(board);
     }
 }

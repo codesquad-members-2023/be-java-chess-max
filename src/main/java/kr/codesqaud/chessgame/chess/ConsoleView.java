@@ -6,4 +6,9 @@ public class ConsoleView implements View {
     public void showBoard(final Board board) {
         System.out.println(board.showBoard());
     }
+
+    @Override
+    public void showMessage(final String message) {
+        System.out.println(message);
+    }
 }
