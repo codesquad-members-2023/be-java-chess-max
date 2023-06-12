@@ -40,6 +40,10 @@ public class Position {
         return (getIndexX() >= BOARD_START_INDEX && getIndexY() >= BOARD_START_INDEX && getIndexX() <= BOARD_END_INDEX && getIndexY() <= BOARD_END_INDEX);
     }
 
+    public String getPosition() {
+        return String.valueOf((char) ('a' + getIndexX())) + y;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
