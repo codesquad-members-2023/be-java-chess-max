@@ -1,5 +1,6 @@
 package chess;
 
+import chess.pieces.Position;
 import chess.utils.StringUtils;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -8,12 +9,13 @@ import chess.pieces.Piece;
 
 public class Board {
 	public final static int PAWN_NUMBER = 8;
+	public final static int RANK_NUMBER = 8;
 	public final static String BLANK_LINE = "........";
 
 	private final ArrayList<Rank> ranks;
 
 	public Board() {
-		this.ranks = new ArrayList<>();
+		this.ranks = new ArrayList<>(RANK_NUMBER);
 	}
 
 	public void initialize() {
@@ -118,11 +120,19 @@ public class Board {
 	}
 
 	public Piece findPiece(String position) {
-		char x = position.charAt(0);
-		int xPos = x - 'a';
-		char y = position.charAt(1);
-		int yPos = Character.getNumericValue(y) - 1;
+		Position p = new Position(position);
 
-		return ranks.get(yPos).getPiece(xPos);
+		return ranks.get(p.getY()).getPiece(p.getX());
+	}
+
+	public void initializeEmpty() {
+		for (int i = 0; i < RANK_NUMBER; i++) {
+			ranks.add(initBlank());
+		}
+	}
+
+	public void move(String position, Piece piece) {
+		Position p = new Position(position);
+		ranks.get(p.getY()).setPiece(p.getX(), piece);
 	}
 }

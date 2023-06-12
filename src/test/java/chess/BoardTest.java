@@ -48,4 +48,17 @@ class BoardTest {
 		assertThat(board.findPiece("h1").getColor()).isEqualTo(Piece.createWhite(Piece.Type.ROOK).getColor());
 		assertThat(board.findPiece("h1").getType()).isEqualTo(Piece.createWhite(Piece.Type.ROOK).getType());
 	}
+
+	@DisplayName("임의의 기물을 체스판 위에 추가할 수 있다.")
+	@Test
+	public void move() {
+		board.initializeEmpty();
+
+		String position = "b5";
+		Piece piece = Piece.createBlack(Piece.Type.ROOK);
+		board.move(position, piece);
+
+		assertThat(board.findPiece(position)).isEqualTo(piece);
+		System.out.println(board.showBoard());
+	}
 }
