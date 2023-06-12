@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.pieces.Piece;
+
 class BoardTest {
 	private Board board;
 
@@ -30,5 +32,20 @@ class BoardTest {
 	public void print() {
 		board.initialize();
 		System.out.println(board.showBoard());
+	}
+
+	@DisplayName("주어진 위치의 기물을 조회할 수 있다.")
+	@Test
+	public void findPiece() {
+		board.initialize();
+
+		assertThat(board.findPiece("a8").getColor()).isEqualTo(Piece.createBlack(Piece.Type.ROOK).getColor());
+		assertThat(board.findPiece("a8").getType()).isEqualTo(Piece.createBlack(Piece.Type.ROOK).getType());
+		assertThat(board.findPiece("h8").getColor()).isEqualTo(Piece.createBlack(Piece.Type.ROOK).getColor());
+		assertThat(board.findPiece("h8").getType()).isEqualTo(Piece.createBlack(Piece.Type.ROOK).getType());
+		assertThat(board.findPiece("a1").getColor()).isEqualTo(Piece.createWhite(Piece.Type.ROOK).getColor());
+		assertThat(board.findPiece("a1").getType()).isEqualTo(Piece.createWhite(Piece.Type.ROOK).getType());
+		assertThat(board.findPiece("h1").getColor()).isEqualTo(Piece.createWhite(Piece.Type.ROOK).getColor());
+		assertThat(board.findPiece("h1").getType()).isEqualTo(Piece.createWhite(Piece.Type.ROOK).getType());
 	}
 }

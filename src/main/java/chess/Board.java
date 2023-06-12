@@ -87,8 +87,8 @@ public class Board {
 
 	public String showBoard() {
 		StringBuilder stringBuilder = new StringBuilder();
-		for (Rank rank: ranks) {
-			stringBuilder.append(StringUtils.appendNewLine(rank.toString()));
+		for (int i = 7; i >= 0; i--) {
+			stringBuilder.append(StringUtils.appendNewLine(ranks.get(i).toString()));
 		}
 		return stringBuilder.toString();
 	}
@@ -115,5 +115,14 @@ public class Board {
 				}
 			})
 			.collect(Collectors.joining());
+	}
+
+	public Piece findPiece(String position) {
+		char x = position.charAt(0);
+		int xPos = x - 'a';
+		char y = position.charAt(1);
+		int yPos = Character.getNumericValue(y) - 1;
+
+		return ranks.get(yPos).getPiece(xPos);
 	}
 }

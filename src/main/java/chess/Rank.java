@@ -14,6 +14,10 @@ public class Rank {
 		pieces.add(piece);
 	}
 
+	public Piece getPiece(int x) {
+		return pieces.get(x);
+	}
+
 	@Override
 	public String toString() {
 		return pieces.stream()
