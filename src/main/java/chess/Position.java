@@ -49,4 +49,9 @@ public class Position {
     public int hashCode() {
         return Objects.hash(getRow(), getColumn());
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf((char) ('a' + column)) + (8 - row);
+    }
 }

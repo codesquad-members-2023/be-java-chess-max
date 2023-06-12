@@ -36,6 +36,7 @@ public class ChessView {
                 .append(" : ")
                 .append(calculatePoint(Color.BLACK, pieces)).append("점")
                 .append(NEXT_LINE);
+        System.out.println(stringBuilder);
         return stringBuilder.toString();
     }
 
@@ -43,5 +44,12 @@ public class ChessView {
         return Arrays.stream(pieces)
                 .map(getRowScore(color))
                 .reduce((double) 0, Double::sum);
+    }
+
+
+    static void printCanMovePositions(Position[] canMovePositions) {
+        System.out.println("이동 가능한 위치:");
+        Arrays.stream(canMovePositions)
+                .forEach(System.out::println);
     }
 }

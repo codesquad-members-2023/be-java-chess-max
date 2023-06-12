@@ -4,6 +4,8 @@ package chess;
 import chess.pieces.BlankPiece;
 import chess.pieces.Color;
 import chess.pieces.Piece;
+import chess.pieces.king.King;
+import java.util.Arrays;
 
 public class Board {
 
@@ -38,6 +40,15 @@ public class Board {
         Piece target = findPiece(sourcePosition);
         move(sourcePosition, new BlankPiece());
         move(targetPosition, target);
+    }
+
+    public boolean isGameOver() {
+        long kingCount = Arrays.stream(pieces)
+                .map(rowPieces -> Arrays.stream(rowPieces)
+                        .filter(piece -> piece instanceof King)
+                        .count())
+                .reduce(Long::sum).orElse(0L);
+        return kingCount != 2;
     }
 
 }
