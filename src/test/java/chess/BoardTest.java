@@ -61,4 +61,30 @@ class BoardTest {
 		assertThat(board.findPiece(position)).isEqualTo(piece);
 		System.out.println(board.showBoard());
 	}
+
+	@DisplayName("체스 프로그램 점수를 계산할 수 있다.")
+	@Test
+	public void calculatePoint() {
+		board.initializeEmpty();
+
+		addPiece("b6", Piece.createBlack(Piece.Type.PAWN));
+		addPiece("e6", Piece.createBlack(Piece.Type.QUEEN));
+		addPiece("b8", Piece.createBlack(Piece.Type.KING));
+		addPiece("c8", Piece.createBlack(Piece.Type.ROOK));
+
+		addPiece("f2", Piece.createWhite(Piece.Type.PAWN));
+		addPiece("g2", Piece.createWhite(Piece.Type.PAWN));
+		addPiece("e1", Piece.createWhite(Piece.Type.ROOK));
+		addPiece("f1", Piece.createWhite(Piece.Type.KING));
+		addPiece("g1", Piece.createWhite(Piece.Type.PAWN));
+
+		assertThat(board.calculatePoint(Piece.Color.BLACK)).isEqualTo(15.0);
+		assertThat(board.calculatePoint(Piece.Color.WHITE)).isEqualTo(7.0);
+
+		System.out.println(board.showBoard());
+	}
+
+	private void addPiece(String position, Piece piece) {
+		board.move(position, piece);
+	}
 }

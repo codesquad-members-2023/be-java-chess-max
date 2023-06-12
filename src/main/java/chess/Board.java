@@ -135,4 +135,29 @@ public class Board {
 		Position p = new Position(position);
 		ranks.get(p.getY()).setPiece(p.getX(), piece);
 	}
+
+	public double calculatePoint(Piece.Color color) {
+		double point = 0.0;
+		for (Rank rank: ranks) {
+			point += rank.calculate(color);
+		}
+		point += calculatePawn(color);
+		return point;
+	}
+
+	private double calculatePawn(Piece.Color color) {
+		double point = 0.0;
+		for (int i = 0; i < ranks.size(); i++) {
+			int pawn = 0;
+			for (Rank rank : ranks) {
+				if (rank.getPiece(i).getType().equals(Piece.Type.PAWN) && rank.getPiece(i).getColor().equals(color)) {
+					pawn++;
+				}
+			}
+			if (pawn > 1) {
+				point -= pawn * 0.5;
+			}
+		}
+		return point;
+	}
 }

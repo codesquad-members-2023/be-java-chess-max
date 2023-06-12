@@ -44,4 +44,14 @@ public class Rank {
 	public void setPiece(int x, Piece piece) {
 		pieces.set(x, piece);
 	}
+
+	public double calculate(Piece.Color color) {
+		double point = 0.0;
+		for (Piece piece: pieces) {
+			if (piece.getColor().equals(color)) {
+				point += piece.getType().getDefaultPoint();
+			}
+		}
+		return point;
+	}
 }
