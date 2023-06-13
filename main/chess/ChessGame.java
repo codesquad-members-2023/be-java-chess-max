@@ -1,38 +1,43 @@
 package chess;
 
-import java.util.Scanner;
+import chess.exception.InvalidTurnException;
+import chess.piece.Color;
+
+import static chess.piece.Color.BLACK;
+import static chess.piece.Color.WHITE;
 
 public class ChessGame {
 
-    public static final String RUN_COMMAND = "start";
-    public static final String EXIT_COMMAND = "end";
-    public static final String MOVE_COMMAND = "move";
+    private final Board board = new Board();
+    private Color turn;
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    public void setUp() {
+        board.initialize();
+        this.turn = WHITE;
+    }
 
-        System.out.println("--- Chess Game ---");
-        System.out.println("--- 게임 시작은 start, 게임 종료는 end를 입력하세요 ---");
+    public void move(final String sourcePosition, final String targetPosition) {
+        checkTurn(sourcePosition);
+        board.move(sourcePosition, targetPosition);
+        changeTurn();
+    }
 
-        Board board = new Board();
-
-        while (true) {
-            String command = scanner.nextLine();
-
-            if (command.equals(RUN_COMMAND)) {
-                board.initialize();
-                System.out.println(board.show());
-            } else if (command.startsWith(MOVE_COMMAND)) {
-                final String[] positions = command.split(" ");
-                final String source = positions[1];
-                final String target = positions[2];
-                board.move(source, target);
-                System.out.println(board.show());
-            } else if (command.equals(EXIT_COMMAND)) {
-                break;
-            } else {
-                System.out.println("'" + command + "'는 지원하지 않는 명령어입니다");
-            }
+    private void checkTurn(final String sourcePosition) {
+        if (!board.findPiece(sourcePosition).isColor(turn)) {
+            throw new InvalidTurnException();
         }
     }
+
+    private void changeTurn() {
+        if (turn.equals(WHITE)) {
+            turn = BLACK;
+        } else {
+        turn = WHITE;
+        }
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
 }
