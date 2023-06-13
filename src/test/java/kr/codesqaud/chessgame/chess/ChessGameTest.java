@@ -1,15 +1,9 @@
 package kr.codesqaud.chessgame.chess;
 
-import org.assertj.core.api.Assertions;
-import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.nio.file.Paths;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class ChessGameTest {
 
@@ -18,9 +12,9 @@ class ChessGameTest {
     public void start() throws FileNotFoundException {
         // given
         FileInputStream in = new FileInputStream("src/test/resources/commands.txt");
-        ChessGame chessGame = new ChessGame(in);
+        ChessGame chessGame = new ChessGame();
         // when
-        chessGame.start();
+        chessGame.run(in);
         // then
     }
 }
