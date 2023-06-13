@@ -18,7 +18,7 @@ class PositionTest {
         Position actual = createPosition(position);
         // then
         SoftAssertions assertions = new SoftAssertions();
-        assertions.assertThat(actual.toString()).isEqualTo("11");
+        assertions.assertThat(actual.toString()).isEqualTo("a1");
         assertions.assertAll();
     }
 
