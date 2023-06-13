@@ -1,12 +1,16 @@
 package kr.codesqaud.chessgame.pieces;
 
 import static java.lang.Character.getNumericValue;
-import static java.lang.Math.abs;
 
 import java.util.Objects;
 import kr.codesqaud.chessgame.exception.InvalidPositionException;
+import kr.codesqaud.chessgame.pieces.config.Direction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Position {
+
+    private static final Logger logger = LoggerFactory.getLogger(Position.class);
 
     private final int file;
     private final int rank;
@@ -14,6 +18,11 @@ public class Position {
     private Position(final int file, final int rank) {
         this.rank = rank;
         this.file = file;
+    }
+
+    public static Position createPosition(final int file, final int rank) {
+        String position = String.format("%s%d", (char) ('a' + file - 1), rank);
+        return createPosition(position);
     }
 
     public static Position createPosition(final String position) {
@@ -63,27 +72,37 @@ public class Position {
         return rank - 1;
     }
 
-    /**
-     * 두 위치간에 관계가 직선인지 확인합니다.
-     * <p>
-     * 직선 조건 : 같은 행 또는 같은 열에 있다면 직선입니다.
-     */
-    public boolean isStraight(final Position position) {
-        // 같은 행에 있는 경우
-        if (rank == position.rank) {
-            return true;
-        }
-        // 같은 열에 있는 경우
-        return file == position.file;
+    public Direction direction(final Position position) {
+        return Direction.valueOf(position.rank - rank, position.file - file);
     }
 
-    /**
-     * 두 위치간에 관계가 대각선인지 판단
-     * <p>
-     * 대각선 조건 : 기울기가 1인 경우 = abs(x2 - x1) == abs(y2 - y1)
-     */
-    public boolean isDiagonal(final Position position) {
-        return abs(file - position.file) == abs(rank - position.rank);
+
+    public Degree degree(final Position position) {
+        return new Degree(position.rank - this.rank, position.file - this.file);
+    }
+
+    public Position getLeftPosition() {
+        try {
+            return createPosition(file - 1, rank);
+        } catch (InvalidPositionException e) {
+            return emptyPosition();
+        }
+    }
+
+    public Position getRightPosition() {
+        try {
+            return createPosition(file + 1, rank);
+        } catch (InvalidPositionException e) {
+            return emptyPosition();
+        }
+    }
+
+    public boolean empty() {
+        return file == 0 && rank == 0;
+    }
+
+    public Position move(final Direction direction) {
+        return createPosition(file + direction.getxDegree(), rank + direction.getyDegree());
     }
 
     @Override
@@ -105,7 +124,7 @@ public class Position {
 
     @Override
     public String toString() {
-        return String.format("%d%d", file, rank);
+        return String.format("%s%d", (char) ('a' + file - 1), rank);
     }
 
 }
