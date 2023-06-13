@@ -4,6 +4,7 @@ import chess.board.Position;
 import chess.exception.BusinessException;
 import chess.exception.ErrorCode;
 import chess.pieces.color.Color;
+import chess.pieces.direction.Direction;
 import chess.pieces.type.Type;
 
 import java.util.Set;
@@ -52,6 +53,24 @@ public abstract class Piece {
 
 	public Set<Position> movablePositions(Position from) {
 		return Set.of();
+	}
+
+	protected void addMovablePositions(Set<Position> positions, Position current, Direction direction) {
+		int x = current.getX();
+		int y = current.getY();
+
+		for (int i = 0; i < BOARD_SIZE; i++) {
+			int nextX = x + direction.getXDegree() * i;
+			int nextY = y + direction.getYDegree() * i;
+			if (!isValidPosition(nextX, nextY)) {
+				continue;
+			}
+			positions.add(new Position(nextX, nextY));
+		}
+	}
+
+	private boolean isValidPosition(final int x, final int y) {
+		return x >= 0 && x < BOARD_SIZE && y >= 0 && y < BOARD_SIZE;
 	}
 
 	@Override

@@ -22,24 +22,11 @@ public class Bishop extends Piece {
 	@Override
 	public Set<Position> movablePositions(Position from) {
 		Set<Position> positions = new HashSet<>();
-		int x = from.getX();
-		int y = from.getY();
 
 		for (Direction direction : Direction.diagonalDirection()) {
-			for (int i = 0; i < BOARD_SIZE; i++) {
-				int nextX = x + direction.getXDegree() * i;
-				int nextY = y + direction.getYDegree() * i;
-				if (!isValidPosition(nextX, nextY)) {
-					continue;
-				}
-				positions.add(new Position(nextX, nextY));
-			}
+			addMovablePositions(positions, from, direction);
 		}
 
 		return positions.stream().collect(Collectors.toUnmodifiableSet());
-	}
-
-	private boolean isValidPosition(final int x, final int y) {
-		return x >= 0 && x < BOARD_SIZE && y >= 0 && y < BOARD_SIZE;
 	}
 }
