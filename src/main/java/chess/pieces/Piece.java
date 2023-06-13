@@ -59,7 +59,7 @@ public abstract class Piece {
 		int x = current.getX();
 		int y = current.getY();
 
-		for (int i = 0; i < BOARD_SIZE; i++) {
+		for (int i = 1; i <= BOARD_SIZE; i++) {
 			int nextX = x + direction.getXDegree() * i;
 			int nextY = y + direction.getYDegree() * i;
 			if (!isValidPosition(nextX, nextY)) {
