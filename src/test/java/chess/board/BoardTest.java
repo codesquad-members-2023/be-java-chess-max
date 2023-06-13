@@ -6,26 +6,24 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.board.Board;
-import chess.pieces.Pawn;
 import chess.color.Color;
 
 class BoardTest {
 
 	@Test
-	@DisplayName("흰색 Pawn을 생성해 Board에 추가한다")
-	void create() {
+	@DisplayName("Board를 초기화하면 black Pawn과 white Pawn이 생성된다")
+	public void initialize() {
+
 		//given
 		Board board = new Board();
-		Pawn white = new Pawn(Color.WHITE);
 
 		//when
-		board.add(white);
+		board.initialize();
 
 		//then
 		assertAll(
-			() -> assertThat(board.size()).isEqualTo(1),
-			() -> assertThat(board.findPawn(0)).isEqualTo(white)
+			() -> assertThat(board.getPawn(Color.WHITE)).isEqualTo("pppppppp"),
+			() -> assertThat(board.getPawn(Color.BLACK)).isEqualTo("PPPPPPPP")
 		);
 	}
 }
