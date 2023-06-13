@@ -1,7 +1,9 @@
 package chess;
 
+import chess.exception.InvalidPositionException;
 import chess.exception.InvalidTurnException;
 import chess.piece.Color;
+import chess.piece.Position;
 
 import static chess.piece.Color.BLACK;
 import static chess.piece.Color.WHITE;
@@ -18,6 +20,7 @@ public class ChessGame {
 
     public void move(final String sourcePosition, final String targetPosition) {
         checkTurn(sourcePosition);
+        checkValidPosition(sourcePosition, targetPosition);
         board.move(sourcePosition, targetPosition);
         changeTurn();
     }
@@ -33,6 +36,12 @@ public class ChessGame {
             turn = BLACK;
         } else {
         turn = WHITE;
+        }
+    }
+
+    private void checkValidPosition(final String sourcePosition, final String targetPosition) {
+        if (!board.findPiece(sourcePosition).getValidMovePositions().contains(new Position(targetPosition))) {
+            throw new InvalidPositionException();
         }
     }
 
