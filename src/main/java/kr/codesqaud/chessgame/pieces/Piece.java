@@ -1,24 +1,32 @@
 package kr.codesqaud.chessgame.pieces;
 
-import static kr.codesqaud.chessgame.pieces.config.Type.KING;
-import static kr.codesqaud.chessgame.pieces.config.Type.PAWN;
-import static kr.codesqaud.chessgame.pieces.config.Type.QUEEN;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import kr.codesqaud.chessgame.exception.InvalidMovingPieceException;
 import kr.codesqaud.chessgame.pieces.config.Color;
+import kr.codesqaud.chessgame.pieces.config.Direction;
 import kr.codesqaud.chessgame.pieces.config.Type;
 
-public class Piece {
+public abstract class Piece {
 
     private final Color color;
     private final Type type;
+    private final List<Direction> directions;
     private Position position;
 
-    Piece(final Color color, final Type type, final Position position) {
+
+    public Piece(final Color color, final Type type, final Position position) {
+        this(color, type, position, new ArrayList<>());
+    }
+
+    public Piece(final Color color, final Type type, final Position position, final List<Direction> directions) {
         this.color = color;
         this.type = type;
         this.position = position;
+        this.directions = directions;
     }
+
 
     public Color getColor() {
         return color;
@@ -36,6 +44,10 @@ public class Piece {
         this.position = position;
     }
 
+    public List<Direction> getDirections() {
+        return directions;
+    }
+
     public String getRepresentation() {
         if (isWhite()) {
             return type.getWhiteRepresentation();
@@ -51,42 +63,39 @@ public class Piece {
         return color == Color.BLACK;
     }
 
-    // 기물이 가진 행마법으로 입력받은 위치로 이동할 수 있는지 판단
-    public boolean isMovable(final Position position) {
-        if (Objects.equals(type, KING)) {
-            // 두 위치의 Rank간 거리가 1이하여야 합니다.
-            if (diffDistance(position.getRank(), this.position.getRank()) > 1) {
-                return false;
-            }
-            if (diffDistance(position.getFile(), this.position.getFile()) > 1) {
-                return false;
-            }
-            return true;
-        }
-
-        if (Objects.equals(type, QUEEN)) {
-            // 두 위치간의 관계가 직선, 대각선이 아닌 경우 false, 상하좌우, 대각선인 경우 true
-            if (this.position.isStraight(position)) {
-                return true;
-            }
-            return this.position.isDiagonal(position);
-        }
-
-        if (Objects.equals(type, PAWN)) {
-            if (diffDistance(position.getRank(), this.position.getRank()) != 1) {
-                return false;
-            }
-            if (diffDistance(position.getFile(), this.position.getFile()) != 0) {
-                return false;
-            }
-            return true;
-        }
-
-        return false;
+    public void move(Piece target) {
+        verifyMovePosition(target);
+        this.position = target.position;
     }
 
-    public int diffDistance(final int source, final int target) {
-        return Math.abs(source - target);
+    public void verifyMovePosition(final Piece target) {
+        if (isSameTeam(target)) {
+            throw new InvalidMovingPieceException(target.position + "로 이동할 수 없습니다. 같은 색상의 기물입니다.");
+        }
+        Direction direction = position.direction(target.position);
+        if (!directions.contains(direction)) {
+            throw new InvalidMovingPieceException(target.position + "로 이동할 수 없습니다.");
+        }
+
+
+    }
+
+
+
+    public boolean isSameTeam(Piece target) {
+        return Objects.equals(color, target.getColor());
+    }
+
+    public Degree degree(Piece target) {
+        return position.degree(target.getPosition());
+    }
+
+    public boolean matchType(Type type) {
+        return this.type == type;
+    }
+
+    public boolean matchColor(Color color) {
+        return this.color == color;
     }
 
     @Override
