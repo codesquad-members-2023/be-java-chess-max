@@ -22,6 +22,7 @@ class BlackKnightTest {
     void getRepresentation() {
         BlackKnight blackKnight = new BlackKnight();
 
-        assertThat(blackKnight.getRepresentation()).isEqualTo(Representation.BLACK_KNIGHT);
+        assertThat(blackKnight.getRepresentation()).isEqualTo(
+                Representation.BLACK_KNIGHT.getValue());
     }
 }

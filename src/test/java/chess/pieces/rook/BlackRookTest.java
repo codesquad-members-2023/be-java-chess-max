@@ -22,6 +22,6 @@ class BlackRookTest {
     void getRepresentation() {
         BlackRook blackRook = new BlackRook();
 
-        assertThat(blackRook.getRepresentation()).isEqualTo(Representation.BLACK_ROOK);
+        assertThat(blackRook.getRepresentation()).isEqualTo(Representation.BLACK_ROOK.getValue());
     }
 }

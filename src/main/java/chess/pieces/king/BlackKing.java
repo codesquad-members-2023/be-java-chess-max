@@ -1,17 +1,23 @@
 package chess.pieces.king;
 
+import static chess.pieces.Color.BLACK;
+
 import chess.pieces.Color;
 import chess.pieces.Representation;
 
 public class BlackKing extends King {
 
-    @Override
-    public boolean verifyColor(Color color) {
-        return Color.BLACK.equals(color);
+    public BlackKing() {
+        super(BLACK);
     }
 
     @Override
-    public Representation getRepresentation() {
-        return Representation.BLACK_KING;
+    public boolean verifyColor(Color color) {
+        return BLACK.equals(color);
+    }
+
+    @Override
+    public String getRepresentation() {
+        return Representation.BLACK_KING.getValue();
     }
 }

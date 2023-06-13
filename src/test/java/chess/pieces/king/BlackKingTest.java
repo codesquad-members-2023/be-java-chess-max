@@ -22,6 +22,6 @@ class BlackKingTest {
     void getRepresentation() {
         BlackKing blackKing = new BlackKing();
 
-        assertThat(blackKing.getRepresentation()).isEqualTo(Representation.BLACK_KING);
+        assertThat(blackKing.getRepresentation()).isEqualTo(Representation.BLACK_KING.getValue());
     }
 }

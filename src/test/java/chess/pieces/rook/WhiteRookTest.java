@@ -22,6 +22,6 @@ class WhiteRookTest {
     void getRepresentation() {
         WhiteRook whiteRook = new WhiteRook();
 
-        assertThat(whiteRook.getRepresentation()).isEqualTo(Representation.WHITE_ROOK);
+        assertThat(whiteRook.getRepresentation()).isEqualTo(Representation.WHITE_ROOK.getValue());
     }
 }

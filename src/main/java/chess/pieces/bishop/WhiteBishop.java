@@ -1,11 +1,15 @@
 package chess.pieces.bishop;
 
-import static chess.pieces.Color.*;
+import static chess.pieces.Color.WHITE;
 
 import chess.pieces.Color;
 import chess.pieces.Representation;
 
 public class WhiteBishop extends Bishop {
+
+    public WhiteBishop() {
+        super(WHITE);
+    }
 
     @Override
     public boolean verifyColor(Color color) {
@@ -13,7 +17,7 @@ public class WhiteBishop extends Bishop {
     }
 
     @Override
-    public Representation getRepresentation() {
-        return Representation.WHITE_BISHOP;
+    public String getRepresentation() {
+        return Representation.WHITE_BISHOP.getValue();
     }
 }

@@ -4,9 +4,12 @@ import static chess.pieces.Color.BLACK;
 import static chess.pieces.Representation.BLACK_ROOK;
 
 import chess.pieces.Color;
-import chess.pieces.Representation;
 
 public class BlackRook extends Rook {
+
+    public BlackRook() {
+        super(BLACK);
+    }
 
     @Override
     public boolean verifyColor(Color color) {
@@ -14,7 +17,7 @@ public class BlackRook extends Rook {
     }
 
     @Override
-    public Representation getRepresentation() {
-        return BLACK_ROOK;
+    public String getRepresentation() {
+        return BLACK_ROOK.getValue();
     }
 }

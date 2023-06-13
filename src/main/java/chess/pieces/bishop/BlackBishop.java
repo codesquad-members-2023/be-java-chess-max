@@ -7,14 +7,18 @@ import chess.pieces.Representation;
 
 public class BlackBishop extends Bishop {
 
+    public BlackBishop() {
+        super(BLACK);
+    }
+
     @Override
     public boolean verifyColor(Color color) {
         return BLACK.equals(color);
     }
 
     @Override
-    public Representation getRepresentation() {
-        return Representation.BLACK_BISHOP;
+    public String getRepresentation() {
+        return Representation.BLACK_BISHOP.getValue();
     }
 
 }

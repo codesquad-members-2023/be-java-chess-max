@@ -22,15 +22,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class PieceCreatorTest {
 
-    @DisplayName("색상에 따라 Pawn를 생성한다")
-    @MethodSource("provideCreatePiece")
-    @ParameterizedTest
-    void create(Type type, Color color, Class<Piece> clazz) {
-        Piece piece = PieceCreator.create(type, color);
-
-        assertThat(piece.getClass()).isEqualTo(clazz);
-    }
-
     private static Stream<Arguments> provideCreatePiece() {
         return Stream.of(
                 Arguments.of(Type.PAWN, Color.WHITE, WhitePawn.class),
@@ -46,5 +37,14 @@ class PieceCreatorTest {
                 Arguments.of(Type.KING, Color.WHITE, WhiteKing.class),
                 Arguments.of(Type.KING, Color.BLACK, BlackKing.class)
         );
+    }
+
+    @DisplayName("색상에 따라 Pawn를 생성한다")
+    @MethodSource("provideCreatePiece")
+    @ParameterizedTest
+    void create(Type type, Color color, Class<Piece> clazz) {
+        Piece piece = PieceCreator.create(type, color);
+
+        assertThat(piece.getClass()).isEqualTo(clazz);
     }
 }

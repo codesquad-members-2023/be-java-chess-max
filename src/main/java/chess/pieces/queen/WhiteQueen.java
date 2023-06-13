@@ -4,9 +4,12 @@ import static chess.pieces.Color.WHITE;
 import static chess.pieces.Representation.WHITE_QUEEN;
 
 import chess.pieces.Color;
-import chess.pieces.Representation;
 
 public class WhiteQueen extends Queen {
+
+    public WhiteQueen() {
+        super(WHITE);
+    }
 
     @Override
     public boolean verifyColor(Color color) {
@@ -14,7 +17,7 @@ public class WhiteQueen extends Queen {
     }
 
     @Override
-    public Representation getRepresentation() {
-        return WHITE_QUEEN;
+    public String getRepresentation() {
+        return WHITE_QUEEN.getValue();
     }
 }

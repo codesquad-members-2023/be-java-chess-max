@@ -1,4 +1,3 @@
-
 package chess.pieces.queen;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,7 +22,7 @@ class WhiteQueenTest {
     void getRepresentation() {
         WhiteQueen whiteQueen = new WhiteQueen();
 
-        assertThat(whiteQueen.getRepresentation()).isEqualTo(Representation.WHITE_QUEEN);
+        assertThat(whiteQueen.getRepresentation()).isEqualTo(Representation.WHITE_QUEEN.getValue());
     }
 
 }
