@@ -133,7 +133,7 @@ public class Board {
 
 		source.verifyMovePosition(to, target);
 		Set<Position> positions = source.movablePositions(from);
-		System.out.println(positions);
+
 		if (!positions.contains(to)) {
 			throw new BusinessException(ErrorCode.INVALID_POSITION);
 		}
