@@ -12,6 +12,11 @@ public class Position {
 	private int x;
 	private int y;
 
+	public Position(final int x, final int y) {
+		this.x = x;
+		this.y = y;
+	}
+
 	public Position(final String position) {
 		verifyPosition(position.toLowerCase());
 		this.y = position.toLowerCase().charAt(0) - 'a';
@@ -49,5 +54,13 @@ public class Position {
 	@Override
 	public int hashCode() {
 		return Objects.hash(x, y);
+	}
+
+	@Override
+	public String toString() {
+		return "Position{" +
+				"x=" + x +
+				", y=" + y +
+				'}';
 	}
 }

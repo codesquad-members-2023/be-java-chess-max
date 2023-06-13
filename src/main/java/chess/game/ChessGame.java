@@ -1,6 +1,7 @@
 package chess.game;
 
 import chess.board.Board;
+import chess.board.Position;
 import chess.view.InputUtils;
 
 public class ChessGame {
@@ -22,9 +23,17 @@ public class ChessGame {
 			board.print();
 			System.out.print("커맨드를 입력해주세요. (종료하려면 'end'를 입력해주세요.) : ");
 			command = InputUtils.getCommand();
+			if (command.startsWith("move")) {
+				String[] tokens = command.split(" ");
+				move(tokens[1], tokens[2]);
+			}
 			if (command.equals("end")) {
 				break;
 			}
 		}
+	}
+
+	private void move(final String from, final String to) {
+		board.move(new Position(from), new Position(to));
 	}
 }

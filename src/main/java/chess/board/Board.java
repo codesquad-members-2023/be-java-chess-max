@@ -1,13 +1,12 @@
 package chess.board;
 
+import chess.exception.BusinessException;
+import chess.exception.ErrorCode;
 import chess.pieces.*;
 import chess.pieces.color.Color;
 import chess.pieces.type.Type;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -78,14 +77,12 @@ public class Board {
 				.sum();
 	}
 
-	public Piece findPiece(final String position) {
-		Position pos = new Position(position);
-		return board.get(pos.getX()).getPiece(pos.getY());
+	public Piece findPiece(final Position position) {
+		return board.get(position.getX()).getPiece(position.getY());
 	}
 
-	public void placePiece(final Piece piece, final String position) {
-		Position pos = new Position(position);
-		board.get(pos.getX()).placePiece(piece, pos.getY());
+	public void placePiece(final Piece piece, final Position position) {
+		board.get(position.getX()).placePiece(piece, position.getY());
 	}
 
 	public float calculatePoint(Color color) {
@@ -128,5 +125,20 @@ public class Board {
 
 		System.out.println(boardFigure);
 		return boardFigure;
+	}
+
+	public void move(final Position from, final Position to) {
+		Piece source = findPiece(from);
+		Piece target = findPiece(to);
+
+		source.verifyMovePosition(to, target);
+		Set<Position> positions = source.movablePositions(from);
+		System.out.println(positions);
+		if (!positions.contains(to)) {
+			throw new BusinessException(ErrorCode.INVALID_POSITION);
+		}
+
+		placePiece(Dummy.of(), from);
+		placePiece(source, to);
 	}
 }
