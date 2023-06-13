@@ -7,6 +7,7 @@ import chess.piece.Piece;
 import chess.piece.Position;
 import chess.piece.Queen;
 import chess.piece.Rook;
+import chess.view.ChessView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,10 +23,12 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class BoardTest {
 
     private Board board;
+    private ChessView view;
 
     @BeforeEach
     public void setUp() {
         board = new Board();
+        view = new ChessView();
     }
 
     @Test
@@ -40,7 +43,7 @@ class BoardTest {
         String whitePieces = "rnbqkbnr";
 
         assertAll(() -> assertThat(board.countPieces()).isEqualTo(32),
-                  () -> assertThat(board.show()).isEqualTo(
+                  () -> assertThat(view.view(board)).isEqualTo(
                           blackPieces + blackPawns +
                                   blankLine + blankLine + blankLine + blankLine +
                                   whitePawns + whitePieces));
@@ -76,8 +79,6 @@ class BoardTest {
         board.put(position, piece);
 
         assertThat(board.findPiece(position)).isEqualTo(piece);
-
-        System.out.println(board.show());
     }
 
     @Test
@@ -97,8 +98,6 @@ class BoardTest {
 
         assertAll(() -> assertThat(board.calculatePoint(BLACK)).isEqualTo(15.0),
                   () -> assertThat(board.calculatePoint(WHITE)).isEqualTo(7.0));
-
-        System.out.println(board.show());
     }
 
     @Test
