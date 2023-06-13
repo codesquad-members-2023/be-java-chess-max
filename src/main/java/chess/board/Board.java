@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 public class Board {
 
 	private static final int BOARD_SIZE = 8;
-	private static final String NEW_LINE = System.lineSeparator();
 
 	private final List<Rank> board;
 
@@ -21,6 +20,10 @@ public class Board {
 		for (int i = 0; i < BOARD_SIZE; i++) {
 			board.add(new Rank());
 		}
+	}
+
+	public List<Rank> getBoard() {
+		return board.stream().collect(Collectors.toUnmodifiableList());
 	}
 
 	public void initializeEmpty() {
@@ -116,15 +119,6 @@ public class Board {
 			points.clear();
 		}
 		return totalPoint;
-	}
-
-	public String print() {
-		String boardFigure = board.stream()
-				.map(Object::toString)
-				.collect(Collectors.joining(NEW_LINE));
-
-		System.out.println(boardFigure);
-		return boardFigure;
 	}
 
 	public void move(final Position from, final Position to) {
