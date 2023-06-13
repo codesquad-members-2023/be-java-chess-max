@@ -1,5 +1,8 @@
 package chess.piece;
 
+import chess.exception.EmptyPieceMoveException;
+
+import java.util.List;
 import java.util.Objects;
 
 import static chess.piece.Color.BLACK;
@@ -59,6 +62,11 @@ public class Blank implements Piece {
         this.position = position;
     }
 
+    @Override
+    public List<Position> getValidMovePositions() {
+        throw new EmptyPieceMoveException();
+    }
+    
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
