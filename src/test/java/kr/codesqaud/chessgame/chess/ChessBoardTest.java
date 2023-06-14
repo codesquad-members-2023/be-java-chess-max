@@ -44,23 +44,23 @@ class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("board가 initialize 메소드를 호출했을때 체스판의 기물들을 초기화한다")
-    public void create() throws IOException {
+    @DisplayName("체스판 객체에 초기화를 요청하면 흑백 기물들이 특정한 위치에 초기화된다")
+    public void initialize() throws IOException {
         // given
-
+        String expectedBoardFilePath = "src/test/resources/chessBoard.txt";
         // when
         board.initialize();
         // then
-        String expectedBoard = Files.readString(Paths.get("src/test/resources/chessBoard.txt"));
-        SoftAssertions assertions = new SoftAssertions();
-        assertions.assertThat(board.countAllPiece()).isEqualTo(32);
-        assertions.assertThat(board.showBoard()).isEqualTo(expectedBoard);
-        assertions.assertAll();
+        String expectedBoard = Files.readString(Paths.get(expectedBoardFilePath));
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThat(board.countAllPiece()).isEqualTo(32);
+            softAssertions.assertThat(board.showBoard()).isEqualTo(expectedBoard);
+        });
     }
 
     @Test
-    @DisplayName("기물의 색상과 종류가 주어질때 Board가 가지고 있는 기물의 개수를 요청했을때 개수를 응답한다")
-    public void getPieceCount() {
+    @DisplayName("체스판 위에 기물들이 초기화된 상태에서 색상과 종류에 따른 기물 개수를 요청할때 초기화된 상태에서의 기물 개수랑 동일하다")
+    public void countPieceByColorAndType() {
         // given
         board.initialize();
         // when
@@ -77,24 +77,24 @@ class ChessBoardTest {
         int whiteQueenCount = board.countPieceByColorAndType(WHITE, Type.QUEEN);
         int whiteKingCount = board.countPieceByColorAndType(WHITE, Type.KING);
         // then
-        SoftAssertions assertions = new SoftAssertions();
-        assertions.assertThat(blackPawnCount).isEqualTo(8);
-        assertions.assertThat(blackRookCount).isEqualTo(2);
-        assertions.assertThat(blackKnightCount).isEqualTo(2);
-        assertions.assertThat(blackBishopCount).isEqualTo(2);
-        assertions.assertThat(blackQueenCount).isEqualTo(1);
-        assertions.assertThat(blackKingCount).isEqualTo(1);
-        assertions.assertThat(whitePawnCount).isEqualTo(8);
-        assertions.assertThat(whiteRookCount).isEqualTo(2);
-        assertions.assertThat(whiteKnightCount).isEqualTo(2);
-        assertions.assertThat(whiteBishopCount).isEqualTo(2);
-        assertions.assertThat(whiteQueenCount).isEqualTo(1);
-        assertions.assertThat(whiteKingCount).isEqualTo(1);
-        assertions.assertAll();
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThat(blackPawnCount).isEqualTo(8);
+            softAssertions.assertThat(blackRookCount).isEqualTo(2);
+            softAssertions.assertThat(blackKnightCount).isEqualTo(2);
+            softAssertions.assertThat(blackBishopCount).isEqualTo(2);
+            softAssertions.assertThat(blackQueenCount).isEqualTo(1);
+            softAssertions.assertThat(blackKingCount).isEqualTo(1);
+            softAssertions.assertThat(whitePawnCount).isEqualTo(8);
+            softAssertions.assertThat(whiteRookCount).isEqualTo(2);
+            softAssertions.assertThat(whiteKnightCount).isEqualTo(2);
+            softAssertions.assertThat(whiteBishopCount).isEqualTo(2);
+            softAssertions.assertThat(whiteQueenCount).isEqualTo(1);
+            softAssertions.assertThat(whiteKingCount).isEqualTo(1);
+        });
     }
 
     @Test
-    @DisplayName("위치가 주어질때 Board 객체에게 위치에 따른 기물을 조회하면 해당 위치에 있는 기물(빈칸 포함)을 응답합니다.")
+    @DisplayName("체스판이 초기화된 상태에서 특정 위치의 기물을 탐색하고자 요청할때 초기화된 상태에서의 기물과 동일하다")
     public void findPiece() {
         // given
         board.initialize();
@@ -105,50 +105,44 @@ class ChessBoardTest {
         Piece whiteRook2 = board.findPiece("h1");
         Piece emptyPiece = board.findPiece("a6");
         // then
-        SoftAssertions assertions = new SoftAssertions();
-        assertions.assertThat(blackRook).isEqualTo(Rook.createBlack(createPosition("a8")));
-        assertions.assertThat(blackRook2).isEqualTo(Rook.createBlack(createPosition("h8")));
-        assertions.assertThat(whiteRook).isEqualTo(Rook.createWhite(createPosition("a1")));
-        assertions.assertThat(whiteRook2).isEqualTo(Rook.createWhite(createPosition("h1")));
-        assertions.assertThat(emptyPiece).isEqualTo(Blank.create(createPosition("a6")));
-        assertions.assertAll();
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThat(blackRook).isEqualTo(Rook.createBlack(createPosition("a8")));
+            softAssertions.assertThat(blackRook2).isEqualTo(Rook.createBlack(createPosition("h8")));
+            softAssertions.assertThat(whiteRook).isEqualTo(Rook.createWhite(createPosition("a1")));
+            softAssertions.assertThat(whiteRook2).isEqualTo(Rook.createWhite(createPosition("h1")));
+            softAssertions.assertThat(emptyPiece).isEqualTo(Blank.create(createPosition("a6")));
+        });
     }
 
     @Test
-    @DisplayName("빈 체스판이 주어지고 흑백룩을 특정 위치로 이동시킨다")
-    public void move() {
+    @DisplayName("빈 체스판이 주어지고 특정 위치에 기물을 설정을 요청할때 해당 위치에 기물이 존재한다")
+    public void setPiece() {
         // given
         board.initializeEmpty();
-        String position = "b5";
-        Piece piece = Rook.createBlack(createPosition(position));
+        String sourcePosition = "b5";
+        Piece piece = Rook.createBlack(createPosition(sourcePosition));
         // when
-        board.setPiece(position, piece);
+        board.setPiece(sourcePosition, piece);
         // then
-        SoftAssertions assertions = new SoftAssertions();
-        assertions.assertThat(board.findPiece(position)).isEqualTo(piece);
-        assertions.assertAll();
-        logger.debug("board : \r\n{}", board.showBoard());
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThat(board.findPiece(sourcePosition))
+                .isEqualTo(Rook.createBlack(createPosition(sourcePosition)));
+        });
     }
-
 
     @Test
     @DisplayName("체스판 위에 기물이 주어지고 흑색과 백색을 구분해서 점수가 높은 순서로 정렬을 요청시 높은 순서로 정렬되어 응답한다")
     public void sortByColor() {
         // given
         board.initializeEmpty();
+        // 흑색 기물 초기화
+        board.setPiece("b6", Pawn.createBlack(createPosition("b6")));
+        board.setPiece("e6", Queen.createBlack(createPosition("e6")));
+        board.setPiece("b8", King.createBlack(createPosition("b8")));
+        board.setPiece("c8", Rook.createBlack(createPosition("c8")));
         // when
-        addPiece("b6", Pawn.createBlack(createPosition("b6")));
-        addPiece("e6", Queen.createBlack(createPosition("e6")));
-        addPiece("b8", King.createBlack(createPosition("b8")));
-        addPiece("c8", Rook.createBlack(createPosition("c8")));
-
-        addPiece("f2", Pawn.createWhite(createPosition("f2")));
-        addPiece("g2", Pawn.createWhite(createPosition("g2")));
-        addPiece("e1", Rook.createWhite(createPosition("e1")));
-        addPiece("f1", King.createWhite(createPosition("f1")));
-        // when
-        List<Piece> decreasePieces = board.sortDecreaseByColor(BLACK);
-        List<Piece> increasePieces = board.sortIncreaseByColor(BLACK);
+        List<Piece> increasePieces = board.sortIncreaseByColor(BLACK); // 오름차순 정렬
+        List<Piece> decreasePieces = board.sortDecreaseByColor(BLACK); // 내림차순 정렬
         // then
         List<Piece> expectedDecreasePiece = new ArrayList<>();
         expectedDecreasePiece.add(Queen.createBlack(createPosition("e6")));
@@ -162,44 +156,35 @@ class ChessBoardTest {
         expectedIncreasePiece.add(Rook.createBlack(createPosition("c8")));
         expectedIncreasePiece.add(Queen.createBlack(createPosition("e6")));
 
-        logger.debug("piece : {}", decreasePieces);
-        logger.debug("expectedDecreasePiece : {}", expectedDecreasePiece);
-        logger.debug("expectedIncreasePiece : {}", expectedIncreasePiece);
-
-        SoftAssertions assertions = new SoftAssertions();
-        assertions.assertThat(decreasePieces).isEqualTo(expectedDecreasePiece);
-        assertions.assertThat(increasePieces).isEqualTo(expectedIncreasePiece);
-        assertions.assertAll();
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThat(decreasePieces).isEqualTo(expectedDecreasePiece);
+            softAssertions.assertThat(increasePieces).isEqualTo(expectedIncreasePiece);
+        });
     }
 
     @Test
-    @DisplayName("체스판 위에 기물이 주어지고 남아있는 기물에 대한 점수를 요청했을때 점수합계를 응답합니다.")
+    @DisplayName("체스판 위에 기물이 주어지고 남아있는 기물에 대한 색상별 점수합계를 요청할때 점수합계가 일치한다")
     public void calculatePoint() {
         // given
         board.initializeEmpty();
+        // 흑색 초기화
+        board.setPiece("b6", Pawn.createBlack(createPosition("b6")));
+        board.setPiece("e6", Queen.createBlack(createPosition("e6")));
+        board.setPiece("b8", King.createBlack(createPosition("b8")));
+        board.setPiece("c8", Rook.createBlack(createPosition("c8")));
+        // 백색 초기화
+        board.setPiece("f2", Pawn.createWhite(createPosition("f2")));
+        board.setPiece("g2", Pawn.createWhite(createPosition("g2")));
+        board.setPiece("e1", Rook.createWhite(createPosition("e1")));
+        board.setPiece("f1", King.createWhite(createPosition("f1")));
         // when
-        addPiece("b6", Pawn.createBlack(createPosition("b6")));
-        addPiece("e6", Queen.createBlack(createPosition("e6")));
-        addPiece("b8", King.createBlack(createPosition("b8")));
-        addPiece("c8", Rook.createBlack(createPosition("c8")));
-
-        addPiece("f2", Pawn.createWhite(createPosition("f2")));
-        addPiece("g2", Pawn.createWhite(createPosition("g2")));
-        addPiece("e1", Rook.createWhite(createPosition("e1")));
-        addPiece("f1", King.createWhite(createPosition("f1")));
-
         double blackScore = board.calculatePoint(BLACK);
         double whiteScore = board.calculatePoint(WHITE);
         // then
-        SoftAssertions assertions = new SoftAssertions();
-        assertions.assertThat(blackScore).isEqualTo(15.0, offset(0.01));
-        assertions.assertThat(whiteScore).isEqualTo(7.0, offset(0.01));
-        assertions.assertAll();
-    }
-
-
-    private void addPiece(String position, Piece piece) {
-        board.setPiece(position, piece);
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThat(blackScore).isEqualTo(15.0, offset(0.01));
+            softAssertions.assertThat(whiteScore).isEqualTo(7.0, offset(0.01));
+        });
     }
 
     @Nested
@@ -453,7 +438,6 @@ class ChessBoardTest {
             });
         }
     }
-
 
     @Nested
     @DisplayName("킹 체크 테스트")

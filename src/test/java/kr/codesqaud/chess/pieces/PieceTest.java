@@ -28,14 +28,14 @@ import org.junit.jupiter.api.Test;
 class PieceTest {
 
     @Test
-    @DisplayName("흰색 폰이 생성되어야 한다")
+    @DisplayName("위치 정보가 주어지고 백폰과 흑폰 생성 요청할때 백폰과 흑폰이 생성된다")
     public void create() {
         verifyPawn(Pawn.createWhite(createPosition("a2")), Color.WHITE, PAWN.getWhiteRepresentation());
         verifyPawn(Pawn.createBlack(createPosition("a7")), Color.BLACK, PAWN.getBlackRepresentation());
     }
 
     @Test
-    @DisplayName("폰의 색깔이 백색이어야 한다.")
+    @DisplayName("위치 정보가 주이지고 백폰 생성 요청할때 생성된 백폰은 하얀색입니다")
     public void isWhite() {
         // given
         final Piece whitePawn = Pawn.createWhite(createPosition("a2"));
@@ -48,7 +48,7 @@ class PieceTest {
     }
 
     @Test
-    @DisplayName("폰의 색깔이 흑색이어야 한다.")
+    @DisplayName("위치 정보가 주어지고 흑폰 생성 요청할때 생성된 흑폰은 검정색입니다.")
     public void isBlack() {
         // given
         final Piece whitePawn = Pawn.createBlack(createPosition("a7"));
@@ -62,7 +62,7 @@ class PieceTest {
 
 
     @Test
-    @DisplayName("백색폰은 소문자 p이고 흑색폰은 대문자 P여야 한다")
+    @DisplayName("폰 타입이 주어지고 색상별 표현문자 요청시 백폰은 소문자 p이고 흑폰은 대문자 P이다")
     public void getRepresentationPerPiece() {
         // given
         Type pawn = PAWN;
@@ -77,7 +77,7 @@ class PieceTest {
     }
 
     @Test
-    @DisplayName("팩토리 메소드로 생성한 기물 객체는 색상과 타입이 일치하여야 한다")
+    @DisplayName("위치정보가 주어지고 기물별 팩토리 메소드로 기물 객체 생성할때 기물의 정보와 색상이 일치한다")
     public void create_piece() {
         // when
         Piece whitePawn = Pawn.createWhite(createPosition("a2"));
