@@ -2,6 +2,9 @@ package chess.piece;
 
 import java.util.Objects;
 
+import static chess.util.StringUtil.BOARD_END_INDEX;
+import static chess.util.StringUtil.BOARD_START_INDEX;
+
 public class Position {
 
     private final int x;
@@ -31,6 +34,14 @@ public class Position {
 
     public int getY() {
         return y;
+    }
+
+    public boolean isValidBoardPosition() {
+        return (getIndexX() >= BOARD_START_INDEX && getIndexY() >= BOARD_START_INDEX && getIndexX() <= BOARD_END_INDEX && getIndexY() <= BOARD_END_INDEX);
+    }
+
+    public String getPosition() {
+        return String.valueOf((char) ('a' + getIndexX())) + y;
     }
 
     @Override

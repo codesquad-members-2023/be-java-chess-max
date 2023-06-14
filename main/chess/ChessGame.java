@@ -1,30 +1,52 @@
 package chess;
 
-import java.util.Scanner;
+import chess.exception.InvalidPositionException;
+import chess.exception.InvalidTurnException;
+import chess.piece.Color;
+import chess.piece.Position;
+
+import static chess.piece.Color.BLACK;
+import static chess.piece.Color.WHITE;
 
 public class ChessGame {
 
-    public static final String RUN_COMMAND = "start";
-    public static final String EXIT_COMMAND = "end";
+    private final Board board = new Board();
+    private Color turn;
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    public void setUp() {
+        board.initialize();
+        this.turn = WHITE;
+    }
 
-        System.out.println("--- Chess Game ---");
-        System.out.println("--- 게임 시작은 start, 게임 종료는 end를 입력하세요 ---");
+    public void move(final String sourcePosition, final String targetPosition) {
+        checkTurn(sourcePosition);
+        checkValidPosition(sourcePosition, targetPosition);
+        board.move(sourcePosition, targetPosition);
+        changeTurn();
+    }
 
-        while (true) {
-            String command = scanner.nextLine();
-
-            if (command.equals(RUN_COMMAND)) {
-                Board board = new Board();
-                board.initialize();
-                System.out.println(board.show());
-            } else if (command.equals(EXIT_COMMAND)) {
-                break;
-            } else {
-                System.out.println("'" + command + "'는 지원하지 않는 명령어입니다");
-            }
+    private void checkTurn(final String sourcePosition) {
+        if (!board.findPiece(sourcePosition).isColor(turn)) {
+            throw new InvalidTurnException();
         }
     }
+
+    private void changeTurn() {
+        if (turn.equals(WHITE)) {
+            turn = BLACK;
+        } else {
+        turn = WHITE;
+        }
+    }
+
+    private void checkValidPosition(final String sourcePosition, final String targetPosition) {
+        if (!board.findPiece(sourcePosition).getValidMovePositions().contains(new Position(targetPosition))) {
+            throw new InvalidPositionException();
+        }
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
 }
