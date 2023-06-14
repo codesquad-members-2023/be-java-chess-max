@@ -17,7 +17,7 @@ class KingTest {
 		// given
 		King king = King.of(Color.BLACK);
 
-		Set<Position> positions = king.movablePositions(new Position("c5"));
+		Set<Position> positions = king.movablePositions(new Position("c5"), Dummy.of());
 
 		assertThat(positions).containsExactlyInAnyOrder(
 				new Position("c6"), // 상

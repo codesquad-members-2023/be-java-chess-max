@@ -17,7 +17,7 @@ class KnightTest {
 		// given
 		Knight knight = Knight.of(Color.BLACK);
 
-		Set<Position> positions = knight.movablePositions(new Position("c5"));
+		Set<Position> positions = knight.movablePositions(new Position("c5"), Dummy.of());
 
 		assertThat(positions).containsExactlyInAnyOrder(
 				new Position("b7"), new Position("a6"),

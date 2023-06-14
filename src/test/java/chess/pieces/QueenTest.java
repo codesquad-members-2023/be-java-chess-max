@@ -17,7 +17,7 @@ class QueenTest {
 		// given
 		Queen queen = Queen.of(Color.BLACK);
 
-		Set<Position> positions = queen.movablePositions(new Position("c5"));
+		Set<Position> positions = queen.movablePositions(new Position("c5"), Dummy.of());
 
 		assertThat(positions).containsExactlyInAnyOrder(
 				new Position("b6"), new Position("a7"),

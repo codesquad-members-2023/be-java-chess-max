@@ -17,7 +17,7 @@ class RookTest {
 		// given
 		Rook rook = Rook.of(Color.BLACK);
 
-		Set<Position> positions = rook.movablePositions(new Position("c5"));
+		Set<Position> positions = rook.movablePositions(new Position("c5"), Dummy.of());
 
 		assertThat(positions).containsExactlyInAnyOrder(
 				new Position("c6"), new Position("c7"), new Position("c8"),

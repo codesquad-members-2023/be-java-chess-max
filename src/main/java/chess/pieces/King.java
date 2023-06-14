@@ -20,7 +20,7 @@ public class King extends Piece {
 	}
 
 	@Override
-	public Set<Position> movablePositions(final Position from) {
+	public Set<Position> movablePositions(final Position from, final Piece target) {
 		Set<Position> movablePosition = new HashSet<>();
 
 		for (Direction direction : Direction.everyDirection()) {

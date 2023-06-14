@@ -22,10 +22,10 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public Set<Position> movablePositions(final Position from) {
+	public Set<Position> movablePositions(final Position from, final Piece target) {
 		Set<Position> positions = new HashSet<>();
-
-		for (Direction direction : Direction.pawnDirection(getColor(), isInitialMove)) {
+		boolean isAttack = target.getColor() != getColor() && !(target instanceof Dummy);
+		for (Direction direction : Direction.pawnDirection(getColor(), isInitialMove, isAttack)) {
 			positions.add(new Position(from.getX() + direction.getXDegree(), from.getY() + direction.getYDegree()));
 		}
 		if (isInitialMove) {

@@ -59,24 +59,38 @@ public enum Direction {
 		return Arrays.asList(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
 	}
 
-	public static List<Direction> pawnDirection(Color color, boolean isInitialMove) {
+	public static List<Direction> pawnDirection(Color color, boolean isInitialMove, boolean isAttack) {
 		if (color == Color.BLACK) {
+			if (isAttack) {
+				return blackPawnAttackDirection();
+			}
 			return blackPawnDirection(isInitialMove);
+		}
+		if (isAttack) {
+			return whitePawnAttackDirection();
 		}
 		return whitePawnDirection(isInitialMove);
 	}
 
+	private static List<Direction> whitePawnAttackDirection() {
+		return Arrays.asList(NORTH_EAST, NORTH_WEST);
+	}
+
+	private static List<Direction> blackPawnAttackDirection() {
+		return Arrays.asList(SOUTH_EAST, SOUTH_WEST);
+	}
+
 	private static List<Direction> whitePawnDirection(boolean isInitialMove) {
 		if (isInitialMove) {
-			return Arrays.asList(NORTH, NN, NORTH_EAST, NORTH_WEST);
+			return Arrays.asList(NORTH, NN);
 		}
-		return Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST);
+		return Arrays.asList(NORTH);
 	}
 
 	private static List<Direction> blackPawnDirection(boolean isInitialMove) {
 		if (isInitialMove) {
-			return Arrays.asList(SOUTH, SS, SOUTH_EAST, SOUTH_WEST);
+			return Arrays.asList(SOUTH, SS);
 		}
-		return Arrays.asList(SOUTH, SOUTH_EAST, SOUTH_WEST);
+		return Arrays.asList(SOUTH);
 	}
 }

@@ -51,7 +51,7 @@ public abstract class Piece {
 		}
 	}
 
-	public Set<Position> movablePositions(Position from) {
+	public Set<Position> movablePositions(Position from, Piece target) {
 		return Set.of();
 	}
 
