@@ -5,11 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-public class Pawn {
+public class Pawn extends Piece{
 
-	private Color color;
-
+	public Pawn(Color color) {
+		super(color);
+	}
 }
