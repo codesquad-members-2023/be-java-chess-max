@@ -29,33 +29,6 @@ class BoardTest {
 		sut.initialize();
 	}
 
-	@DisplayName("체스판을 초기화할 때 체스판을 출력하면 체스판이 정상적으로 초기화됨을 확인한다.")
-	@Test
-	void givenInitializedBoard_whenPrintBoard_thenSuccessInitializeBoard() {
-		// given
-
-		// when
-		String boardFigure = sut.print();
-
-		// then
-		assertThat(boardFigure).isEqualTo(createInitialBoardFigure());
-	}
-
-	private String createInitialBoardFigure() {
-		StringBuilder figure = new StringBuilder();
-		String newLine = System.lineSeparator();
-		figure
-				.append("RNBQKBNR").append(newLine)
-				.append("PPPPPPPP").append(newLine)
-				.append("........").append(newLine)
-				.append("........").append(newLine)
-				.append("........").append(newLine)
-				.append("........").append(newLine)
-				.append("pppppppp").append(newLine)
-				.append("rnbqkbnr");
-		return figure.toString();
-	}
-
 	@DisplayName("기물의 개수를 셀 때 기물의 타입과 색깔이 주어지면 해당 기물의 개수가 반환된다.")
 	@MethodSource("provideTypeAndColor")
 	@ParameterizedTest
@@ -90,7 +63,7 @@ class BoardTest {
 	@Test
 	void givenPosition_whenFindPiece_thenReturnsPiece() {
 		// given
-		String position = "b8";
+		Position position = new Position("b8");
 
 		// when
 		Piece piece = sut.findPiece(position);
@@ -109,7 +82,7 @@ class BoardTest {
 		// given
 
 		// when & then
-		assertThatThrownBy(() -> sut.findPiece(position))
+		assertThatThrownBy(() -> sut.findPiece(new Position(position)))
 				.isInstanceOf(BusinessException.class)
 				.extracting("errorCode")
 				.isEqualTo(ErrorCode.INVALID_POSITION);
@@ -122,10 +95,10 @@ class BoardTest {
 		Pawn pawn = Pawn.of(Color.BLACK);
 
 		// when
-		sut.placePiece(pawn, "a3");
+		sut.placePiece(pawn, new Position("a3"));
 
 		// then
-		Piece piece = sut.findPiece("a3");
+		Piece piece = sut.findPiece(new Position("a3"));
 		SoftAssertions.assertSoftly(softAssertions -> {
 			softAssertions.assertThat(piece.getType()).isEqualTo(Type.PAWN);
 			softAssertions.assertThat(piece.getColor()).isEqualTo(Color.BLACK);
@@ -152,18 +125,18 @@ class BoardTest {
 	private void initializeChessBoard() {
 		sut.initializeEmpty();
 
-		sut.placePiece(Pawn.of(Color.BLACK), "b6");
-		sut.placePiece(Queen.of(Color.BLACK), "e6");
-		sut.placePiece(King.of(Color.BLACK), "b8");
-		sut.placePiece(Rook.of(Color.BLACK), "c8");
+		sut.placePiece(Pawn.of(Color.BLACK), new Position("b6"));
+		sut.placePiece(Queen.of(Color.BLACK), new Position("e6"));
+		sut.placePiece(King.of(Color.BLACK), new Position("b8"));
+		sut.placePiece(Rook.of(Color.BLACK), new Position("c8"));
 
-		sut.placePiece(Knight.of(Color.WHITE), "f4");
-		sut.placePiece(Queen.of(Color.WHITE), "g4");
-		sut.placePiece(Pawn.of(Color.WHITE), "f2");
-		sut.placePiece(Pawn.of(Color.WHITE), "f3");
-		sut.placePiece(Pawn.of(Color.WHITE), "h3");
-		sut.placePiece(Pawn.of(Color.WHITE), "g2");
-		sut.placePiece(Rook.of(Color.WHITE), "e1");
-		sut.placePiece(King.of(Color.WHITE), "f1");
+		sut.placePiece(Knight.of(Color.WHITE), new Position("f4"));
+		sut.placePiece(Queen.of(Color.WHITE), new Position("g4"));
+		sut.placePiece(Pawn.of(Color.WHITE), new Position("f2"));
+		sut.placePiece(Pawn.of(Color.WHITE), new Position("f3"));
+		sut.placePiece(Pawn.of(Color.WHITE), new Position("h3"));
+		sut.placePiece(Pawn.of(Color.WHITE), new Position("g2"));
+		sut.placePiece(Rook.of(Color.WHITE), new Position("e1"));
+		sut.placePiece(King.of(Color.WHITE), new Position("f1"));
 	}
 }

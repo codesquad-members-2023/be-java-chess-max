@@ -13,7 +13,7 @@ public class Rank {
 	private List<Piece> rank = new ArrayList<>();
 
 	public void init(final List<Piece> rank) {
-		this.rank = rank;
+		this.rank = new ArrayList<>(rank);
 	}
 
 	public int countPieces(final Type type, final Color color) {

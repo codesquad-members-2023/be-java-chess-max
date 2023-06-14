@@ -1,5 +1,6 @@
 package chess.pieces;
 
+import chess.board.Position;
 import chess.pieces.color.Color;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
@@ -8,7 +9,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Set;
 import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PawnTest {
 
@@ -50,5 +54,24 @@ class PawnTest {
 			softAssertions.assertThat(isBlack).isTrue();
 			softAssertions.assertThat(isWhite).isFalse();
 		});
+	}
+
+	@DisplayName("이동가능한 위치를 찾을 때 Pawn 인스턴스가 주어지면 이동가능한 위치들이 반환된다.")
+	@MethodSource("provideColorAndExpectedPositions")
+	@ParameterizedTest
+	void givenPawn_whenFindMovablePositions_thenReturnsMovablePositions(Color color, Set<Position> expectedPosition) {
+		// given
+		Pawn pawn = Pawn.of(color);
+
+		Set<Position> positions = pawn.movablePositions(new Position("c7"));
+
+		assertThat(positions).containsAll(expectedPosition);
+	}
+
+	private static Stream<Arguments> provideColorAndExpectedPositions() {
+		return Stream.of(
+				Arguments.of(Color.BLACK, Set.of(new Position("c6"), new Position("b6"), new Position("d6"))),
+				Arguments.of(Color.WHITE, Set.of(new Position("c8"), new Position("b8"), new Position("d8")))
+		);
 	}
 }

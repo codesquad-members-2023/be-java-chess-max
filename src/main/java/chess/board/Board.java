@@ -1,19 +1,17 @@
 package chess.board;
 
+import chess.exception.BusinessException;
+import chess.exception.ErrorCode;
 import chess.pieces.*;
 import chess.pieces.color.Color;
 import chess.pieces.type.Type;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Board {
 
 	private static final int BOARD_SIZE = 8;
-	private static final String NEW_LINE = System.lineSeparator();
 
 	private final List<Rank> board;
 
@@ -22,6 +20,10 @@ public class Board {
 		for (int i = 0; i < BOARD_SIZE; i++) {
 			board.add(new Rank());
 		}
+	}
+
+	public List<Rank> getBoard() {
+		return board.stream().collect(Collectors.toUnmodifiableList());
 	}
 
 	public void initializeEmpty() {
@@ -78,14 +80,12 @@ public class Board {
 				.sum();
 	}
 
-	public Piece findPiece(final String position) {
-		Position pos = new Position(position);
-		return board.get(pos.getX()).getPiece(pos.getY());
+	public Piece findPiece(final Position position) {
+		return board.get(position.getX()).getPiece(position.getY());
 	}
 
-	public void placePiece(final Piece piece, final String position) {
-		Position pos = new Position(position);
-		board.get(pos.getX()).placePiece(piece, pos.getY());
+	public void placePiece(final Piece piece, final Position position) {
+		board.get(position.getX()).placePiece(piece, position.getY());
 	}
 
 	public float calculatePoint(Color color) {
@@ -121,12 +121,18 @@ public class Board {
 		return totalPoint;
 	}
 
-	public String print() {
-		String boardFigure = board.stream()
-				.map(Object::toString)
-				.collect(Collectors.joining(NEW_LINE));
+	public void move(final Position from, final Position to) {
+		Piece source = findPiece(from);
+		Piece target = findPiece(to);
 
-		System.out.println(boardFigure);
-		return boardFigure;
+		source.verifyMovePosition(to, target);
+		Set<Position> positions = source.movablePositions(from);
+
+		if (!positions.contains(to)) {
+			throw new BusinessException(ErrorCode.INVALID_POSITION);
+		}
+
+		placePiece(Dummy.of(), from);
+		placePiece(source, to);
 	}
 }
