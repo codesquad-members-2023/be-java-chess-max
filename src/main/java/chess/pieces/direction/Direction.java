@@ -16,6 +16,8 @@ public enum Direction {
 	WEST(0, -1),
 	NORTH_WEST(-1, -1),
 
+	NN(-2, 0),
+	SS(2, 0),
 	NNE(-2, 1),
 	NNW(-2, -1),
 	SSE(2, 1),
@@ -57,18 +59,24 @@ public enum Direction {
 		return Arrays.asList(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
 	}
 
-	public static List<Direction> pawnDirection(Color color) {
+	public static List<Direction> pawnDirection(Color color, boolean isInitialMove) {
 		if (color == Color.BLACK) {
-			return blackPawnDirection();
+			return blackPawnDirection(isInitialMove);
 		}
-		return whitePawnDirection();
+		return whitePawnDirection(isInitialMove);
 	}
 
-	private static List<Direction> whitePawnDirection() {
+	private static List<Direction> whitePawnDirection(boolean isInitialMove) {
+		if (isInitialMove) {
+			return Arrays.asList(NORTH, NN, NORTH_EAST, NORTH_WEST);
+		}
 		return Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST);
 	}
 
-	private static List<Direction> blackPawnDirection() {
+	private static List<Direction> blackPawnDirection(boolean isInitialMove) {
+		if (isInitialMove) {
+			return Arrays.asList(SOUTH, SS, SOUTH_EAST, SOUTH_WEST);
+		}
 		return Arrays.asList(SOUTH, SOUTH_EAST, SOUTH_WEST);
 	}
 }
