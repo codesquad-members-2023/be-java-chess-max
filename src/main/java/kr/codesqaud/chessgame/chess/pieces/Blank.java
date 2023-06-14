@@ -1,7 +1,7 @@
-package kr.codesqaud.chessgame.pieces;
+package kr.codesqaud.chessgame.chess.pieces;
 
-import kr.codesqaud.chessgame.pieces.config.Color;
-import kr.codesqaud.chessgame.pieces.config.Type;
+import kr.codesqaud.chessgame.chess.pieces.config.Color;
+import kr.codesqaud.chessgame.chess.pieces.config.Type;
 
 public class Blank extends Piece {
 
@@ -12,6 +12,4 @@ public class Blank extends Piece {
     public static Blank create(final Position position) {
         return new Blank(position);
     }
-
-
 }

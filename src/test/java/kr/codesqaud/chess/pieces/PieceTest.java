@@ -1,26 +1,26 @@
 package kr.codesqaud.chess.pieces;
 
 
-import static kr.codesqaud.chessgame.pieces.Position.createPosition;
-import static kr.codesqaud.chessgame.pieces.Position.emptyPosition;
-import static kr.codesqaud.chessgame.pieces.config.Type.BISHOP;
-import static kr.codesqaud.chessgame.pieces.config.Type.KING;
-import static kr.codesqaud.chessgame.pieces.config.Type.KNIGHT;
-import static kr.codesqaud.chessgame.pieces.config.Type.NO_PIECE;
-import static kr.codesqaud.chessgame.pieces.config.Type.PAWN;
-import static kr.codesqaud.chessgame.pieces.config.Type.QUEEN;
-import static kr.codesqaud.chessgame.pieces.config.Type.ROOK;
+import static kr.codesqaud.chessgame.chess.pieces.Position.createPosition;
+import static kr.codesqaud.chessgame.chess.pieces.Position.emptyPosition;
+import static kr.codesqaud.chessgame.chess.pieces.config.Type.BISHOP;
+import static kr.codesqaud.chessgame.chess.pieces.config.Type.KING;
+import static kr.codesqaud.chessgame.chess.pieces.config.Type.KNIGHT;
+import static kr.codesqaud.chessgame.chess.pieces.config.Type.NO_PIECE;
+import static kr.codesqaud.chessgame.chess.pieces.config.Type.PAWN;
+import static kr.codesqaud.chessgame.chess.pieces.config.Type.QUEEN;
+import static kr.codesqaud.chessgame.chess.pieces.config.Type.ROOK;
 
-import kr.codesqaud.chessgame.pieces.Bishop;
-import kr.codesqaud.chessgame.pieces.Blank;
-import kr.codesqaud.chessgame.pieces.King;
-import kr.codesqaud.chessgame.pieces.Knight;
-import kr.codesqaud.chessgame.pieces.Pawn;
-import kr.codesqaud.chessgame.pieces.Piece;
-import kr.codesqaud.chessgame.pieces.Queen;
-import kr.codesqaud.chessgame.pieces.Rook;
-import kr.codesqaud.chessgame.pieces.config.Color;
-import kr.codesqaud.chessgame.pieces.config.Type;
+import kr.codesqaud.chessgame.chess.pieces.Bishop;
+import kr.codesqaud.chessgame.chess.pieces.Blank;
+import kr.codesqaud.chessgame.chess.pieces.King;
+import kr.codesqaud.chessgame.chess.pieces.Knight;
+import kr.codesqaud.chessgame.chess.pieces.Pawn;
+import kr.codesqaud.chessgame.chess.pieces.Piece;
+import kr.codesqaud.chessgame.chess.pieces.Queen;
+import kr.codesqaud.chessgame.chess.pieces.Rook;
+import kr.codesqaud.chessgame.chess.pieces.config.Color;
+import kr.codesqaud.chessgame.chess.pieces.config.Type;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

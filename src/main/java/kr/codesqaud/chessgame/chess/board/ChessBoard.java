@@ -1,15 +1,15 @@
-package kr.codesqaud.chessgame.chess;
+package kr.codesqaud.chessgame.chess.board;
 
 
-import static kr.codesqaud.chessgame.pieces.Position.createPosition;
-import static kr.codesqaud.chessgame.pieces.Position.emptyPosition;
-import static kr.codesqaud.chessgame.pieces.config.Color.BLACK;
-import static kr.codesqaud.chessgame.pieces.config.Color.WHITE;
-import static kr.codesqaud.chessgame.pieces.config.Direction.NORTHEAST;
-import static kr.codesqaud.chessgame.pieces.config.Direction.NORTHWEST;
-import static kr.codesqaud.chessgame.pieces.config.Direction.SOUTHWEST;
-import static kr.codesqaud.chessgame.pieces.config.Type.NO_PIECE;
-import static kr.codesqaud.chessgame.pieces.config.Type.PAWN;
+import static kr.codesqaud.chessgame.chess.pieces.Position.createPosition;
+import static kr.codesqaud.chessgame.chess.pieces.Position.emptyPosition;
+import static kr.codesqaud.chessgame.chess.pieces.config.Color.BLACK;
+import static kr.codesqaud.chessgame.chess.pieces.config.Color.WHITE;
+import static kr.codesqaud.chessgame.chess.pieces.config.Direction.NORTHEAST;
+import static kr.codesqaud.chessgame.chess.pieces.config.Direction.NORTHWEST;
+import static kr.codesqaud.chessgame.chess.pieces.config.Direction.SOUTHWEST;
+import static kr.codesqaud.chessgame.chess.pieces.config.Type.NO_PIECE;
+import static kr.codesqaud.chessgame.chess.pieces.config.Type.PAWN;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,13 +17,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import kr.codesqaud.chessgame.chess.pieces.Blank;
+import kr.codesqaud.chessgame.chess.pieces.Piece;
+import kr.codesqaud.chessgame.chess.pieces.Position;
+import kr.codesqaud.chessgame.chess.pieces.config.Color;
+import kr.codesqaud.chessgame.chess.pieces.config.Direction;
+import kr.codesqaud.chessgame.chess.pieces.config.Type;
 import kr.codesqaud.chessgame.exception.InvalidMovingPieceException;
-import kr.codesqaud.chessgame.pieces.Blank;
-import kr.codesqaud.chessgame.pieces.Piece;
-import kr.codesqaud.chessgame.pieces.Position;
-import kr.codesqaud.chessgame.pieces.config.Color;
-import kr.codesqaud.chessgame.pieces.config.Direction;
-import kr.codesqaud.chessgame.pieces.config.Type;
 import kr.codesqaud.chessgame.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,6 +56,7 @@ public class ChessBoard implements Board {
     }
 
     // sourcePosition에서 targetPosition으로 기물 이동
+    // "a2", 'a3'
     @Override
     public void move(final String sourcePosition, final String targetPosition) {
         Piece sourcePiece = findPiece(sourcePosition);

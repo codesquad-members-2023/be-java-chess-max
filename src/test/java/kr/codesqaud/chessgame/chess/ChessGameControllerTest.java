@@ -3,6 +3,7 @@ package kr.codesqaud.chessgame.chess;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import kr.codesqaud.chessgame.controller.ChessGameController;
+import kr.codesqaud.chessgame.view.ConsoleView;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package kr.codesqaud.chessgame.chess;
+package kr.codesqaud.chessgame.view;
 
 public interface View {
     

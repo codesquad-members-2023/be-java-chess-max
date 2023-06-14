@@ -1,12 +1,12 @@
-package kr.codesqaud.chessgame.pieces;
+package kr.codesqaud.chessgame.chess.pieces;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import kr.codesqaud.chessgame.chess.pieces.config.Color;
+import kr.codesqaud.chessgame.chess.pieces.config.Direction;
+import kr.codesqaud.chessgame.chess.pieces.config.Type;
 import kr.codesqaud.chessgame.exception.InvalidMovingPieceException;
-import kr.codesqaud.chessgame.pieces.config.Color;
-import kr.codesqaud.chessgame.pieces.config.Direction;
-import kr.codesqaud.chessgame.pieces.config.Type;
 
 public abstract class Piece {
 
@@ -14,7 +14,6 @@ public abstract class Piece {
     private final Type type;
     private final List<Direction> directions;
     private Position position;
-
 
     public Piece(final Color color, final Type type, final Position position) {
         this(color, type, position, new ArrayList<>());
@@ -26,7 +25,6 @@ public abstract class Piece {
         this.position = position;
         this.directions = directions;
     }
-
 
     public Color getColor() {
         return color;
@@ -76,11 +74,7 @@ public abstract class Piece {
         if (!directions.contains(direction)) {
             throw new InvalidMovingPieceException(target.position + "로 이동할 수 없습니다.");
         }
-
-
     }
-
-
 
     public boolean isSameTeam(Piece target) {
         return Objects.equals(color, target.getColor());

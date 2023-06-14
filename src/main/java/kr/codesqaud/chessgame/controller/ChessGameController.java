@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Objects;
-import kr.codesqaud.chessgame.chess.ChessBoard;
 import kr.codesqaud.chessgame.chess.ChessGame;
-import kr.codesqaud.chessgame.chess.View;
+import kr.codesqaud.chessgame.chess.board.ChessBoard;
 import kr.codesqaud.chessgame.exception.InvalidMovingPieceException;
 import kr.codesqaud.chessgame.exception.InvalidPositionException;
 import kr.codesqaud.chessgame.exception.InvalidTurnException;
+import kr.codesqaud.chessgame.view.View;
 
 public class ChessGameController {
 

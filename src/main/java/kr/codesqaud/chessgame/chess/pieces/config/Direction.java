@@ -1,4 +1,4 @@
-package kr.codesqaud.chessgame.pieces.config;
+package kr.codesqaud.chessgame.chess.pieces.config;
 
 import java.util.Arrays;
 import java.util.List;

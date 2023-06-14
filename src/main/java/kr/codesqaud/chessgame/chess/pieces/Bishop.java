@@ -1,14 +1,13 @@
-package kr.codesqaud.chessgame.pieces;
+package kr.codesqaud.chessgame.chess.pieces;
 
-import static kr.codesqaud.chessgame.pieces.config.Type.BISHOP;
-
-import kr.codesqaud.chessgame.pieces.config.Color;
-import kr.codesqaud.chessgame.pieces.config.Direction;
+import kr.codesqaud.chessgame.chess.pieces.config.Color;
+import kr.codesqaud.chessgame.chess.pieces.config.Direction;
+import kr.codesqaud.chessgame.chess.pieces.config.Type;
 
 public class Bishop extends Piece {
 
     public Bishop(final Color color, final Position position) {
-        super(color, BISHOP, position, Direction.diagonalDirection());
+        super(color, Type.BISHOP, position, Direction.diagonalDirection());
     }
 
     public static Bishop createWhite(final Position position) {

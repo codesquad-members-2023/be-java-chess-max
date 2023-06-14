@@ -1,4 +1,4 @@
-package kr.codesqaud.chessgame.pieces;
+package kr.codesqaud.chessgame.chess.pieces;
 
 public class Degree {
 

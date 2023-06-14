@@ -1,10 +1,10 @@
-package kr.codesqaud.chessgame.pieces;
+package kr.codesqaud.chessgame.chess.pieces;
 
 import static java.lang.Character.getNumericValue;
 
 import java.util.Objects;
+import kr.codesqaud.chessgame.chess.pieces.config.Direction;
 import kr.codesqaud.chessgame.exception.InvalidPositionException;
-import kr.codesqaud.chessgame.pieces.config.Direction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

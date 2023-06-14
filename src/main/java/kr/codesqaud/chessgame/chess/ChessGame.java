@@ -1,7 +1,8 @@
 package kr.codesqaud.chessgame.chess;
 
+import kr.codesqaud.chessgame.chess.board.Board;
+import kr.codesqaud.chessgame.chess.pieces.config.Color;
 import kr.codesqaud.chessgame.exception.InvalidTurnException;
-import kr.codesqaud.chessgame.pieces.config.Color;
 
 public class ChessGame {
 

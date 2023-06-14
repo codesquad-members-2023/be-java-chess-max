@@ -1,7 +1,7 @@
 package kr.codesqaud.chessgame;
 
-import kr.codesqaud.chessgame.chess.ConsoleView;
 import kr.codesqaud.chessgame.controller.ChessGameController;
+import kr.codesqaud.chessgame.view.ConsoleView;
 
 public class ChessApplication {
 

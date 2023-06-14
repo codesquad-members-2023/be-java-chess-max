@@ -1,6 +1,6 @@
-package kr.codesqaud.chessgame.chess;
+package kr.codesqaud.chessgame.chess.board;
 
-import kr.codesqaud.chessgame.pieces.config.Color;
+import kr.codesqaud.chessgame.chess.pieces.config.Color;
 
 public interface Board {
 

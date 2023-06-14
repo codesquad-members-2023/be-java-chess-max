@@ -1,14 +1,13 @@
-package kr.codesqaud.chessgame.pieces;
+package kr.codesqaud.chessgame.chess.pieces;
 
-import static kr.codesqaud.chessgame.pieces.config.Type.ROOK;
-
-import kr.codesqaud.chessgame.pieces.config.Color;
-import kr.codesqaud.chessgame.pieces.config.Direction;
+import kr.codesqaud.chessgame.chess.pieces.config.Color;
+import kr.codesqaud.chessgame.chess.pieces.config.Direction;
+import kr.codesqaud.chessgame.chess.pieces.config.Type;
 
 public class Rook extends Piece {
 
     public Rook(final Color color, final Position position) {
-        super(color, ROOK, position, Direction.linearDirection());
+        super(color, Type.ROOK, position, Direction.linearDirection());
     }
 
     public static Rook createWhite(final Position position) {

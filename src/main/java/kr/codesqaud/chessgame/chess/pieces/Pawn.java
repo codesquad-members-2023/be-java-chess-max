@@ -1,11 +1,10 @@
-package kr.codesqaud.chessgame.pieces;
-
-import static kr.codesqaud.chessgame.pieces.config.Type.PAWN;
+package kr.codesqaud.chessgame.chess.pieces;
 
 import java.util.List;
+import kr.codesqaud.chessgame.chess.pieces.config.Color;
+import kr.codesqaud.chessgame.chess.pieces.config.Direction;
+import kr.codesqaud.chessgame.chess.pieces.config.Type;
 import kr.codesqaud.chessgame.exception.InvalidMovingPieceException;
-import kr.codesqaud.chessgame.pieces.config.Color;
-import kr.codesqaud.chessgame.pieces.config.Direction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +15,7 @@ public class Pawn extends Piece {
     private static final int BLACK_STARTING_RANK = 7;
 
     public Pawn(final Color color, final Position position, final List<Direction> directions) {
-        super(color, PAWN, position, directions);
+        super(color, Type.PAWN, position, directions);
     }
 
     public static Pawn createWhite(final Position position) {

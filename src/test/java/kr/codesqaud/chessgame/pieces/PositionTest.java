@@ -1,7 +1,8 @@
 package kr.codesqaud.chessgame.pieces;
 
-import static kr.codesqaud.chessgame.pieces.Position.createPosition;
+import static kr.codesqaud.chessgame.chess.pieces.Position.createPosition;
 
+import kr.codesqaud.chessgame.chess.pieces.Position;
 import kr.codesqaud.chessgame.exception.InvalidPositionException;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;

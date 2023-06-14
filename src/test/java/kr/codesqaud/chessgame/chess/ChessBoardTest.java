@@ -1,9 +1,9 @@
 package kr.codesqaud.chessgame.chess;
 
 
-import static kr.codesqaud.chessgame.pieces.Position.createPosition;
-import static kr.codesqaud.chessgame.pieces.config.Color.BLACK;
-import static kr.codesqaud.chessgame.pieces.config.Color.WHITE;
+import static kr.codesqaud.chessgame.chess.pieces.Position.createPosition;
+import static kr.codesqaud.chessgame.chess.pieces.config.Color.BLACK;
+import static kr.codesqaud.chessgame.chess.pieces.config.Color.WHITE;
 import static org.assertj.core.data.Offset.offset;
 
 import java.io.IOException;
@@ -11,18 +11,19 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import kr.codesqaud.chessgame.chess.board.ChessBoard;
+import kr.codesqaud.chessgame.chess.pieces.Bishop;
+import kr.codesqaud.chessgame.chess.pieces.Blank;
+import kr.codesqaud.chessgame.chess.pieces.King;
+import kr.codesqaud.chessgame.chess.pieces.Knight;
+import kr.codesqaud.chessgame.chess.pieces.Pawn;
+import kr.codesqaud.chessgame.chess.pieces.Piece;
+import kr.codesqaud.chessgame.chess.pieces.Position;
+import kr.codesqaud.chessgame.chess.pieces.Queen;
+import kr.codesqaud.chessgame.chess.pieces.Rook;
+import kr.codesqaud.chessgame.chess.pieces.config.Type;
 import kr.codesqaud.chessgame.exception.InvalidMovingPieceException;
 import kr.codesqaud.chessgame.exception.InvalidPositionException;
-import kr.codesqaud.chessgame.pieces.Bishop;
-import kr.codesqaud.chessgame.pieces.Blank;
-import kr.codesqaud.chessgame.pieces.King;
-import kr.codesqaud.chessgame.pieces.Knight;
-import kr.codesqaud.chessgame.pieces.Pawn;
-import kr.codesqaud.chessgame.pieces.Piece;
-import kr.codesqaud.chessgame.pieces.Position;
-import kr.codesqaud.chessgame.pieces.Queen;
-import kr.codesqaud.chessgame.pieces.Rook;
-import kr.codesqaud.chessgame.pieces.config.Type;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

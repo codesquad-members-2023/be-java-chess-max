@@ -1,5 +1,6 @@
 package kr.codesqaud.chessgame.chess;
 
+import kr.codesqaud.chessgame.chess.board.ChessBoard;
 import kr.codesqaud.chessgame.exception.InvalidTurnException;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
