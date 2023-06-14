@@ -126,7 +126,7 @@ public class Board {
 		Piece target = findPiece(to);
 
 		source.verifyMovePosition(to, target);
-		Set<Position> positions = source.movablePositions(from, target);
+		Set<Position> positions = source.movablePositions(from, target, board);
 
 		if (!positions.contains(to)) {
 			throw new BusinessException(ErrorCode.INVALID_POSITION);

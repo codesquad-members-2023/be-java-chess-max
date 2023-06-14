@@ -1,5 +1,6 @@
 package chess.pieces;
 
+import chess.board.Board;
 import chess.board.Position;
 import chess.pieces.color.Color;
 import org.junit.jupiter.api.DisplayName;
@@ -15,15 +16,17 @@ class RookTest {
 	@Test
 	void givenRook_whenFindMovablePositions_thenReturnsMovablePositions() {
 		// given
+		Board board = new Board();
+		board.initialize();
 		Rook rook = Rook.of(Color.BLACK);
 
-		Set<Position> positions = rook.movablePositions(new Position("c5"), Dummy.of());
+		Set<Position> positions = rook.movablePositions(new Position("c5"), Dummy.of(), board.getBoard());
 
 		assertThat(positions).containsExactlyInAnyOrder(
-				new Position("c6"), new Position("c7"), new Position("c8"),
+				new Position("c6"),
 				new Position("b5"), new Position("a5"),
 				new Position("d5"), new Position("e5"), new Position("f5"), new Position("g5"), new Position("h5"),
-				new Position("c4"), new Position("c3"), new Position("c2"), new Position("c1")
+				new Position("c4"), new Position("c3")
 		);
 	}
 }

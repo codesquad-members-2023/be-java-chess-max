@@ -1,5 +1,6 @@
 package chess.pieces;
 
+import chess.board.Board;
 import chess.board.Position;
 import chess.pieces.color.Color;
 import org.junit.jupiter.api.DisplayName;
@@ -15,15 +16,17 @@ class BishopTest {
 	@Test
 	void givenBishop_whenFindMovablePositions_thenReturnsMovablePositions() {
 		// given
+		Board board = new Board();
+		board.initialize();
 		Bishop bishop = Bishop.of(Color.BLACK);
 
-		Set<Position> positions = bishop.movablePositions(new Position("c5"), Dummy.of());
+		Set<Position> positions = bishop.movablePositions(new Position("c5"), Dummy.of(), board.getBoard());
 
 		assertThat(positions).containsExactlyInAnyOrder(
-				new Position("b6"), new Position("a7"),
-				new Position("d6"), new Position("e7"), new Position("f8"),
+				new Position("b6"),
+				new Position("d6"),
 				new Position("b4"), new Position("a3"),
-				new Position("d4"), new Position("e3"), new Position("f2"), new Position("g1")
+				new Position("d4"), new Position("e3")
 		);
 	}
 }
