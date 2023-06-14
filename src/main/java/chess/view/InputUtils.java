@@ -10,6 +10,7 @@ public final class InputUtils {
 	}
 
 	public static String getCommand() {
+		System.out.print("명령어를 입력해주세요 : ");
 		return scanner.nextLine();
 	}
 }

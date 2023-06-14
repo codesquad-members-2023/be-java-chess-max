@@ -135,4 +135,10 @@ public class Board {
 		placePiece(Dummy.of(), from);
 		placePiece(source, to);
 	}
+
+	public void checkTurn(final Color turn, final Position from) {
+		if (turn != board.get(from.getX()).getPiece(from.getY()).getColor()) {
+			throw new BusinessException(ErrorCode.INVALID_TURN);
+		}
+	}
 }
