@@ -216,21 +216,24 @@ public class ChessBoard implements Board {
             .findPiece(position.getFileIndex());
     }
 
-    // 컬러를 기준으로 점수가 높은 순서로 정렬하여 반환합니다.
-    public List<Piece> sortDecreaseByColor(final Color color) {
-        return ranks.stream()
-            .flatMap(rank -> rank.getPieces().stream())
-            .filter(piece -> Objects.equals(piece.getColor(), color))
-            .sorted(Comparator.comparingDouble(p -> ((Piece) p).getType().getDefaultPoint()).reversed())
-            .collect(Collectors.toUnmodifiableList());
-    }
-
     // 컬러를 기준으로 점수가 낮은 순서로 정렬하여 반환합니다.
     public List<Piece> sortIncreaseByColor(final Color color) {
+        return sortByColorAndPoint(color,
+            (p1, p2) -> (int) Math.floor(p1.getType().getDefaultPoint() - p2.getType().getDefaultPoint()));
+    }
+
+    // 컬러를 기준으로 점수가 높은 순서로 정렬하여 반환합니다.
+    public List<Piece> sortDecreaseByColor(final Color color) {
+        return sortByColorAndPoint(color,
+            (p1, p2) -> (int) Math.floor(p2.getType().getDefaultPoint() - p1.getType().getDefaultPoint()));
+    }
+
+    // 컬러와 정렬 기준에 따라서 정렬하여 반환합니다.
+    private List<Piece> sortByColorAndPoint(final Color color, final Comparator<Piece> comparator) {
         return ranks.stream()
             .flatMap(rank -> rank.getPieces().stream())
             .filter(piece -> Objects.equals(piece.getColor(), color))
-            .sorted(Comparator.comparingDouble(p -> p.getType().getDefaultPoint()))
+            .sorted(comparator)
             .collect(Collectors.toUnmodifiableList());
     }
 
