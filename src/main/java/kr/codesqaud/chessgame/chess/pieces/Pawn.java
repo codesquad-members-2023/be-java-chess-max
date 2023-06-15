@@ -5,12 +5,9 @@ import kr.codesqaud.chessgame.chess.pieces.config.Color;
 import kr.codesqaud.chessgame.chess.pieces.config.Direction;
 import kr.codesqaud.chessgame.chess.pieces.config.Type;
 import kr.codesqaud.chessgame.exception.InvalidMovingPieceException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Pawn extends Piece {
 
-    private static final Logger logger = LoggerFactory.getLogger(Pawn.class);
     private static final int WHITE_STARTING_RANK = 2;
     private static final int BLACK_STARTING_RANK = 7;
 
@@ -37,8 +34,6 @@ public class Pawn extends Piece {
 
     @Override
     public void verifyMovePosition(final Piece target) {
-        Direction direction = getPosition().direction(target.getPosition());
-
         // 같은 색의 기물인지 확인
         verifySameTeam(target);
         // 방향 검증
@@ -47,19 +42,6 @@ public class Pawn extends Piece {
         verifyDiagonal(target);
         // 폰 두칸 이동 검증
         verifyFirstMove(target);
-    }
-
-    private void verifySameTeam(final Piece target) {
-        if (isSameTeam(target)) {
-            throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다. 같은 색상의 기물입니다.");
-        }
-    }
-
-    private void verifyDirection(final Piece target) {
-        Direction direction = direction(target);
-        if (!getDirections().contains(direction)) {
-            throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
-        }
     }
 
     private void verifyDiagonal(final Piece target) {

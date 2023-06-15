@@ -68,14 +68,23 @@ public abstract class Piece {
         verifyDirection(target);
     }
 
-    private void verifySameTeam(final Piece target) {
+    public void verifySameTeam(final Piece target) {
         if (isSameTeam(target)) {
             throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다. 같은 색상의 기물입니다.");
         }
     }
 
-    private void verifyDirection(final Piece target) {
-        if (!getDirections().contains(direction(target))) {
+    public void verifyDirection(final Piece target) {
+        if (!directions.contains(direction(target))) {
+            throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
+        }
+    }
+
+    public void verifyDirectionMatch(final Piece target) {
+        int y = target.getPosition().getRank() - getPosition().getRank();
+        int x = target.getPosition().getFile() - getPosition().getFile();
+        Direction direction = direction(target);
+        if (!direction.match(y, x)) {
             throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
         }
     }
