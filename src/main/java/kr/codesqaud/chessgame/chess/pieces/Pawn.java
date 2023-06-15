@@ -43,8 +43,23 @@ public class Pawn extends Piece {
         verifySameTeam(target);
         // 방향 검증
         verifyDirection(target, direction);
+        // 대각선 이동시 target이 적기물인지 검증
+        verifyDiagonal(target, direction);
         // 폰 두칸 이동 검증
         verifyFirstMove(target);
+    }
+
+    private void verifyDiagonal(final Piece target, final Direction direction) {
+        if (isWhite() &&
+            (direction == Direction.NORTHWEST || direction == Direction.NORTHEAST) &&
+            !target.isBlack()) {
+            throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
+        }
+        if (isBlack() &&
+            (direction == Direction.SOUTHWEST || direction == Direction.SOUTHEAST) &&
+            !target.isWhite()) {
+            throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
+        }
     }
 
     private void verifySameTeam(final Piece target) {
@@ -68,5 +83,4 @@ public class Pawn extends Piece {
             throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
         }
     }
-
 }

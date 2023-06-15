@@ -62,7 +62,6 @@ public abstract class Piece {
     }
 
     public void move(Piece target) {
-        verifyMovePosition(target);
         this.position = target.position;
     }
 
@@ -90,6 +89,19 @@ public abstract class Piece {
 
     public boolean matchColor(Color color) {
         return this.color == color;
+    }
+
+    public Direction direction(final Piece targetPiece) {
+        return position.direction(targetPiece.position);
+    }
+
+    public boolean isMoving(final Piece target) {
+        try {
+            verifyMovePosition(target);
+            return true;
+        } catch (InvalidMovingPieceException e) {
+            return false;
+        }
     }
 
     @Override

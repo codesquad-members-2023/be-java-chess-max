@@ -102,7 +102,11 @@ public class Position {
     }
 
     public Position move(final Direction direction) {
-        return createPosition(file + direction.getxDegree(), rank + direction.getyDegree());
+        try {
+            return createPosition(file + direction.getxDegree(), rank + direction.getyDegree());
+        } catch (InvalidPositionException e) {
+            return emptyPosition();
+        }
     }
 
     @Override

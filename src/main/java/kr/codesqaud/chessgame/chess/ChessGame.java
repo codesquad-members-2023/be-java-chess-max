@@ -19,11 +19,11 @@ public class ChessGame {
     }
 
     public void move(final String sourcePosition, final String targetPosition) {
-        verifySameColor(sourcePosition);
+        verifyMyOwnPiece(sourcePosition);
         board.move(sourcePosition, targetPosition);
     }
 
-    private void verifySameColor(final String sourcePosition) {
+    private void verifyMyOwnPiece(final String sourcePosition) {
         if (currentTurn != board.getColorByPosition(sourcePosition)) {
             throw new InvalidTurnException(currentTurn.name() + "색 기물을 선택해주세요.");
         }
