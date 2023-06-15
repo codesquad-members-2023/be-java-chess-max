@@ -8,6 +8,7 @@ import static kr.codesqaud.chessgame.chess.pieces.config.Color.WHITE;
 import static kr.codesqaud.chessgame.chess.pieces.config.Direction.NORTHEAST;
 import static kr.codesqaud.chessgame.chess.pieces.config.Direction.NORTHWEST;
 import static kr.codesqaud.chessgame.chess.pieces.config.Direction.SOUTHWEST;
+import static kr.codesqaud.chessgame.chess.pieces.config.Type.KING;
 import static kr.codesqaud.chessgame.chess.pieces.config.Type.NO_PIECE;
 import static kr.codesqaud.chessgame.chess.pieces.config.Type.PAWN;
 
@@ -15,9 +16,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import kr.codesqaud.chessgame.chess.pieces.Blank;
+import kr.codesqaud.chessgame.chess.pieces.King;
 import kr.codesqaud.chessgame.chess.pieces.Piece;
 import kr.codesqaud.chessgame.chess.pieces.Position;
 import kr.codesqaud.chessgame.chess.pieces.config.Color;
@@ -56,28 +59,20 @@ public class ChessBoard implements Board {
     }
 
     // sourcePosition에서 targetPosition으로 기물 이동
-    // "a2", 'a3'
     @Override
     public void move(final String sourcePosition, final String targetPosition) {
-        Piece sourcePiece = findPiece(sourcePosition);
-        Piece targetPiece = findPiece(targetPosition);
+        Piece sourcePiece = findPiece(createPosition(sourcePosition));
+        Piece targetPiece = findPiece(createPosition(targetPosition));
         Position prevPosition = sourcePiece.getPosition();
-        if (sourcePiece.matchType(PAWN)) {
-            Direction direction = sourcePiece.getPosition().direction(targetPiece.getPosition());
-            Position removePosition = verifyEnPassant(direction, sourcePiece);
 
-            if (!removePosition.empty()) {
-                setPiece(removePosition, Blank.create(removePosition));
-            }
-        }
-        // 이동 경로 중간에 다른 기물이 있는지 확인합니다.
-        if (isPathBlocked(sourcePiece, targetPiece)) {
-            throw new InvalidMovingPieceException(targetPiece.getPosition() + "로 이동할 수 없습니다.");
+        if (!isMoving(sourcePiece, targetPiece)) {
+            throw new InvalidMovingPieceException("해당 위치로 이동할 수 없습니다." + targetPosition);
         }
 
         sourcePiece.move(targetPiece);
         setPiece(prevPosition, Blank.create(prevPosition));
         setPiece(sourcePiece.getPosition(), sourcePiece);
+        setKingCheck(sourcePiece);
     }
 
     // 체스판 위에 기물 상태를 문자열로 반환
@@ -92,41 +87,152 @@ public class ChessBoard implements Board {
 
     @Override
     public Color getColorByPosition(final String position) {
-        return findPiece(position).getColor();
+        return findPiece(createPosition(position)).getColor();
     }
 
-    private boolean isPathBlocked(final Piece sourcePiece, final Piece target) {
-        Direction direction = sourcePiece.getPosition().direction(target.getPosition());
-        Position currentPosition = sourcePiece.getPosition();
+    @Override
+    public void setPiece(final Position position, final Piece piece) {
+        ranks.get(position.getRankIndex())
+            .setPiece(position.getFileIndex(), piece);
+    }
 
-        while (!Objects.equals(currentPosition, target.getPosition())) {
-            currentPosition = currentPosition.move(direction);
-            if (!findPiece(currentPosition).matchType(NO_PIECE)) {
-                return true;
+    // 입력받은 Position에 따른 기물 객체 반환
+    @Override
+    public Piece findPiece(final Position position) {
+        return ranks.get(position.getRankIndex())
+            .findPiece(position.getFileIndex());
+    }
+
+    // 입력받은 위치에서 이동할 수 있는 경로를 응답합니다.
+    @Override
+    public List<Position> possiblePath(final Position position) {
+        Piece sourcePiece = findPiece(position);
+        List<Position> positions = new ArrayList<>();
+        for (Direction direction : sourcePiece.getDirections()) {
+            Position target = sourcePiece.getPosition();
+            while (!target.empty()) {
+                target = target.move(direction);
+
+                if (target.empty()) {
+                    break;
+                }
+
+                Piece targetPiece = findPiece(target);
+                if (isMoving(sourcePiece, targetPiece)) {
+                    positions.add(target);
+                }
             }
         }
+        return positions;
+    }
+
+    private boolean isMoving(final Piece sourcePiece, final Piece targetPiece) {
+        try {
+            // target 위치로 이동하고자 할시 체크가 되는지 검증
+            verifyCheckStatusAt(sourcePiece, targetPiece);
+            // 체크 상태에서 다른 기물을 이동하려는지 검증합니다.
+            verifyMoveFromCheck(sourcePiece);
+
+            // 이동 경로 중간에 다른 기물이 있는지 확인합니다.
+            verifyPathBlocked(sourcePiece, targetPiece);
+
+            return sourcePiece.isMoving(targetPiece);
+        } catch (InvalidMovingPieceException e) {
+            return false;
+        }
+    }
+
+    // target 위치로 이동하고자 할시 체크가 되는지 검증
+    private void verifyCheckStatusAt(final Piece sourcePiece, final Piece targetPiece) {
+        if (!sourcePiece.matchType(KING)) {
+            return;
+        }
+
+        if (sourcePiece.isWhite()) {
+            King whiteKing = King.createWhite(targetPiece.getPosition());
+            if (isCheckKing(whiteKing)) {
+                throw new InvalidMovingPieceException("해당 위치로 이동시 체크입니다");
+            }
+        } else if (sourcePiece.isBlack()) {
+            King blackKign = King.createBlack(targetPiece.getPosition());
+            if (isCheckKing(blackKign)) {
+                throw new InvalidMovingPieceException("해당 위치로 이동시 체크입니다.");
+            }
+        }
+    }
+
+    // king이 위치한 자리에서 king 기물의 적기물들이 king 자리로 이동이 가능한지 검사합니다.
+    private boolean isCheckKing(final Piece king) {
+        Color color = king.isWhite() ? BLACK : WHITE;
+        List<Piece> pieces = findPiecesBy(color);
+        return pieces.stream()
+            .anyMatch(piece -> piece.isMoving(king));
+    }
+
+
+    private void verifyMoveFromCheck(final Piece sourcePiece) {
+        if (sourcePiece.isWhite() && white_king_check && !sourcePiece.matchType(KING)) {
+            throw new InvalidMovingPieceException(sourcePiece.getColor() + "색 킹이 체크상태입니다. 킹을 이동해주세요.");
+        } else if (sourcePiece.isBlack() && black_king_check && !sourcePiece.matchType(KING)) {
+            throw new InvalidMovingPieceException(sourcePiece.getColor() + "색 킹이 체크상태입니다. 킹을 이동해주세요.");
+        }
+    }
+
+    private void setKingCheck(final Piece sourcePiece) {
+        if (sourcePiece.isWhite()) {
+            black_king_check = isCheckKing(sourcePiece.getColor(), BLACK);
+        }
+        if (sourcePiece.isBlack()) {
+            white_king_check = isCheckKing(sourcePiece.getColor(), WHITE);
+        }
+    }
+
+    // 입력받은 color의 King이 체크 상태인지 검사합니다.
+    private boolean isCheckKing(final Color sourcePieceColor, final Color oppositeColor) {
+        Optional<Piece> king = findPieceBy(oppositeColor, KING);
+        if (king.isPresent()) {
+            List<Piece> pieces = findPiecesBy(sourcePieceColor);
+            return pieces.stream().anyMatch(piece -> isMoving(piece, king.get()));
+        }
         return false;
+    }
+
+    // 중간 경로에 다른 기물이 있는지 검증합니다.
+    private void verifyPathBlocked(final Piece sourcePiece, final Piece targetPiece) {
+        Direction direction = sourcePiece.direction(targetPiece);
+        Position currentPosition = sourcePiece.getPosition();
+        Position targetPosition = targetPiece.getPosition();
+
+        while (!Objects.equals(currentPosition.move(direction), targetPosition)) {
+            currentPosition = currentPosition.move(direction);
+            if (!findPiece(currentPosition).matchType(NO_PIECE)) {
+                throw new InvalidMovingPieceException(targetPiece.getPosition() + "로 이동할 수 없습니다.");
+            }
+        }
+
     }
 
     // 백색폰 북서쪽 앙파상 조건 : 현재 백색폰 위치 기준으로 왼쪽(file - 1)에 흑백 기물이 있는 경우
     // 백색폰 북동쪽 앙파상 조건 : 현재 백색폰 위치 기준으로 오른쪽(file + 1)에 흑백 기물이 있는 경우
     // 흑백폰 남서쪽 앙파상 조건 : 현재 흑백폰 위치 기준으로 왼쪽(file - 1)에 백색 기물이 있는 경우
     // 흑백폰 남동쪽 앙파상 조건 : 현재 흑백폰 위치 기준으로 오른쪽(file + 1)에 흑백 기물이 있는 경우
-    private Position verifyEnPassant(Direction direction, Piece target) {
-        if (target.isWhite()) {
-            return verifyWhitePawnEnPassant(direction, target);
-        } else if (target.isBlack()) {
-            return verifyBlackPawnEnPassant(direction, target);
+    private Position moveEnPassant(Piece sourcePiece, Piece targetPiece) {
+        Direction direction = sourcePiece.direction(targetPiece);
+        if (sourcePiece.isWhite()) {
+            return moveWhitePawnEnPassant(direction, sourcePiece);
+        } else if (sourcePiece.isBlack()) {
+            return moveBlackPawnEnPassant(direction, sourcePiece);
         }
         return Position.emptyPosition();
     }
 
-    private Position verifyWhitePawnEnPassant(Direction direction, Piece target) {
+    private Position moveWhitePawnEnPassant(Direction direction, Piece target) {
         Position position = emptyPosition();
         if (!target.getPosition().getLeftPosition().empty()) {
             Piece leftPiece = findPiece(target.getPosition().getLeftPosition());
             if (direction.matchDirection(NORTHWEST) && !leftPiece.matchColor(BLACK)) {
-                throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
+                position = emptyPosition();
+//                throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
             } else if (target.isSameTeam(leftPiece)) {
                 position = emptyPosition();
             } else {
@@ -136,7 +242,7 @@ public class ChessBoard implements Board {
         if (!target.getPosition().getRightPosition().empty()) {
             Piece rightPiece = findPiece(target.getPosition().getRightPosition());
             if (direction.matchDirection(NORTHEAST) && !rightPiece.matchColor(BLACK)) {
-                throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
+                position = emptyPosition();
             } else if (target.isSameTeam(rightPiece)) {
                 position = emptyPosition();
             } else {
@@ -146,7 +252,7 @@ public class ChessBoard implements Board {
         return position;
     }
 
-    private Position verifyBlackPawnEnPassant(Direction direction, Piece target) {
+    private Position moveBlackPawnEnPassant(Direction direction, Piece target) {
         Position position = emptyPosition();
         if (!target.getPosition().getLeftPosition().empty()) {
             Piece leftPiece = findPiece(target.getPosition().getLeftPosition());
@@ -172,18 +278,6 @@ public class ChessBoard implements Board {
         return position;
     }
 
-    // Position 위치로 기물 설정
-    public void setPiece(final String position, final Piece piece) {
-        piece.setPosition(createPosition(position));
-        setPiece(createPosition(position), piece);
-    }
-
-    // Position 위치로 기물 설정
-    public void setPiece(final Position position, final Piece piece) {
-        ranks.get(position.getRankIndex())
-            .setPiece(position.getFileIndex(), piece);
-    }
-
     // 빈 체스판 초기화
     public void initializeEmpty() {
         for (int i = 1; i <= SIZE; i++) {
@@ -192,7 +286,7 @@ public class ChessBoard implements Board {
     }
 
     // Color와 기물 종류에 따른 기물 개수를 반환
-    public int countPieceByColorAndType(final Color color, final Type type) {
+    public int countPieceBy(final Color color, final Type type) {
         return ranks.stream()
             .mapToInt(rank -> rank.getPieceCount(color, type))
             .sum();
@@ -205,15 +299,19 @@ public class ChessBoard implements Board {
             .sum();
     }
 
-    // 입력받은 Position에 따른 기물 객체 반환
-    public Piece findPiece(final String position) {
-        return findPiece(createPosition(position));
+    private Optional<Piece> findPieceBy(final Color color, final Type type) {
+        return ranks.stream()
+            .flatMap(rank -> rank.getPieces().stream())
+            .filter(piece -> Objects.equals(piece.getColor(), color))
+            .filter(piece -> Objects.equals(piece.getType(), type))
+            .findAny();
     }
 
-    // 입력받은 Position에 따른 기물 객체 반환
-    public Piece findPiece(final Position position) {
-        return ranks.get(position.getRankIndex())
-            .findPiece(position.getFileIndex());
+    private List<Piece> findPiecesBy(final Color color) {
+        return ranks.stream()
+            .flatMap(rank -> rank.getPieces().stream())
+            .filter(piece -> Objects.equals(piece.getColor(), color))
+            .collect(Collectors.toUnmodifiableList());
     }
 
     // 컬러를 기준으로 점수가 낮은 순서로 정렬하여 반환합니다.

@@ -1,5 +1,8 @@
 package kr.codesqaud.chessgame.chess.board;
 
+import java.util.List;
+import kr.codesqaud.chessgame.chess.pieces.Piece;
+import kr.codesqaud.chessgame.chess.pieces.Position;
 import kr.codesqaud.chessgame.chess.pieces.config.Color;
 
 public interface Board {
@@ -13,4 +16,10 @@ public interface Board {
     String showBoard();
 
     Color getColorByPosition(final String position); // 위치에 존재하는 Piece의 색상을 응답합니다.
+
+    void setPiece(final Position position, final Piece piece);
+
+    Piece findPiece(Position position);
+
+    List<Position> possiblePath(Position position);
 }
