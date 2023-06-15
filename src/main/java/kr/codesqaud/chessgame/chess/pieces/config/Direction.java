@@ -22,7 +22,9 @@ public enum Direction {
     EEN(1, 2),
     EES(-1, 2),
     WWN(1, -2),
-    WWS(-1, -2);
+    WWS(-1, -2),
+
+    INVALID(0, 0);
 
     private final int yDegree;
     private final int xDegree;
@@ -58,7 +60,7 @@ public enum Direction {
         int remainder = x % y;
         // 대각선이 아닌 경우
         if (remainder != 0) {
-            throw new InvalidMovingPieceException("이동할 수 없는 위치입니다. y:" + y + ", x : " + x);
+            return INVALID;
         }
 
         int quotient = x / y; // 몫
@@ -71,7 +73,7 @@ public enum Direction {
             return getNortWestAndSouthEast(x);
         }
 
-        throw new InvalidMovingPieceException("이동할 수 없는 위치입니다. y:" + y + ", x : " + x);
+        return INVALID;
     }
 
     private static Direction getSouthAndNorth(final int y) {
