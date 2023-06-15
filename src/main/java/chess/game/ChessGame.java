@@ -49,9 +49,13 @@ public class ChessGame {
 		}
 	}
 
-	private void move(final String from, final String to) {
+	public void move(final String from, final String to) {
 		board.checkTurn(turn, new Position(from));
 		board.move(new Position(from), new Position(to));
 		turn = Color.changeTurn(turn);
+	}
+
+	public void initialize() {
+		board.initialize();
 	}
 }
