@@ -65,6 +65,18 @@ public class ChessBoard implements Board {
         Piece targetPiece = findPiece(createPosition(targetPosition));
         Position prevPosition = sourcePiece.getPosition();
 
+        // 앙파상인 경우 처리
+        if (sourcePiece.matchType(PAWN) && isEnPassant(sourcePiece, targetPiece)) {
+            Position removePosition = getEnPassant(sourcePiece, targetPiece);
+            Piece removePiece = findPiece(removePosition);
+            removePiece.setPosition(targetPiece.getPosition());
+            // 기물 옆에 있는 적기물 제거
+            setPiece(removePosition, Blank.create(removePosition));
+            // target 자리에 적 기물 설정
+            setPiece(removePiece.getPosition(), removePiece);
+            targetPiece = removePiece;
+        }
+
         if (!isMoving(sourcePiece, targetPiece)) {
             throw new InvalidMovingPieceException("해당 위치로 이동할 수 없습니다." + targetPosition);
         }
@@ -124,6 +136,126 @@ public class ChessBoard implements Board {
             }
         }
         return positions;
+    }
+
+    private boolean isEnPassant(final Piece sourcePiece, final Piece targetPiece) {
+        Direction direction = sourcePiece.direction(targetPiece);
+        if (sourcePiece.isWhite()) {
+            return isWhitePawnEnPassant(direction, sourcePiece);
+        } else if (sourcePiece.isBlack()) {
+            return isBlackPawnEnPassant(direction, sourcePiece);
+        }
+        return false;
+    }
+
+    private boolean isWhitePawnEnPassant(Direction direction, Piece target) {
+        if (!target.getPosition().getLeftPosition().empty()) {
+            Piece leftPiece = findPiece(target.getPosition().getLeftPosition());
+            if (direction.matchDirection(NORTHWEST) && !leftPiece.matchColor(BLACK)) {
+                return false;
+            } else if (target.isSameTeam(leftPiece)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        if (!target.getPosition().getRightPosition().empty()) {
+            Piece rightPiece = findPiece(target.getPosition().getRightPosition());
+            if (direction.matchDirection(NORTHEAST) && !rightPiece.matchColor(BLACK)) {
+                return false;
+            } else if (target.isSameTeam(rightPiece)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isBlackPawnEnPassant(Direction direction, Piece target) {
+        if (!target.getPosition().getLeftPosition().empty()) {
+            Piece leftPiece = findPiece(target.getPosition().getLeftPosition());
+            if (direction.matchDirection(SOUTHWEST) && !leftPiece.matchColor(WHITE)) {
+                return false;
+            } else if (target.isSameTeam(leftPiece)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        if (!target.getPosition().getRightPosition().empty()) {
+            Piece rightPiece = findPiece(target.getPosition().getRightPosition());
+            if (direction.matchDirection(SOUTHWEST) && !rightPiece.matchColor(WHITE)) {
+                return false;
+            } else if (target.isSameTeam(rightPiece)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Position getEnPassant(final Piece sourcePiece, final Piece targetPiece) {
+        Direction direction = sourcePiece.direction(targetPiece);
+        if (sourcePiece.isWhite()) {
+            return getWhitePawnEnPassant(direction, sourcePiece);
+        } else if (sourcePiece.isBlack()) {
+            return getBlackPawnEnPassant(direction, sourcePiece);
+        }
+        return emptyPosition();
+    }
+
+    private Position getWhitePawnEnPassant(Direction direction, Piece target) {
+        Position position = emptyPosition();
+        if (!target.getPosition().getLeftPosition().empty()) {
+            Piece leftPiece = findPiece(target.getPosition().getLeftPosition());
+            if (direction.matchDirection(NORTHWEST) && !leftPiece.matchColor(BLACK)) {
+                return position;
+            } else if (target.isSameTeam(leftPiece)) {
+                return position;
+            } else {
+                position = leftPiece.getPosition();
+            }
+        }
+        if (!target.getPosition().getRightPosition().empty()) {
+            Piece rightPiece = findPiece(target.getPosition().getRightPosition());
+            if (direction.matchDirection(NORTHEAST) && !rightPiece.matchColor(BLACK)) {
+                return position;
+            } else if (target.isSameTeam(rightPiece)) {
+                return position;
+            } else {
+                position = rightPiece.getPosition();
+            }
+        }
+        return position;
+    }
+
+    private Position getBlackPawnEnPassant(Direction direction, Piece target) {
+        Position position = emptyPosition();
+        if (!target.getPosition().getLeftPosition().empty()) {
+            Piece leftPiece = findPiece(target.getPosition().getLeftPosition());
+            if (direction.matchDirection(SOUTHWEST) && !leftPiece.matchColor(WHITE)) {
+                return position;
+            } else if (target.isSameTeam(leftPiece)) {
+                return position;
+            } else {
+                position = leftPiece.getPosition();
+            }
+        }
+
+        if (!target.getPosition().getRightPosition().empty()) {
+            Piece rightPiece = findPiece(target.getPosition().getRightPosition());
+            if (direction.matchDirection(SOUTHWEST) && !rightPiece.matchColor(WHITE)) {
+                return position;
+            } else if (target.isSameTeam(rightPiece)) {
+                return position;
+            } else {
+                position = rightPiece.getPosition();
+            }
+        }
+        return position;
     }
 
     private boolean isMoving(final Piece sourcePiece, final Piece targetPiece) {
@@ -213,71 +345,6 @@ public class ChessBoard implements Board {
 
     }
 
-    // 백색폰 북서쪽 앙파상 조건 : 현재 백색폰 위치 기준으로 왼쪽(file - 1)에 흑백 기물이 있는 경우
-    // 백색폰 북동쪽 앙파상 조건 : 현재 백색폰 위치 기준으로 오른쪽(file + 1)에 흑백 기물이 있는 경우
-    // 흑백폰 남서쪽 앙파상 조건 : 현재 흑백폰 위치 기준으로 왼쪽(file - 1)에 백색 기물이 있는 경우
-    // 흑백폰 남동쪽 앙파상 조건 : 현재 흑백폰 위치 기준으로 오른쪽(file + 1)에 흑백 기물이 있는 경우
-    private Position moveEnPassant(Piece sourcePiece, Piece targetPiece) {
-        Direction direction = sourcePiece.direction(targetPiece);
-        if (sourcePiece.isWhite()) {
-            return moveWhitePawnEnPassant(direction, sourcePiece);
-        } else if (sourcePiece.isBlack()) {
-            return moveBlackPawnEnPassant(direction, sourcePiece);
-        }
-        return Position.emptyPosition();
-    }
-
-    private Position moveWhitePawnEnPassant(Direction direction, Piece target) {
-        Position position = emptyPosition();
-        if (!target.getPosition().getLeftPosition().empty()) {
-            Piece leftPiece = findPiece(target.getPosition().getLeftPosition());
-            if (direction.matchDirection(NORTHWEST) && !leftPiece.matchColor(BLACK)) {
-                position = emptyPosition();
-//                throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
-            } else if (target.isSameTeam(leftPiece)) {
-                position = emptyPosition();
-            } else {
-                position = leftPiece.getPosition();
-            }
-        }
-        if (!target.getPosition().getRightPosition().empty()) {
-            Piece rightPiece = findPiece(target.getPosition().getRightPosition());
-            if (direction.matchDirection(NORTHEAST) && !rightPiece.matchColor(BLACK)) {
-                position = emptyPosition();
-            } else if (target.isSameTeam(rightPiece)) {
-                position = emptyPosition();
-            } else {
-                position = rightPiece.getPosition();
-            }
-        }
-        return position;
-    }
-
-    private Position moveBlackPawnEnPassant(Direction direction, Piece target) {
-        Position position = emptyPosition();
-        if (!target.getPosition().getLeftPosition().empty()) {
-            Piece leftPiece = findPiece(target.getPosition().getLeftPosition());
-            if (direction.matchDirection(SOUTHWEST) && !leftPiece.matchColor(WHITE)) {
-                throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
-            } else if (target.isSameTeam(leftPiece)) {
-                position = emptyPosition();
-            } else {
-                position = leftPiece.getPosition();
-            }
-        }
-
-        if (!target.getPosition().getRightPosition().empty()) {
-            Piece rightPiece = findPiece(target.getPosition().getRightPosition());
-            if (direction.matchDirection(SOUTHWEST) && !rightPiece.matchColor(WHITE)) {
-                throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
-            } else if (target.isSameTeam(rightPiece)) {
-                position = emptyPosition();
-            } else {
-                position = rightPiece.getPosition();
-            }
-        }
-        return position;
-    }
 
     // 빈 체스판 초기화
     public void initializeEmpty() {
