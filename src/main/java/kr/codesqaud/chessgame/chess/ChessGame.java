@@ -19,9 +19,9 @@ public class ChessGame {
     }
 
 
-    public void move(final String sourcePosition, final String targetPosition) {
+    public boolean move(final String sourcePosition, final String targetPosition) {
         verifyMyOwnPiece(sourcePosition);
-        board.move(sourcePosition, targetPosition);
+        return board.move(sourcePosition, targetPosition);
     }
 
     private void verifyMyOwnPiece(final String sourcePosition) {

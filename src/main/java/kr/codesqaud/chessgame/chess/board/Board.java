@@ -13,7 +13,7 @@ public interface Board {
 
     void initialize();
 
-    void move(final String sourcePosition, final String targetPosition);
+    boolean move(final String sourcePosition, final String targetPosition);
 
     String showBoard();
 

@@ -86,9 +86,9 @@ public class ConsoleChessGameController implements ChessGameController {
         String[] commands = command.split(BLANK);
 
         try {
-            game.move(commands[SOURCE_POSITION_INDEX], commands[TARGET_POSITION_INDEX]);
+            boolean success = game.move(commands[SOURCE_POSITION_INDEX], commands[TARGET_POSITION_INDEX]);
             view.showMessage(game.showBoard());
-            return true;
+            return success;
         } catch (InvalidMovingPieceException | InvalidPositionException | InvalidTurnException e) {
             view.showMessage(e.getMessage());
         }

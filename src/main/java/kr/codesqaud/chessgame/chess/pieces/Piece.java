@@ -146,4 +146,17 @@ public abstract class Piece {
     }
 
 
+    public double getPoint(final List<Piece> pieces) {
+        if (!matchType(Type.PAWN)) {
+            return this.type.getDefaultPoint();
+        }
+        List<Position> columnNeighbors = this.position.getColumnNeighbors();
+
+        for (Position position : columnNeighbors) {
+            if (pieces.contains(Pawn.create(this.color, position))) {
+                return this.type.getDefaultPoint() - 0.5;
+            }
+        }
+        return this.type.getDefaultPoint();
+    }
 }

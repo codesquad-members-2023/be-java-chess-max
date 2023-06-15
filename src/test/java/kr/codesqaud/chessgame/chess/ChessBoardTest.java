@@ -23,7 +23,6 @@ import kr.codesqaud.chessgame.chess.pieces.Queen;
 import kr.codesqaud.chessgame.chess.pieces.Rook;
 import kr.codesqaud.chessgame.chess.pieces.config.Type;
 import kr.codesqaud.chessgame.exception.InvalidMovingPieceException;
-import kr.codesqaud.chessgame.exception.InvalidPositionException;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -363,10 +362,7 @@ class ChessBoardTest {
             board.initialize();
             // when
             SoftAssertions.assertSoftly(softAssertions -> {
-                softAssertions.assertThatThrownBy(() -> {
-                    board.move("e8", "e9"); // 체스판 밖으로 이동하는 경우
-                }).isInstanceOf(InvalidPositionException.class);
-
+                softAssertions.assertThat(board.move("e8", "e9")).isFalse(); // 체스판 밖으로 이동하는 경우
                 softAssertions.assertThatThrownBy(() -> {
                     board.move("e8", "e7"); // 이동하려는 위치에 같은 편의 기물이 있는 경우
                 }).isInstanceOf(InvalidMovingPieceException.class);

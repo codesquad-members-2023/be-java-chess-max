@@ -1,5 +1,7 @@
 package kr.codesqaud.chessgame.chess.pieces;
 
+import static kr.codesqaud.chessgame.chess.pieces.config.Color.WHITE;
+
 import java.util.List;
 import kr.codesqaud.chessgame.chess.pieces.config.Color;
 import kr.codesqaud.chessgame.chess.pieces.config.Direction;
@@ -16,11 +18,15 @@ public class Pawn extends Piece {
     }
 
     public static Pawn createWhite(final Position position) {
-        return new Pawn(Color.WHITE, position, Direction.whitePawnDirection());
+        return new Pawn(WHITE, position, Direction.whitePawnDirection());
     }
 
     public static Pawn createBlack(final Position position) {
         return new Pawn(Color.BLACK, position, Direction.blackPawnDirection());
+    }
+
+    public static Pawn create(final Color color, final Position position) {
+        return color == WHITE ? createWhite(position) : createBlack(position);
     }
 
     public boolean isStartingPosition() {

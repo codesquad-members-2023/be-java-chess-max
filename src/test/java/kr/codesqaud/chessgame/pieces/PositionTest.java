@@ -3,7 +3,6 @@ package kr.codesqaud.chessgame.pieces;
 import static kr.codesqaud.chessgame.chess.pieces.Position.createPosition;
 
 import kr.codesqaud.chessgame.chess.pieces.Position;
-import kr.codesqaud.chessgame.exception.InvalidPositionException;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,9 +17,9 @@ class PositionTest {
         // when
         Position actual = createPosition(position);
         // then
-        SoftAssertions assertions = new SoftAssertions();
-        assertions.assertThat(actual.toString()).isEqualTo("a1");
-        assertions.assertAll();
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThat(actual.toString()).isEqualTo("a1");
+        });
     }
 
     @Test
@@ -31,16 +30,10 @@ class PositionTest {
         String p2 = "a0";
         String p3 = "a13";
         // when, then
-        verifyPositionThrow(p1);
-        verifyPositionThrow(p2);
-        verifyPositionThrow(p3);
-    }
-
-    private void verifyPositionThrow(String position) {
-        SoftAssertions assertions = new SoftAssertions();
-        assertions.assertThatThrownBy(() -> {
-            createPosition(position);
-        }).isInstanceOf(InvalidPositionException.class);
-        assertions.assertAll();
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThat(createPosition(p1).empty()).isTrue();
+            softAssertions.assertThat(createPosition(p2).empty()).isTrue();
+            softAssertions.assertThat(createPosition(p3).empty()).isTrue();
+        });
     }
 }

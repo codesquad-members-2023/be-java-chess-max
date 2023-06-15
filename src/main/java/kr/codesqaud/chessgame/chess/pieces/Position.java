@@ -2,6 +2,8 @@ package kr.codesqaud.chessgame.chess.pieces;
 
 import static java.lang.Character.getNumericValue;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import kr.codesqaud.chessgame.chess.pieces.config.Direction;
 import kr.codesqaud.chessgame.exception.InvalidPositionException;
@@ -26,7 +28,12 @@ public class Position {
     }
 
     public static Position createPosition(final String position) {
-        validatePosition(position);
+        try {
+            validatePosition(position);
+        } catch (InvalidPositionException e) {
+            return emptyPosition();
+        }
+
         final int FILE_INDEX = 0;
         final int RANK_INDEX = 1;
         int file = position.charAt(FILE_INDEX) - 'a' + 1;
@@ -131,4 +138,18 @@ public class Position {
         return String.format("%s%d", (char) ('a' + file - 1), rank);
     }
 
+    public List<Position> getColumnNeighbors() {
+        List<Position> columnNeighbors = new ArrayList<>();
+        Position position = createPosition(rank - 1, file);
+
+        if (!position.empty()) {
+            columnNeighbors.add(position);
+        }
+
+        position = createPosition(rank + 1, file);
+        if (!position.empty()) {
+            columnNeighbors.add(position);
+        }
+        return columnNeighbors;
+    }
 }
