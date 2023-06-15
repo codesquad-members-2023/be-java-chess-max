@@ -31,20 +31,4 @@ public class King extends Piece {
             throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
         }
     }
-
-    @Override
-    public boolean isMoving(final Piece target) {
-        if (isSameTeam(target)) {
-            return false;
-        }
-        Direction direction = direction(target);
-        int y = target.getPosition().getRank() - getPosition().getRank();
-        int x = target.getPosition().getFile() - getPosition().getFile();
-        if (!getDirections().contains(direction) || !direction.match(y, x)) {
-            return false;
-        }
-        return true;
-    }
-
-
 }

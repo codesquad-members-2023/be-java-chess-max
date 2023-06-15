@@ -47,10 +47,7 @@ public abstract class Piece {
     }
 
     public String getRepresentation() {
-        if (isWhite()) {
-            return type.getWhiteRepresentation();
-        }
-        return type.getBlackRepresentation();
+        return isWhite() ? type.getWhiteRepresentation() : type.getBlackRepresentation();
     }
 
     public boolean isWhite() {
@@ -62,37 +59,37 @@ public abstract class Piece {
     }
 
     public void move(Piece target) {
+        verifyMovePosition(target);
         this.position = target.position;
     }
 
     public void verifyMovePosition(final Piece target) {
+        verifySameTeam(target);
+        verifyDirection(target);
+    }
+
+    private void verifySameTeam(final Piece target) {
         if (isSameTeam(target)) {
-            throw new InvalidMovingPieceException(target.position + "로 이동할 수 없습니다. 같은 색상의 기물입니다.");
-        }
-        Direction direction = position.direction(target.position);
-        if (!directions.contains(direction)) {
-            throw new InvalidMovingPieceException(target.position + "로 이동할 수 없습니다.");
+            throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다. 같은 색상의 기물입니다.");
         }
     }
 
-    public boolean isSameTeam(Piece target) {
-        return Objects.equals(color, target.getColor());
+    private void verifyDirection(final Piece target) {
+        if (!getDirections().contains(direction(target))) {
+            throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
+        }
+    }
+
+    public Direction direction(final Piece target) {
+        return position.direction(target.position);
     }
 
     public Degree degree(Piece target) {
         return position.degree(target.getPosition());
     }
 
-    public boolean matchType(Type type) {
-        return this.type == type;
-    }
-
-    public boolean matchColor(Color color) {
-        return this.color == color;
-    }
-
-    public Direction direction(final Piece targetPiece) {
-        return position.direction(targetPiece.position);
+    public boolean isSameTeam(Piece target) {
+        return Objects.equals(color, target.getColor());
     }
 
     public boolean isMoving(final Piece target) {
@@ -102,6 +99,14 @@ public abstract class Piece {
         } catch (InvalidMovingPieceException e) {
             return false;
         }
+    }
+
+    public boolean matchType(Type type) {
+        return this.type == type;
+    }
+
+    public boolean matchColor(Color color) {
+        return this.color == color;
     }
 
     @Override

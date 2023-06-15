@@ -130,6 +130,7 @@ public class ChessBoard implements Board {
         try {
             // target 위치로 이동하고자 할시 체크가 되는지 검증
             verifyCheckStatusAt(sourcePiece, targetPiece);
+
             // 체크 상태에서 다른 기물을 이동하려는지 검증합니다.
             verifyMoveFromCheck(sourcePiece);
 
@@ -169,7 +170,6 @@ public class ChessBoard implements Board {
             .anyMatch(piece -> piece.isMoving(king));
     }
 
-
     private void verifyMoveFromCheck(final Piece sourcePiece) {
         if (sourcePiece.isWhite() && white_king_check && !sourcePiece.matchType(KING)) {
             throw new InvalidMovingPieceException(sourcePiece.getColor() + "색 킹이 체크상태입니다. 킹을 이동해주세요.");
@@ -180,16 +180,17 @@ public class ChessBoard implements Board {
 
     private void setKingCheck(final Piece sourcePiece) {
         if (sourcePiece.isWhite()) {
-            black_king_check = isCheckKing(sourcePiece.getColor(), BLACK);
+            black_king_check = isCheckKing(sourcePiece.getColor());
         }
         if (sourcePiece.isBlack()) {
-            white_king_check = isCheckKing(sourcePiece.getColor(), WHITE);
+            white_king_check = isCheckKing(sourcePiece.getColor());
         }
     }
 
     // 입력받은 color의 King이 체크 상태인지 검사합니다.
-    private boolean isCheckKing(final Color sourcePieceColor, final Color oppositeColor) {
-        Optional<Piece> king = findPieceBy(oppositeColor, KING);
+    private boolean isCheckKing(final Color sourcePieceColor) {
+        Color color = sourcePieceColor == WHITE ? BLACK : WHITE;
+        Optional<Piece> king = findPieceBy(color, KING);
         if (king.isPresent()) {
             List<Piece> pieces = findPiecesBy(sourcePieceColor);
             return pieces.stream().anyMatch(piece -> isMoving(piece, king.get()));
