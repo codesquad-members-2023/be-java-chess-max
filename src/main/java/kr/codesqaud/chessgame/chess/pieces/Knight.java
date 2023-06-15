@@ -17,4 +17,11 @@ public class Knight extends Piece {
     public static Knight createBlack(final Position position) {
         return new Knight(Color.BLACK, position);
     }
+
+    @Override
+    public void verifyMovePosition(final Piece target) {
+        verifySameTeam(target);
+        verifyDirection(target);
+        verifyDirectionMatch(target);
+    }
 }

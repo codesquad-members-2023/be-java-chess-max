@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 import kr.codesqaud.chessgame.chess.ChessGame;
 import kr.codesqaud.chessgame.chess.board.ChessBoard;
+import kr.codesqaud.chessgame.chess.pieces.config.Color;
 import kr.codesqaud.chessgame.exception.InvalidMovingPieceException;
 import kr.codesqaud.chessgame.exception.InvalidPositionException;
 import kr.codesqaud.chessgame.exception.InvalidTurnException;
@@ -64,6 +65,11 @@ public class ConsoleChessGameController implements ChessGameController {
         } else if (moveCommandPattern.matcher(command).matches()) {
             boolean result = executeMoveCommand(command);
             if (result) {
+                Color winner = game.checkmate();
+                if (winner != Color.NOCOLOR) {
+                    view.showMessage("승자 : " + winner);
+                    return false;
+                }
                 game.nextTurn();
             }
             return true;

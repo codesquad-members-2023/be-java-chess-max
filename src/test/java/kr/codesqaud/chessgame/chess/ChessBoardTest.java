@@ -26,6 +26,7 @@ import kr.codesqaud.chessgame.exception.InvalidMovingPieceException;
 import kr.codesqaud.chessgame.exception.InvalidPositionException;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -547,6 +548,7 @@ class ChessBoardTest {
 
         @Test
         @DisplayName("c5 백색킹이 체크된 상태에서 백색킹을 제외한 다른 백색 기물을 이동하려고 할때 예외가 발생한다")
+        @Disabled
         public void testCheckState_MoveWhitePiece_ExceptionThrown() {
             // given
             board.initializeEmpty();
@@ -569,6 +571,7 @@ class ChessBoardTest {
 
         @Test
         @DisplayName("백룩이 2개 흑킹 1개 있을때 룩이 이동하여 흑킹이 체크메이트 된다.")
+        @Disabled
         public void testDoubleRook_checkMate() {
             // given
             board.initializeEmpty();

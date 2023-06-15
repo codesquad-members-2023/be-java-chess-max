@@ -1,9 +1,11 @@
 package kr.codesqaud.chessgame.chess.board;
 
 import java.util.List;
+import java.util.Optional;
 import kr.codesqaud.chessgame.chess.pieces.Piece;
 import kr.codesqaud.chessgame.chess.pieces.Position;
 import kr.codesqaud.chessgame.chess.pieces.config.Color;
+import kr.codesqaud.chessgame.chess.pieces.config.Type;
 
 public interface Board {
 
@@ -22,4 +24,8 @@ public interface Board {
     Piece findPiece(Position position);
 
     List<Position> possiblePath(Position position);
+
+    Optional<Piece> findPieceBy(Color color, Type type);
+
+    boolean checkmate(Color white);
 }

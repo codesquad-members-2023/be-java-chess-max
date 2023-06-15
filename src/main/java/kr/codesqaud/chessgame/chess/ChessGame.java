@@ -46,5 +46,12 @@ public class ChessGame {
         return currentTurn;
     }
 
-
+    public Color checkmate() {
+        if (board.checkmate(Color.WHITE)) {
+            return Color.BLACK;
+        } else if (board.checkmate(Color.BLACK)) {
+            return Color.WHITE;
+        }
+        return Color.NOCOLOR;
+    }
 }

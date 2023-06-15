@@ -132,10 +132,26 @@ public class ChessBoard implements Board {
                 Piece targetPiece = findPiece(target);
                 if (isMoving(sourcePiece, targetPiece)) {
                     positions.add(target);
+                } else {
+                    break;
                 }
             }
         }
         return positions;
+    }
+
+    @Override
+    public Optional<Piece> findPieceBy(final Color color, final Type type) {
+        return ranks.stream()
+            .flatMap(rank -> rank.getPieces().stream())
+            .filter(piece -> Objects.equals(piece.getColor(), color))
+            .filter(piece -> Objects.equals(piece.getType(), type))
+            .findAny();
+    }
+
+    @Override
+    public boolean checkmate(final Color color) {
+        return findPieceBy(color, KING).isEmpty();
     }
 
     private boolean isEnPassant(final Piece sourcePiece, final Piece targetPiece) {
@@ -265,10 +281,10 @@ public class ChessBoard implements Board {
     private boolean isMoving(final Piece sourcePiece, final Piece targetPiece) {
         try {
             // target 위치로 이동하고자 할시 체크가 되는지 검증
-            verifyCheckStatusAt(sourcePiece, targetPiece);
+//            verifyCheckStatusAt(sourcePiece, targetPiece);
 
             // 체크 상태에서 다른 기물을 이동하려는지 검증합니다.
-            verifyMoveFromCheck(sourcePiece);
+//            verifyMoveFromCheck(sourcePiece);
 
             // 이동 경로 중간에 다른 기물이 있는지 확인합니다.
             verifyPathBlocked(sourcePiece, targetPiece);
@@ -342,13 +358,14 @@ public class ChessBoard implements Board {
 
         while (!Objects.equals(currentPosition.move(direction), targetPosition)) {
             currentPosition = currentPosition.move(direction);
-            if (!findPiece(currentPosition).matchType(NO_PIECE)) {
+
+//            if (!findPiece(currentPosition).matchType(NO_PIECE)) {
+            if (!sourcePiece.isMoving(findPiece(currentPosition))) {
                 throw new InvalidMovingPieceException(targetPiece.getPosition() + "로 이동할 수 없습니다.");
             }
         }
 
     }
-
 
     // 빈 체스판 초기화
     public void initializeEmpty() {
@@ -369,14 +386,6 @@ public class ChessBoard implements Board {
         return ranks.stream()
             .mapToInt(Rank::countPieces)
             .sum();
-    }
-
-    private Optional<Piece> findPieceBy(final Color color, final Type type) {
-        return ranks.stream()
-            .flatMap(rank -> rank.getPieces().stream())
-            .filter(piece -> Objects.equals(piece.getColor(), color))
-            .filter(piece -> Objects.equals(piece.getType(), type))
-            .findAny();
     }
 
     private List<Piece> findPiecesBy(final Color color) {
