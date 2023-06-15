@@ -25,4 +25,11 @@ public enum Color {
 				.findFirst()
 				.orElseThrow(() -> new BusinessException(ErrorCode.NO_MATCH_COLOR));
 	}
+
+	public static Color changeTurn(final Color color) {
+		if (color == WHITE) {
+			return BLACK;
+		}
+		return WHITE;
+	}
 }

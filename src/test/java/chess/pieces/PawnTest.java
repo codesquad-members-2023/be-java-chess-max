@@ -1,5 +1,6 @@
 package chess.pieces;
 
+import chess.board.Board;
 import chess.board.Position;
 import chess.pieces.color.Color;
 import org.assertj.core.api.SoftAssertions;
@@ -61,17 +62,19 @@ class PawnTest {
 	@ParameterizedTest
 	void givenPawn_whenFindMovablePositions_thenReturnsMovablePositions(Color color, Set<Position> expectedPosition) {
 		// given
+		Board board = new Board();
+		board.initialize();
 		Pawn pawn = Pawn.of(color);
 
-		Set<Position> positions = pawn.movablePositions(new Position("c7"));
+		Set<Position> positions = pawn.movablePositions(new Position("c7"), Dummy.of(), board.getBoard());
 
 		assertThat(positions).containsAll(expectedPosition);
 	}
 
 	private static Stream<Arguments> provideColorAndExpectedPositions() {
 		return Stream.of(
-				Arguments.of(Color.BLACK, Set.of(new Position("c6"), new Position("b6"), new Position("d6"))),
-				Arguments.of(Color.WHITE, Set.of(new Position("c8"), new Position("b8"), new Position("d8")))
+				Arguments.of(Color.BLACK, Set.of(new Position("c6"))),
+				Arguments.of(Color.WHITE, Set.of(new Position("c8")))
 		);
 	}
 }

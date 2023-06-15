@@ -16,8 +16,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class BoardTest {
 
@@ -138,5 +137,31 @@ class BoardTest {
 		sut.placePiece(Pawn.of(Color.WHITE), new Position("g2"));
 		sut.placePiece(Rook.of(Color.WHITE), new Position("e1"));
 		sut.placePiece(King.of(Color.WHITE), new Position("f1"));
+	}
+
+	@DisplayName("턴이 유효한지 확인할 때 현재 턴과 움직이려는 위치 정보가 주어지면 확인에 성공한다.")
+	@Test
+	void givenCurrentTurnAndPosition_whenCheckTurn_thenSuccessCheck() {
+		// given
+		Color currentTurn = Color.WHITE;
+		Position position = new Position("a2");
+
+		// when & then
+		assertThatCode(() -> sut.checkTurn(currentTurn, position))
+				.doesNotThrowAnyException();
+	}
+
+	@DisplayName("턴이 유효한지 확인할 때 현재 턴과 움직이려는 위치 정보가 일치하지 않으면 예외를 던진다.")
+	@Test
+	void givenCurrentTurnAndInvalidPosition_whenCheckTurn_thenThrowsException() {
+		// given
+		Color currentTurn = Color.BLACK;
+		Position position = new Position("a2");
+
+		// when & then
+		assertThatThrownBy(() -> sut.checkTurn(currentTurn, position))
+				.isInstanceOf(BusinessException.class)
+				.extracting("errorCode")
+				.isEqualTo(ErrorCode.INVALID_TURN);
 	}
 }

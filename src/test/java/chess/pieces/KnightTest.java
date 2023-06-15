@@ -1,5 +1,6 @@
 package chess.pieces;
 
+import chess.board.Board;
 import chess.board.Position;
 import chess.pieces.color.Color;
 import org.junit.jupiter.api.DisplayName;
@@ -15,9 +16,11 @@ class KnightTest {
 	@Test
 	void givenKnight_whenFindMovablePositions_thenReturnsMovablePositions() {
 		// given
+		Board board = new Board();
+		board.initialize();
 		Knight knight = Knight.of(Color.BLACK);
 
-		Set<Position> positions = knight.movablePositions(new Position("c5"));
+		Set<Position> positions = knight.movablePositions(new Position("c5"), Dummy.of(), board.getBoard());
 
 		assertThat(positions).containsExactlyInAnyOrder(
 				new Position("b7"), new Position("a6"),

@@ -126,7 +126,7 @@ public class Board {
 		Piece target = findPiece(to);
 
 		source.verifyMovePosition(to, target);
-		Set<Position> positions = source.movablePositions(from);
+		Set<Position> positions = source.movablePositions(from, target, board);
 
 		if (!positions.contains(to)) {
 			throw new BusinessException(ErrorCode.INVALID_POSITION);
@@ -134,5 +134,11 @@ public class Board {
 
 		placePiece(Dummy.of(), from);
 		placePiece(source, to);
+	}
+
+	public void checkTurn(final Color turn, final Position from) {
+		if (turn != board.get(from.getX()).getPiece(from.getY()).getColor()) {
+			throw new BusinessException(ErrorCode.INVALID_TURN);
+		}
 	}
 }

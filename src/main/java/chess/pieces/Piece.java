@@ -1,12 +1,14 @@
 package chess.pieces;
 
 import chess.board.Position;
+import chess.board.Rank;
 import chess.exception.BusinessException;
 import chess.exception.ErrorCode;
 import chess.pieces.color.Color;
 import chess.pieces.direction.Direction;
 import chess.pieces.type.Type;
 
+import java.util.List;
 import java.util.Set;
 
 public abstract class Piece {
@@ -51,11 +53,11 @@ public abstract class Piece {
 		}
 	}
 
-	public Set<Position> movablePositions(Position from) {
+	public Set<Position> movablePositions(Position from, Piece target, List<Rank> board) {
 		return Set.of();
 	}
 
-	protected void addMovablePositions(Set<Position> positions, Position current, Direction direction) {
+	protected void addMovablePositions(Set<Position> positions, Position current, Direction direction, List<Rank> board) {
 		int x = current.getX();
 		int y = current.getY();
 
@@ -63,7 +65,10 @@ public abstract class Piece {
 			int nextX = x + direction.getXDegree() * i;
 			int nextY = y + direction.getYDegree() * i;
 			if (!isValidPosition(nextX, nextY)) {
-				continue;
+				break;
+			}
+			if (!(board.get(nextX).getPiece(nextY) instanceof Dummy)) {
+				break;
 			}
 			positions.add(new Position(nextX, nextY));
 		}
