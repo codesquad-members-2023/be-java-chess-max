@@ -64,18 +64,18 @@ class ChessBoardTest {
         // given
         board.initialize();
         // when
-        int blackPawnCount = board.countPieceByColorAndType(BLACK, Type.PAWN);
-        int blackRookCount = board.countPieceByColorAndType(BLACK, Type.ROOK);
-        int blackKnightCount = board.countPieceByColorAndType(BLACK, Type.KNIGHT);
-        int blackBishopCount = board.countPieceByColorAndType(BLACK, Type.BISHOP);
-        int blackQueenCount = board.countPieceByColorAndType(BLACK, Type.QUEEN);
-        int blackKingCount = board.countPieceByColorAndType(BLACK, Type.KING);
-        int whitePawnCount = board.countPieceByColorAndType(WHITE, Type.PAWN);
-        int whiteRookCount = board.countPieceByColorAndType(WHITE, Type.ROOK);
-        int whiteKnightCount = board.countPieceByColorAndType(WHITE, Type.KNIGHT);
-        int whiteBishopCount = board.countPieceByColorAndType(WHITE, Type.BISHOP);
-        int whiteQueenCount = board.countPieceByColorAndType(WHITE, Type.QUEEN);
-        int whiteKingCount = board.countPieceByColorAndType(WHITE, Type.KING);
+        int blackPawnCount = board.countPieceBy(BLACK, Type.PAWN);
+        int blackRookCount = board.countPieceBy(BLACK, Type.ROOK);
+        int blackKnightCount = board.countPieceBy(BLACK, Type.KNIGHT);
+        int blackBishopCount = board.countPieceBy(BLACK, Type.BISHOP);
+        int blackQueenCount = board.countPieceBy(BLACK, Type.QUEEN);
+        int blackKingCount = board.countPieceBy(BLACK, Type.KING);
+        int whitePawnCount = board.countPieceBy(WHITE, Type.PAWN);
+        int whiteRookCount = board.countPieceBy(WHITE, Type.ROOK);
+        int whiteKnightCount = board.countPieceBy(WHITE, Type.KNIGHT);
+        int whiteBishopCount = board.countPieceBy(WHITE, Type.BISHOP);
+        int whiteQueenCount = board.countPieceBy(WHITE, Type.QUEEN);
+        int whiteKingCount = board.countPieceBy(WHITE, Type.KING);
         // then
         SoftAssertions.assertSoftly(softAssertions -> {
             softAssertions.assertThat(blackPawnCount).isEqualTo(8);
@@ -99,11 +99,11 @@ class ChessBoardTest {
         // given
         board.initialize();
         // when
-        Piece blackRook = board.findPiece("a8");
-        Piece blackRook2 = board.findPiece("h8");
-        Piece whiteRook = board.findPiece("a1");
-        Piece whiteRook2 = board.findPiece("h1");
-        Piece emptyPiece = board.findPiece("a6");
+        Piece blackRook = board.findPiece(createPosition("a8"));
+        Piece blackRook2 = board.findPiece(createPosition("h8"));
+        Piece whiteRook = board.findPiece(createPosition("a1"));
+        Piece whiteRook2 = board.findPiece(createPosition("h1"));
+        Piece emptyPiece = board.findPiece(createPosition("a6"));
         // then
         SoftAssertions.assertSoftly(softAssertions -> {
             softAssertions.assertThat(blackRook).isEqualTo(Rook.createBlack(createPosition("a8")));
@@ -122,10 +122,10 @@ class ChessBoardTest {
         String sourcePosition = "b5";
         Piece piece = Rook.createBlack(createPosition(sourcePosition));
         // when
-        board.setPiece(sourcePosition, piece);
+        board.setPiece(createPosition(sourcePosition), piece);
         // then
         SoftAssertions.assertSoftly(softAssertions -> {
-            softAssertions.assertThat(board.findPiece(sourcePosition))
+            softAssertions.assertThat(board.findPiece(createPosition(sourcePosition)))
                 .isEqualTo(Rook.createBlack(createPosition(sourcePosition)));
         });
     }
@@ -136,10 +136,10 @@ class ChessBoardTest {
         // given
         board.initializeEmpty();
         // 흑색 기물 초기화
-        board.setPiece("b6", Pawn.createBlack(createPosition("b6")));
-        board.setPiece("e6", Queen.createBlack(createPosition("e6")));
-        board.setPiece("b8", King.createBlack(createPosition("b8")));
-        board.setPiece("c8", Rook.createBlack(createPosition("c8")));
+        board.setPiece(createPosition("b6"), Pawn.createBlack(createPosition("b6")));
+        board.setPiece(createPosition("e6"), Queen.createBlack(createPosition("e6")));
+        board.setPiece(createPosition("b8"), King.createBlack(createPosition("b8")));
+        board.setPiece(createPosition("c8"), Rook.createBlack(createPosition("c8")));
         // when
         List<Piece> increasePieces = board.sortIncreaseByColor(BLACK); // 오름차순 정렬
         List<Piece> decreasePieces = board.sortDecreaseByColor(BLACK); // 내림차순 정렬
@@ -168,15 +168,15 @@ class ChessBoardTest {
         // given
         board.initializeEmpty();
         // 흑색 초기화
-        board.setPiece("b6", Pawn.createBlack(createPosition("b6")));
-        board.setPiece("e6", Queen.createBlack(createPosition("e6")));
-        board.setPiece("b8", King.createBlack(createPosition("b8")));
-        board.setPiece("c8", Rook.createBlack(createPosition("c8")));
+        board.setPiece(createPosition("b6"), Pawn.createBlack(createPosition("b6")));
+        board.setPiece(createPosition("e6"), Queen.createBlack(createPosition("e6")));
+        board.setPiece(createPosition("b8"), King.createBlack(createPosition("b8")));
+        board.setPiece(createPosition("c8"), Rook.createBlack(createPosition("c8")));
         // 백색 초기화
-        board.setPiece("f2", Pawn.createWhite(createPosition("f2")));
-        board.setPiece("g2", Pawn.createWhite(createPosition("g2")));
-        board.setPiece("e1", Rook.createWhite(createPosition("e1")));
-        board.setPiece("f1", King.createWhite(createPosition("f1")));
+        board.setPiece(createPosition("f2"), Pawn.createWhite(createPosition("f2")));
+        board.setPiece(createPosition("g2"), Pawn.createWhite(createPosition("g2")));
+        board.setPiece(createPosition("e1"), Rook.createWhite(createPosition("e1")));
+        board.setPiece(createPosition("f1"), King.createWhite(createPosition("f1")));
         // when
         double blackScore = board.calculatePoint(BLACK);
         double whiteScore = board.calculatePoint(WHITE);
@@ -209,9 +209,9 @@ class ChessBoardTest {
             board.move(sourcePosition, targetPosition);
             // then
             SoftAssertions.assertSoftly(softAssertions -> {
-                softAssertions.assertThat(board.findPiece(sourcePosition))
+                softAssertions.assertThat(board.findPiece(createPosition(sourcePosition)))
                     .isEqualTo(Blank.create(createPosition(sourcePosition)));
-                softAssertions.assertThat(board.findPiece(targetPosition))
+                softAssertions.assertThat(board.findPiece(createPosition(targetPosition)))
                     .isEqualTo(Pawn.createWhite(createPosition(targetPosition)));
             });
         }
@@ -227,14 +227,18 @@ class ChessBoardTest {
                 softAssertions.assertThatThrownBy(() -> {
                     board.move("a2", "a5");
                 }).isInstanceOf(InvalidMovingPieceException.class);
-                softAssertions.assertThat(board.findPiece("a2")).isEqualTo(Pawn.createWhite(createPosition("a2")));
-                softAssertions.assertThat(board.findPiece("a5")).isEqualTo(Blank.create(createPosition("a5")));
+                softAssertions.assertThat(board.findPiece(createPosition("a2")))
+                    .isEqualTo(Pawn.createWhite(createPosition("a2")));
+                softAssertions.assertThat(board.findPiece(createPosition("a5")))
+                    .isEqualTo(Blank.create(createPosition("a5")));
 
                 softAssertions.assertThatThrownBy(() -> {
                     board.move("a2", "b3");
                 }).isInstanceOf(InvalidMovingPieceException.class);
-                softAssertions.assertThat(board.findPiece("a2")).isEqualTo(Pawn.createWhite(createPosition("a2")));
-                softAssertions.assertThat(board.findPiece("b3")).isEqualTo(Blank.create(createPosition("b3")));
+                softAssertions.assertThat(board.findPiece(createPosition("a2")))
+                    .isEqualTo(Pawn.createWhite(createPosition("a2")));
+                softAssertions.assertThat(board.findPiece(createPosition("b3")))
+                    .isEqualTo(Blank.create(createPosition("b3")));
             });
         }
 
@@ -247,8 +251,29 @@ class ChessBoardTest {
             board.move("a2", "a4");
             // then
             SoftAssertions.assertSoftly(softAssertions -> {
-                softAssertions.assertThat(board.findPiece("a4")).isEqualTo(Pawn.createWhite(createPosition("a4")));
-                softAssertions.assertThat(board.findPiece("a2")).isEqualTo(Blank.create(createPosition("a2")));
+                softAssertions.assertThat(board.findPiece(createPosition("a4")))
+                    .isEqualTo(Pawn.createWhite(createPosition("a4")));
+                softAssertions.assertThat(board.findPiece(createPosition("a2")))
+                    .isEqualTo(Blank.create(createPosition("a2")));
+            });
+        }
+
+        @Test
+        @DisplayName("a2백폰과 b3흑폰이 주어지고 a2백폰이 b3로 대각이동합니다.")
+        public void move_WhitePawn_a2_b3_success() {
+            // given
+            board.initializeEmpty();
+            board.setPiece(createPosition("a2"), Pawn.createWhite(createPosition("a2")));
+            board.setPiece(createPosition("b2"), Pawn.createWhite(createPosition("b2")));
+            board.setPiece(createPosition("b3"), Pawn.createBlack(createPosition("b3")));
+            // when
+            board.move("a2", "b3");
+            // then
+            SoftAssertions.assertSoftly(softAssertions -> {
+                softAssertions.assertThat(board.findPiece(createPosition("a2")))
+                    .isEqualTo(Blank.create(createPosition("a2")));
+                softAssertions.assertThat(board.findPiece(createPosition("b3")))
+                    .isEqualTo(Pawn.createWhite(createPosition("b3")));
             });
         }
 
@@ -281,11 +306,11 @@ class ChessBoardTest {
             board.move(sourcePosition, targetPosition);
             // then
             SoftAssertions.assertSoftly(softAssertions -> {
-                softAssertions.assertThat(board.findPiece(sourcePosition))
+                softAssertions.assertThat(board.findPiece(createPosition(sourcePosition)))
                     .isEqualTo(Blank.create(createPosition(sourcePosition)));
-                softAssertions.assertThat(board.findPiece(targetPosition))
+                softAssertions.assertThat(board.findPiece(createPosition(targetPosition)))
                     .isEqualTo(Pawn.createBlack(createPosition(targetPosition)));
-                softAssertions.assertThat(board.findPiece(enPassantPosition))
+                softAssertions.assertThat(board.findPiece(createPosition(enPassantPosition)))
                     .isEqualTo(Pawn.createBlack(createPosition(enPassantPosition)));
             });
         }
@@ -295,15 +320,18 @@ class ChessBoardTest {
         public void move_whitePawn_b4_c5() {
             // given
             board.initializeEmpty();
-            board.setPiece("b4", Pawn.createWhite(createPosition("b4")));
-            board.setPiece("c4", Pawn.createBlack(createPosition("c4")));
+            board.setPiece(createPosition("b4"), Pawn.createWhite(createPosition("b4")));
+            board.setPiece(createPosition("c4"), Pawn.createBlack(createPosition("c4")));
             // when
             board.move("b4", "c5");
             // then
             SoftAssertions.assertSoftly(softAssertions -> {
-                softAssertions.assertThat(board.findPiece("b4")).isEqualTo(Blank.create(createPosition("b4")));
-                softAssertions.assertThat(board.findPiece("c5")).isEqualTo(Pawn.createWhite(createPosition("c5")));
-                softAssertions.assertThat(board.findPiece("c4")).isEqualTo(Blank.create(createPosition("c4")));
+                softAssertions.assertThat(board.findPiece(createPosition("b4")))
+                    .isEqualTo(Blank.create(createPosition("b4")));
+                softAssertions.assertThat(board.findPiece(createPosition("c5")))
+                    .isEqualTo(Pawn.createWhite(createPosition("c5")));
+                softAssertions.assertThat(board.findPiece(createPosition("c4")))
+                    .isEqualTo(Blank.create(createPosition("c4")));
             });
         }
 
@@ -320,9 +348,9 @@ class ChessBoardTest {
             board.move(sourcePosition, targetPosition);
             // then
             SoftAssertions.assertSoftly(softAssertions -> {
-                softAssertions.assertThat(board.findPiece(sourcePosition))
+                softAssertions.assertThat(board.findPiece(createPosition(sourcePosition)))
                     .isEqualTo(Blank.create(createPosition(sourcePosition)));
-                softAssertions.assertThat(board.findPiece(targetPosition))
+                softAssertions.assertThat(board.findPiece(createPosition(targetPosition)))
                     .isEqualTo(King.createBlack(createPosition(targetPosition)));
             });
         }
@@ -361,8 +389,8 @@ class ChessBoardTest {
             board.move(sourcePosition, targetPosition);
             // then
             SoftAssertions.assertSoftly(softAssertions -> {
-                softAssertions.assertThat(board.findPiece(sourcePosition)).isEqualTo(Blank.create(d8));
-                softAssertions.assertThat(board.findPiece(targetPosition))
+                softAssertions.assertThat(board.findPiece(createPosition(sourcePosition))).isEqualTo(Blank.create(d8));
+                softAssertions.assertThat(board.findPiece(createPosition(targetPosition)))
                     .isEqualTo(Queen.createBlack(createPosition(targetPosition)));
             });
         }
@@ -380,9 +408,9 @@ class ChessBoardTest {
             board.move(sourcePosition, targetPosition);
             // then
             SoftAssertions.assertSoftly(softAssertions -> {
-                softAssertions.assertThat(board.findPiece(sourcePosition))
+                softAssertions.assertThat(board.findPiece(createPosition(sourcePosition)))
                     .isEqualTo(Blank.create(createPosition(sourcePosition)));
-                softAssertions.assertThat(board.findPiece(targetPosition))
+                softAssertions.assertThat(board.findPiece(createPosition(targetPosition)))
                     .isEqualTo(Rook.createBlack(createPosition(targetPosition)));
             });
         }
@@ -398,9 +426,9 @@ class ChessBoardTest {
             board.move(sourcePosition, targetPosition);
             // then
             SoftAssertions.assertSoftly(softAssertions -> {
-                softAssertions.assertThat(board.findPiece(sourcePosition))
+                softAssertions.assertThat(board.findPiece(createPosition(sourcePosition)))
                     .isEqualTo(Blank.create(createPosition(sourcePosition)));
-                softAssertions.assertThat(board.findPiece(targetPosition))
+                softAssertions.assertThat(board.findPiece(createPosition(targetPosition)))
                     .isEqualTo(Knight.createBlack(createPosition(targetPosition)));
             });
         }
@@ -418,9 +446,9 @@ class ChessBoardTest {
             board.move(sourcePosition, targetPosition);
             // then
             SoftAssertions.assertSoftly(softAssertions -> {
-                softAssertions.assertThat(board.findPiece(sourcePosition))
+                softAssertions.assertThat(board.findPiece(createPosition(sourcePosition)))
                     .isEqualTo(Blank.create(createPosition(sourcePosition)));
-                softAssertions.assertThat(board.findPiece(targetPosition))
+                softAssertions.assertThat(board.findPiece(createPosition(targetPosition)))
                     .isEqualTo(Bishop.createBlack(createPosition(targetPosition)));
             });
         }
@@ -437,10 +465,69 @@ class ChessBoardTest {
                 }).isInstanceOf(InvalidMovingPieceException.class);
             });
         }
+
+        @Test
+        @DisplayName("흑백룩이 a8->a6 이동시 a6에 있는 폰을 잡으며 이동한다")
+        public void move_blackRook_a8_a6_success() {
+            // given
+            board.initializeEmpty();
+            board.setPiece(createPosition("a8"), Rook.createBlack(createPosition("a8")));
+            board.setPiece(createPosition("a6"), Pawn.createWhite(createPosition("a6")));
+            // when
+            board.move("a8", "a6");
+            // then
+            SoftAssertions.assertSoftly(softAssertions -> {
+                softAssertions.assertThat(board.findPiece(createPosition("a8")))
+                    .isEqualTo(Blank.create(createPosition("a8")));
+                softAssertions.assertThat(board.findPiece(createPosition("a6")))
+                    .isEqualTo(Rook.createBlack(createPosition("a6")));
+            });
+        }
     }
 
     @Nested
-    @DisplayName("킹 체크 테스트")
+    @DisplayName("이동 가능한 경로 테스트")
+    class PossiblePathTest {
+
+        @Test
+        @DisplayName("백색폰이 주어지고 이동 가능한 경로 요청시 경로를 응답한다")
+        public void possiblePath_pawn() {
+            // given
+            board.initialize();
+            // when
+            List<Position> positions = board.possiblePath(createPosition("a2"));
+            // then
+            SoftAssertions.assertSoftly(softAssertions -> {
+                softAssertions.assertThat(positions)
+                    .containsExactly(createPosition("a3"), createPosition("a4"));
+                softAssertions.assertThat(positions.size()).isEqualTo(2);
+            });
+        }
+
+        @Test
+        @DisplayName("백킹이 주어지고 이동 가능한 경로 요청시 경로를 응답한다.")
+        public void possiblePath_king() {
+            // given
+            board.initializeEmpty();
+            board.setPiece(createPosition("e1"), King.createWhite(createPosition("e1")));
+            // when
+            List<Position> positions = board.possiblePath(createPosition("e1"));
+            // then
+            SoftAssertions.assertSoftly(softAssertions -> {
+                softAssertions.assertThat(positions).containsAll(
+                    List.of(createPosition("d1"),
+                        createPosition("d2"),
+                        createPosition("e2"),
+                        createPosition("f2"),
+                        createPosition("f1")));
+                softAssertions.assertThat(positions.size()).isEqualTo(5);
+            });
+        }
+
+    }
+
+    @Nested
+    @DisplayName("체크 테스트")
     class KingCheckTest {
 
         @Test
@@ -448,13 +535,58 @@ class ChessBoardTest {
         public void givenBlackRookWhenA8ToA5ThenKingIsCheck() {
             // given
             board.initializeEmpty();
-            board.setPiece("a8", Rook.createBlack(createPosition("a8")));
-            board.setPiece("c5", King.createWhite(createPosition("c5")));
+            board.setPiece(createPosition("a8"), Rook.createBlack(createPosition("a8")));
+            board.setPiece(createPosition("c5"), King.createWhite(createPosition("c5")));
             // when
             board.move("a8", "a5");
             // then
             SoftAssertions.assertSoftly(softAssertions -> {
                 softAssertions.assertThat(board.isCheckByColor(WHITE)).isTrue();
+            });
+        }
+
+        @Test
+        @DisplayName("c5 백색킹이 체크된 상태에서 백색킹을 제외한 다른 백색 기물을 이동하려고 할때 예외가 발생한다")
+        public void testCheckState_MoveWhitePiece_ExceptionThrown() {
+            // given
+            board.initializeEmpty();
+            board.setPiece(createPosition("a8"), Rook.createBlack(createPosition("a8")));
+            board.setPiece(createPosition("c5"), King.createWhite(createPosition("c5")));
+            board.setPiece(createPosition("c2"), Pawn.createWhite(createPosition("c2")));
+            board.move("a8", "a5");
+            // when, then
+            SoftAssertions.assertSoftly(softAssertions -> {
+                softAssertions.assertThatThrownBy(() -> {
+                    board.move("c2", "c3");
+                }).isInstanceOf(InvalidMovingPieceException.class);
+            });
+        }
+    }
+
+    @Nested
+    @DisplayName("체크메이트 테스트")
+    class CheckMateTest {
+
+        @Test
+        @DisplayName("백룩이 2개 흑킹 1개 있을때 룩이 이동하여 흑킹이 체크메이트 된다.")
+        public void testDoubleRook_checkMate() {
+            // given
+            board.initializeEmpty();
+            board.setPiece(createPosition("a1"), Rook.createWhite(createPosition("a1")));
+            board.setPiece(createPosition("h6"), Rook.createWhite(createPosition("h6")));
+            board.setPiece(createPosition("e1"), King.createWhite(createPosition("e1")));
+            board.setPiece(createPosition("d7"), King.createBlack(createPosition("d7")));
+            // when
+            board.move("a1", "a7"); // 룩이동
+            board.move("d7", "e8"); // 킹이동
+            board.move("h6", "h8"); // 룩이동
+            // then
+            List<Position> positions = board.possiblePath(createPosition("e8")); // e8에서 이동 가능한 경로 조회
+            SoftAssertions.assertSoftly(softAssertions -> {
+                softAssertions.assertThat(positions.size()).isEqualTo(0);
+                softAssertions.assertThatThrownBy(() -> {
+                    board.move("e8", "f8");
+                }).isInstanceOf(InvalidMovingPieceException.class);
             });
         }
     }
