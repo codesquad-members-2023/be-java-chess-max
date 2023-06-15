@@ -19,4 +19,15 @@ class ConsoleChessGameControllerTest {
         consoleChessGameController.service(in);
         // then
     }
+
+    @Test
+    @DisplayName("checkmate.txt 파일 입력대로 수행하여 백색 체크메이트 된다")
+    public void checkmate() throws FileNotFoundException {
+        // given
+        FileInputStream in = new FileInputStream("src/test/resources/checkmate.txt");
+        ConsoleChessGameController consoleChessGameController = new ConsoleChessGameController(new ConsoleView());
+        // when
+        consoleChessGameController.service(in);
+        // then
+    }
 }
