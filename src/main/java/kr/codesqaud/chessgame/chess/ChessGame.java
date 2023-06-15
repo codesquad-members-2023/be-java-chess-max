@@ -18,6 +18,7 @@ public class ChessGame {
         board.initialize();
     }
 
+
     public void move(final String sourcePosition, final String targetPosition) {
         verifyMyOwnPiece(sourcePosition);
         board.move(sourcePosition, targetPosition);
@@ -44,4 +45,6 @@ public class ChessGame {
     public Color getCurrentTurn() {
         return currentTurn;
     }
+
+
 }

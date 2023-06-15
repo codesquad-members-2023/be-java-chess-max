@@ -139,6 +139,10 @@ public class ChessBoard implements Board {
     }
 
     private boolean isEnPassant(final Piece sourcePiece, final Piece targetPiece) {
+        if (!targetPiece.matchType(NO_PIECE)) {
+            return false;
+        }
+
         Direction direction = sourcePiece.direction(targetPiece);
         if (sourcePiece.isWhite()) {
             return isWhitePawnEnPassant(direction, sourcePiece);
