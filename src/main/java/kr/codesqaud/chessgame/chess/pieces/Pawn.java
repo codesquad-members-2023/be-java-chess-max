@@ -39,15 +39,33 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void verifyMovePosition(final Piece target) {
-        // 같은 색의 기물인지 확인
+    public List<Position> verifyMovePosition(final Piece target) {
         verifySameTeam(target);
-        // 방향 검증
         verifyDirection(target);
-        // 대각선 이동시 target이 적기물인지 검증
-        verifyDiagonal(target);
-        // 폰 두칸 이동 검증
         verifyFirstMove(target);
+        verifyDiagonal(target);
+        verifyNorthMoving(target);
+        return getPosition().getMovablePositions(direction(target), target);
+    }
+
+    @Override
+    public String getWhiteSymbol() {
+        return "&#9817;";
+    }
+
+    @Override
+    public String getBlackSymbol() {
+        return "&#9823;";
+    }
+
+    private void verifyFirstMove(final Piece target) {
+        Degree degree = degree(target);
+        if (!isStartingPosition() && degree.isOverOneYDegree()) {
+            throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
+        }
+        if (isStartingPosition() && !degree.isUnderThreeYDegree()) {
+            throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
+        }
     }
 
     private void verifyDiagonal(final Piece target) {
@@ -60,13 +78,11 @@ public class Pawn extends Piece {
         }
     }
 
-    private void verifyFirstMove(final Piece target) {
-        Degree degree = degree(target);
-        if (!isStartingPosition() && degree.isOverOneYDegree()) {
-            throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
-        }
-        if (isStartingPosition() && !degree.isUnderThreeYDegree()) {
-            throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
+    private void verifyNorthMoving(final Piece target) {
+        if (direction(target) == Direction.NORTH) {
+            if (!target.matchType(Type.NO_PIECE)) {
+                throw new InvalidMovingPieceException("이동 할 수 없습니다. : " + target.getPosition());
+            }
         }
     }
 }

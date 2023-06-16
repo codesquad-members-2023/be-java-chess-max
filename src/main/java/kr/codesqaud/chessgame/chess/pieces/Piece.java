@@ -63,9 +63,11 @@ public abstract class Piece {
         this.position = target.position;
     }
 
-    public void verifyMovePosition(final Piece target) {
+    public List<Position> verifyMovePosition(final Piece target) {
         verifySameTeam(target);
         verifyDirection(target);
+        Direction direction = direction(target);
+        return position.getMovablePositions(direction, target);
     }
 
     public void verifySameTeam(final Piece target) {
@@ -76,15 +78,6 @@ public abstract class Piece {
 
     public void verifyDirection(final Piece target) {
         if (!directions.contains(direction(target))) {
-            throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
-        }
-    }
-
-    public void verifyDirectionMatch(final Piece target) {
-        int y = target.getPosition().getRank() - getPosition().getRank();
-        int x = target.getPosition().getFile() - getPosition().getFile();
-        Direction direction = direction(target);
-        if (!direction.match(y, x)) {
             throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
         }
     }
@@ -117,6 +110,17 @@ public abstract class Piece {
     public boolean matchColor(Color color) {
         return this.color == color;
     }
+
+    public String getSymbol() {
+        if (isWhite()) {
+            return String.valueOf((char) Integer.parseInt(getWhiteSymbol().replaceAll("[&#;]", "")));
+        }
+        return String.valueOf((char) Integer.parseInt(getBlackSymbol().replaceAll("[&#;]", "")));
+    }
+
+    public abstract String getWhiteSymbol();
+
+    public abstract String getBlackSymbol();
 
     @Override
     public int hashCode() {

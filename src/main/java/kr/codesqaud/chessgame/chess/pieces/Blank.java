@@ -12,4 +12,14 @@ public class Blank extends Piece {
     public static Blank create(final Position position) {
         return new Blank(position);
     }
+
+    @Override
+    public String getWhiteSymbol() {
+        return "&#32;";
+    }
+
+    @Override
+    public String getBlackSymbol() {
+        return "&#32;";
+    }
 }

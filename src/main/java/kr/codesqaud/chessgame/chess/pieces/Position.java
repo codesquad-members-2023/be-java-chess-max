@@ -2,6 +2,7 @@ package kr.codesqaud.chessgame.chess.pieces;
 
 import static java.lang.Character.getNumericValue;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +18,7 @@ public class Position {
     private final int file;
     private final int rank;
 
-    private Position(final int file, final int rank) {
+    public Position(final int file, final int rank) {
         this.rank = rank;
         this.file = file;
     }
@@ -88,22 +89,6 @@ public class Position {
         return new Degree(position.rank - this.rank, position.file - this.file);
     }
 
-    public Position getLeftPosition() {
-        try {
-            return createPosition(file - 1, rank);
-        } catch (InvalidPositionException e) {
-            return emptyPosition();
-        }
-    }
-
-    public Position getRightPosition() {
-        try {
-            return createPosition(file + 1, rank);
-        } catch (InvalidPositionException e) {
-            return emptyPosition();
-        }
-    }
-
     public boolean empty() {
         return file == 0 && rank == 0;
     }
@@ -138,6 +123,7 @@ public class Position {
         return String.format("%s%d", (char) ('a' + file - 1), rank);
     }
 
+    @JsonIgnore
     public List<Position> getColumnNeighbors() {
         List<Position> columnNeighbors = new ArrayList<>();
         Position position = createPosition(rank - 1, file);
@@ -151,5 +137,24 @@ public class Position {
             columnNeighbors.add(position);
         }
         return columnNeighbors;
+    }
+
+    public List<Position> getMovablePositions(final Direction direction, final Piece target) {
+        List<Position> movablePositions = new ArrayList<>();
+        getMovablePositions(movablePositions, direction, target);
+        return movablePositions;
+    }
+
+    private void getMovablePositions(final List<Position> movablePositions, final Direction direction,
+        final Piece target) {
+        Position movablePosition = move(direction);
+        if (!movablePosition.equals(target.getPosition())) {
+            movablePositions.add(movablePosition);
+            movablePosition.getMovablePositions(movablePositions, direction, target);
+        }
+    }
+
+    public String getCharPosition() {
+        return String.format("%s%d", (char) ('a' + file - 1), rank);
     }
 }
