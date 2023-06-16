@@ -1,45 +1,57 @@
 package kr.codesqaud.chessgame.chess;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Objects;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import kr.codesqaud.chessgame.chess.board.Board;
+import kr.codesqaud.chessgame.chess.pieces.config.Color;
+import kr.codesqaud.chessgame.exception.InvalidTurnException;
 
 public class ChessGame {
 
-    private static final Logger logger = LoggerFactory.getLogger(ChessGame.class);
+    private final Board board;
+    private Color currentTurn;
 
-    public void run(final InputStream in) {
-        System.out.println("체스게임을 시작합니다.");
-        System.out.println("게임 시작: start, 게임 종료: end");
+    public ChessGame(Board board) {
+        this.board = board;
+        this.currentTurn = Color.WHITE;
+    }
 
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
-            String command;
-            boolean gameContinue = true;
-            // command를 안쪽에
-            while (gameContinue && (command = br.readLine()) != null) {
-                logger.debug("command : {}", command);
-                gameContinue = processCommand(command);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public void initialize() {
+        board.initialize();
+    }
+
+
+    public void move(final String sourcePosition, final String targetPosition) {
+        verifyMyOwnPiece(sourcePosition);
+        board.move(sourcePosition, targetPosition);
+    }
+
+    private void verifyMyOwnPiece(final String sourcePosition) {
+        if (currentTurn != board.getColorByPosition(sourcePosition)) {
+            throw new InvalidTurnException(currentTurn.name() + "색 기물을 선택해주세요.");
         }
     }
 
-    private boolean processCommand(final String command) {
-        if (Objects.equals(command, "start")) {
-            Board board = new ChessBoard();
-            System.out.println(board.showBoard());
-            return true;
-        } else if (Objects.equals(command, "end")) {
-            System.out.println("게임을 종료하였습니다.");
-            return false;
+    public String showBoard() {
+        return board.showBoard();
+    }
+
+    public void nextTurn() {
+        if (currentTurn == Color.WHITE) {
+            currentTurn = Color.BLACK;
         } else {
-            System.out.printf("%s 명령어는 지원하지 않습니다.%n", command);
+            currentTurn = Color.WHITE;
         }
-        return true;
+    }
+
+    public Color getCurrentTurn() {
+        return currentTurn;
+    }
+
+    public Color checkmate() {
+        if (board.checkmate(Color.WHITE)) {
+            return Color.BLACK;
+        } else if (board.checkmate(Color.BLACK)) {
+            return Color.WHITE;
+        }
+        return Color.NOCOLOR;
     }
 }

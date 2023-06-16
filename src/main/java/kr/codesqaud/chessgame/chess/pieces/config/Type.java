@@ -1,4 +1,4 @@
-package kr.codesqaud.chessgame.pieces;
+package kr.codesqaud.chessgame.chess.pieces.config;
 
 public enum Type {
     PAWN("p", 1.0),

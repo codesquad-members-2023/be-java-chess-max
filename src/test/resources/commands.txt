@@ -1,2 +1,22 @@
 start
+move e2 e4
+move e7 e5
+move g1 f3
+move f8 c5
+move f3 e5
+move d8 h4
+move d1 f3
+move g8 h6
+move g2 g3
+move h4 g5
+move f3 f4
+move g5 f4
+move g3 f4
+move c5 d4
+move f1 b5
+move e8 e7
+move e5 c4
+move e7 e6
+move b5 c6
+move b7 c6
 end

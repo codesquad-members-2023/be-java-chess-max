@@ -1,46 +1,44 @@
 package kr.codesqaud.chess.pieces;
 
 
-import static kr.codesqaud.chessgame.pieces.Position.createPosition;
-import static kr.codesqaud.chessgame.pieces.Position.emptyPosition;
-import static kr.codesqaud.chessgame.pieces.Type.BISHOP;
-import static kr.codesqaud.chessgame.pieces.Type.KING;
-import static kr.codesqaud.chessgame.pieces.Type.KNIGHT;
-import static kr.codesqaud.chessgame.pieces.Type.NO_PIECE;
-import static kr.codesqaud.chessgame.pieces.Type.PAWN;
-import static kr.codesqaud.chessgame.pieces.Type.QUEEN;
-import static kr.codesqaud.chessgame.pieces.Type.ROOK;
+import static kr.codesqaud.chessgame.chess.pieces.Position.createPosition;
+import static kr.codesqaud.chessgame.chess.pieces.Position.emptyPosition;
+import static kr.codesqaud.chessgame.chess.pieces.config.Type.BISHOP;
+import static kr.codesqaud.chessgame.chess.pieces.config.Type.KING;
+import static kr.codesqaud.chessgame.chess.pieces.config.Type.KNIGHT;
+import static kr.codesqaud.chessgame.chess.pieces.config.Type.NO_PIECE;
+import static kr.codesqaud.chessgame.chess.pieces.config.Type.PAWN;
+import static kr.codesqaud.chessgame.chess.pieces.config.Type.QUEEN;
+import static kr.codesqaud.chessgame.chess.pieces.config.Type.ROOK;
 
-import kr.codesqaud.chessgame.pieces.Color;
-import kr.codesqaud.chessgame.pieces.Piece;
-import kr.codesqaud.chessgame.pieces.PieceFactory;
-import kr.codesqaud.chessgame.pieces.Type;
+import kr.codesqaud.chessgame.chess.pieces.Bishop;
+import kr.codesqaud.chessgame.chess.pieces.Blank;
+import kr.codesqaud.chessgame.chess.pieces.King;
+import kr.codesqaud.chessgame.chess.pieces.Knight;
+import kr.codesqaud.chessgame.chess.pieces.Pawn;
+import kr.codesqaud.chessgame.chess.pieces.Piece;
+import kr.codesqaud.chessgame.chess.pieces.Queen;
+import kr.codesqaud.chessgame.chess.pieces.Rook;
+import kr.codesqaud.chessgame.chess.pieces.config.Color;
+import kr.codesqaud.chessgame.chess.pieces.config.Type;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PieceTest {
 
-    private PieceFactory pieceFactory;
-
-    @BeforeEach
-    public void setup() {
-        pieceFactory = PieceFactory.getInstance();
-    }
-
     @Test
-    @DisplayName("흰색 폰이 생성되어야 한다")
+    @DisplayName("위치 정보가 주어지고 백폰과 흑폰 생성 요청할때 백폰과 흑폰이 생성된다")
     public void create() {
-        verifyPawn(pieceFactory.createWhitePawn(createPosition("a2")), Color.WHITE, PAWN.getWhiteRepresentation());
-        verifyPawn(pieceFactory.createBlackPawn(createPosition("a7")), Color.BLACK, PAWN.getBlackRepresentation());
+        verifyPawn(Pawn.createWhite(createPosition("a2")), Color.WHITE, PAWN.getWhiteRepresentation());
+        verifyPawn(Pawn.createBlack(createPosition("a7")), Color.BLACK, PAWN.getBlackRepresentation());
     }
 
     @Test
-    @DisplayName("폰의 색깔이 백색이어야 한다.")
+    @DisplayName("위치 정보가 주이지고 백폰 생성 요청할때 생성된 백폰은 하얀색입니다")
     public void isWhite() {
         // given
-        final Piece whitePawn = pieceFactory.createWhitePawn(createPosition("a2"));
+        final Piece whitePawn = Pawn.createWhite(createPosition("a2"));
         // when
         final boolean white = whitePawn.isWhite();
         // then
@@ -50,10 +48,10 @@ class PieceTest {
     }
 
     @Test
-    @DisplayName("폰의 색깔이 흑색이어야 한다.")
+    @DisplayName("위치 정보가 주어지고 흑폰 생성 요청할때 생성된 흑폰은 검정색입니다.")
     public void isBlack() {
         // given
-        final Piece whitePawn = pieceFactory.createBlackPawn(createPosition("a7"));
+        final Piece whitePawn = Pawn.createBlack(createPosition("a7"));
         // when
         final boolean black = whitePawn.isBlack();
         // then
@@ -64,7 +62,7 @@ class PieceTest {
 
 
     @Test
-    @DisplayName("백색폰은 소문자 p이고 흑색폰은 대문자 P여야 한다")
+    @DisplayName("폰 타입이 주어지고 색상별 표현문자 요청시 백폰은 소문자 p이고 흑폰은 대문자 P이다")
     public void getRepresentationPerPiece() {
         // given
         Type pawn = PAWN;
@@ -79,22 +77,22 @@ class PieceTest {
     }
 
     @Test
-    @DisplayName("팩토리 메소드로 생성한 기물 객체는 색상과 타입이 일치하여야 한다")
+    @DisplayName("위치정보가 주어지고 기물별 팩토리 메소드로 기물 객체 생성할때 기물의 정보와 색상이 일치한다")
     public void create_piece() {
         // when
-        Piece whitePawn = pieceFactory.createWhitePawn(createPosition("a2"));
-        Piece blackPawn = pieceFactory.createBlackPawn(createPosition("a7"));
-        Piece whiteRook = pieceFactory.createWhiteRook(createPosition("a1"));
-        Piece blackRook = pieceFactory.createBlackRook(createPosition("a8"));
-        Piece whiteKnight = pieceFactory.createWhiteKnight(createPosition("b1"));
-        Piece blackKnight = pieceFactory.createBlackKnight(createPosition("b8"));
-        Piece whiteBishop = pieceFactory.createWhiteBishop(createPosition("c1"));
-        Piece blackBishop = pieceFactory.createBlackBishop(createPosition("c8"));
-        Piece whiteQueen = pieceFactory.createWhiteQueen(createPosition("d1"));
-        Piece blackQueen = pieceFactory.createBlackQueen(createPosition("d8"));
-        Piece whiteKing = pieceFactory.createWhiteKing(createPosition("e1"));
-        Piece blackKing = pieceFactory.createBlackKing(createPosition("e8"));
-        Piece blank = pieceFactory.createBlank(emptyPosition());
+        Piece whitePawn = Pawn.createWhite(createPosition("a2"));
+        Piece blackPawn = Pawn.createBlack(createPosition("a7"));
+        Piece whiteRook = Rook.createWhite(createPosition("a1"));
+        Piece blackRook = Rook.createBlack(createPosition("a8"));
+        Piece whiteKnight = Knight.createWhite(createPosition("b1"));
+        Piece blackKnight = Knight.createBlack(createPosition("b8"));
+        Piece whiteBishop = Bishop.createWhite(createPosition("c1"));
+        Piece blackBishop = Bishop.createBlack(createPosition("c8"));
+        Piece whiteQueen = Queen.createWhite(createPosition("d1"));
+        Piece blackQueen = Queen.createBlack(createPosition("d8"));
+        Piece whiteKing = King.createWhite(createPosition("e1"));
+        Piece blackKing = King.createBlack(createPosition("e8"));
+        Piece blank = Blank.create(emptyPosition());
         // then
         verifyPiece(whitePawn, blackPawn, PAWN);
         verifyPiece(whiteRook, blackRook, ROOK);
@@ -119,7 +117,7 @@ class PieceTest {
         assertions.assertThat(blank.isWhite()).isFalse();
         assertions.assertThat(blank.isBlack()).isFalse();
         assertions.assertThat(blank.getType()).isEqualTo(NO_PIECE);
-        assertions.assertThat(blank.getPosition().toString()).isEqualTo("00");
+        assertions.assertThat(blank.getPosition().toString()).isEqualTo("`0");
         assertions.assertAll();
     }
 

@@ -1,7 +1,9 @@
 package kr.codesqaud.chessgame.pieces;
 
-import static kr.codesqaud.chessgame.pieces.Position.createPosition;
+import static kr.codesqaud.chessgame.chess.pieces.Position.createPosition;
 
+import kr.codesqaud.chessgame.chess.pieces.Position;
+import kr.codesqaud.chessgame.exception.InvalidPositionException;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +19,7 @@ class PositionTest {
         Position actual = createPosition(position);
         // then
         SoftAssertions assertions = new SoftAssertions();
-        assertions.assertThat(actual.toString()).isEqualTo("11");
+        assertions.assertThat(actual.toString()).isEqualTo("a1");
         assertions.assertAll();
     }
 
@@ -38,7 +40,7 @@ class PositionTest {
         SoftAssertions assertions = new SoftAssertions();
         assertions.assertThatThrownBy(() -> {
             createPosition(position);
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(InvalidPositionException.class);
         assertions.assertAll();
     }
 }
