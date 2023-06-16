@@ -19,13 +19,16 @@ public interface Board {
 
     Color getColorByPosition(final String position); // 위치에 존재하는 Piece의 색상을 응답합니다.
 
-    void setPiece(final Position position, final Piece piece);
+    void setPiece(final Piece piece);
 
     Piece findPiece(Position position);
-
-    List<Position> possiblePath(Position position);
 
     Optional<Piece> findPieceBy(Color color, Type type);
 
     boolean checkmate(Color white);
+
+    // 색상을 기준으로 기물들의 점수합을 반환
+    double getPointBy(Color color);
+
+    List<Rank> getReverseRanks();
 }

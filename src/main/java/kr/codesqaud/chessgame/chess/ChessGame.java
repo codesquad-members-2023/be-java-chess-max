@@ -34,12 +34,13 @@ public class ChessGame {
         return board.showBoard();
     }
 
-    public void nextTurn() {
+    public Color nextTurn() {
         if (currentTurn == Color.WHITE) {
             currentTurn = Color.BLACK;
         } else {
             currentTurn = Color.WHITE;
         }
+        return currentTurn;
     }
 
     public Color getCurrentTurn() {
@@ -54,4 +55,18 @@ public class ChessGame {
         }
         return Color.NOCOLOR;
     }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public double getPointByWhite() {
+        return board.getPointBy(Color.WHITE);
+    }
+
+    public double getPointByBlack() {
+        return board.getPointBy(Color.BLACK);
+    }
+
+
 }
