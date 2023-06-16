@@ -15,7 +15,7 @@ class PawnTest {
 	@DisplayName("지정한 색의 폰이 생성되어야 한다.")
 	void create(Color color) {
 		//given
-		Pawn pawn = new Pawn(color);
+		Pawn pawn = new Pawn(color, 'p');
 
 		//when, then
 		assertThat(pawn.getColor()).isEqualTo(color);

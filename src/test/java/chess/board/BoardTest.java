@@ -11,7 +11,7 @@ import chess.color.Color;
 class BoardTest {
 
 	@Test
-	@DisplayName("Board를 초기화하면 black Pawn과 white Pawn이 생성된다")
+	@DisplayName("Board를 초기화하면 black과 white 기물들이 생성된다.")
 	public void initialize() {
 
 		//given
@@ -19,11 +19,13 @@ class BoardTest {
 
 		//when
 		board.initialize();
-
+		board.print();
 		//then
 		assertAll(
 			() -> assertThat(board.getPawn(Color.WHITE)).isEqualTo("pppppppp"),
-			() -> assertThat(board.getPawn(Color.BLACK)).isEqualTo("PPPPPPPP")
+			() -> assertThat(board.getPawn(Color.BLACK)).isEqualTo("PPPPPPPP"),
+			() -> assertThat(board.getPiece(Color.WHITE)).isEqualTo("rnbqkbnr"),
+			() -> assertThat(board.getPiece(Color.BLACK)).isEqualTo("RNBQKBNR")
 		);
 	}
 }
