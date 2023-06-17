@@ -6,8 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 public class Pawn extends Piece{
-
-	public Pawn(Color color) {
-		super(color);
+	public Pawn(Color color, char symbol) {
+		super(color, symbol);
 	}
 }
