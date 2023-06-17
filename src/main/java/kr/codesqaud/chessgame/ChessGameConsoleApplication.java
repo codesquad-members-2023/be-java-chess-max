@@ -3,7 +3,7 @@ package kr.codesqaud.chessgame;
 import kr.codesqaud.chessgame.controller.ConsoleChessGameController;
 import kr.codesqaud.chessgame.view.ConsoleView;
 
-public class ChessApplication {
+public class ChessGameConsoleApplication {
 
     public static void main(String[] args) {
         final ConsoleChessGameController consoleChessGameController = new ConsoleChessGameController(new ConsoleView());

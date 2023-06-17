@@ -18,10 +18,14 @@ public class Knight extends Piece {
         return new Knight(Color.BLACK, position);
     }
 
+
     @Override
-    public void verifyMovePosition(final Piece target) {
-        verifySameTeam(target);
-        verifyDirection(target);
-        verifyDirectionMatch(target);
+    public String getWhiteSymbol() {
+        return "&#9816;";
+    }
+
+    @Override
+    public String getBlackSymbol() {
+        return "&#9822;";
     }
 }

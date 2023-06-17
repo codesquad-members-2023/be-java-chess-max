@@ -20,4 +20,14 @@ public class Queen extends Piece {
     public static Queen createBlack(final Position position) {
         return new Queen(BLACK, position);
     }
+
+    @Override
+    public String getWhiteSymbol() {
+        return "&#9813;";
+    }
+
+    @Override
+    public String getBlackSymbol() {
+        return "&#9819;";
+    }
 }

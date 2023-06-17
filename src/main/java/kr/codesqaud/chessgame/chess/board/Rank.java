@@ -16,8 +16,12 @@ import kr.codesqaud.chessgame.chess.pieces.Queen;
 import kr.codesqaud.chessgame.chess.pieces.Rook;
 import kr.codesqaud.chessgame.chess.pieces.config.Color;
 import kr.codesqaud.chessgame.chess.pieces.config.Type;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Rank implements Comparable<Rank> {
+
+    private static final Logger logger = LoggerFactory.getLogger(Rank.class);
 
     private final List<Piece> pieces = new ArrayList<>(ChessBoard.SIZE);
     private final int value;
@@ -94,7 +98,11 @@ public class Rank implements Comparable<Rank> {
 
     public String getPieceResult() {
         return pieces.stream()
-            .map(Piece::getRepresentation)
+            .map(Piece::getSymbol)
+            .map(symbol -> symbol.replaceAll("[&#;]", ""))
+            .mapToInt(Integer::parseInt)
+            .mapToObj(num -> (char) num)
+            .map(String::valueOf)
             .collect(Collectors.joining());
     }
 

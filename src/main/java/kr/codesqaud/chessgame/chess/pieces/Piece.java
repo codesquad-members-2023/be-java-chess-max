@@ -63,9 +63,11 @@ public abstract class Piece {
         this.position = target.position;
     }
 
-    public void verifyMovePosition(final Piece target) {
+    public List<Position> verifyMovePosition(final Piece target) {
         verifySameTeam(target);
         verifyDirection(target);
+        Direction direction = direction(target);
+        return position.getMovablePositions(direction, target);
     }
 
     public void verifySameTeam(final Piece target) {
@@ -76,15 +78,6 @@ public abstract class Piece {
 
     public void verifyDirection(final Piece target) {
         if (!directions.contains(direction(target))) {
-            throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
-        }
-    }
-
-    public void verifyDirectionMatch(final Piece target) {
-        int y = target.getPosition().getRank() - getPosition().getRank();
-        int x = target.getPosition().getFile() - getPosition().getFile();
-        Direction direction = direction(target);
-        if (!direction.match(y, x)) {
             throw new InvalidMovingPieceException(target.getPosition() + "로 이동할 수 없습니다.");
         }
     }
@@ -118,6 +111,17 @@ public abstract class Piece {
         return this.color == color;
     }
 
+    public String getSymbol() {
+        if (isWhite()) {
+            return String.valueOf((char) Integer.parseInt(getWhiteSymbol().replaceAll("[&#;]", "")));
+        }
+        return String.valueOf((char) Integer.parseInt(getBlackSymbol().replaceAll("[&#;]", "")));
+    }
+
+    public abstract String getWhiteSymbol();
+
+    public abstract String getBlackSymbol();
+
     @Override
     public int hashCode() {
         return Objects.hash(getColor(), getType(), getPosition());
@@ -146,4 +150,17 @@ public abstract class Piece {
     }
 
 
+    public double getPoint(final List<Piece> pieces) {
+        if (!matchType(Type.PAWN)) {
+            return this.type.getDefaultPoint();
+        }
+        List<Position> columnNeighbors = this.position.getColumnNeighbors();
+
+        for (Position position : columnNeighbors) {
+            if (pieces.contains(Pawn.create(this.color, position))) {
+                return this.type.getDefaultPoint() - 0.5;
+            }
+        }
+        return this.type.getDefaultPoint();
+    }
 }

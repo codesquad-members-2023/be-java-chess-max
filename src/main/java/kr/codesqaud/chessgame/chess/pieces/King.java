@@ -19,9 +19,12 @@ public class King extends Piece {
     }
 
     @Override
-    public void verifyMovePosition(final Piece target) {
-        verifySameTeam(target);
-        verifyDirection(target);
-        verifyDirectionMatch(target);
+    public String getWhiteSymbol() {
+        return "&#9812;";
+    }
+
+    @Override
+    public String getBlackSymbol() {
+        return "&#9818;";
     }
 }
